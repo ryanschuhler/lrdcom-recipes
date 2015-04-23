@@ -346,9 +346,13 @@
 		#set ($form_field_strings_json = $jsonFactoryUtil.createJSONObject())
 
 		#foreach ($name in $field_name.siblings)
+			#set ($article_field_values_json = $jsonFactoryUtil.createJSONObject())
+
 			#if ($name.label.data != "")
-				#set ($article_field_name = $jsonFactoryUtil.createJSONObject())
-				#set ($void = $article_field_names_json.put($name.data, $name.label.data))
+				#set ($void = $article_field_values_json.put("label", $name.label.data))
+				#set ($void = $article_field_values_json.put("description", $name.description.data))
+
+				#set ($void = $article_field_names_json.put($name.data, $article_field_values_json))
 			#end
 
 			#if ($name.required_message.data != "")
@@ -372,11 +376,21 @@
 						#set ($item = $hs_form_fields.getJSONObject($i))
 
 						#set ($label_text = "")
+						#set ($field_description ="")
 
 						#if ($article_field_names_json.has($item.getString("name")))
-							#set ($label_text = $article_field_names_json.getString($item.getString("name")))
+							#set ($article_field_name_value = $article_field_names_json.getJSONObject($item.getString("name")))
+
+							#set ($label_text = $article_field_name_value.getString("label"))
+
+							#if ($article_field_name_value.getString("description") !="")
+								#set ($field_description = $article_field_name_value.getString("description"))
+							#else
+								#set ($field_description = $item.getString("description"))
+							#end
 						#else
 							#set ($label_text = $item.getString("label"))
+							#set ($field_description = $item.getString("description"))
 						#end
 
 						#set ($hidden = $getterUtil.getBoolean($item.getString("hidden")))
@@ -541,6 +555,11 @@
 									<label class="aui-field-label">
 										<input class="${field_input_css_class}" name="$item.getString('name')" type="checkbox" value="$value"/>$label_text
 									</label>
+
+									#if ($field_description != "")
+										<div class="aui-field-desc">$field_description</div>
+									#end
+
 								#elseif ($field_type == "checkbox" || $field_type == "radio")
 									#set ($selection_choices = $item.getJSONArray("options"))
 									#set ($selection_choices_length = $selection_choices.length() - 1)
