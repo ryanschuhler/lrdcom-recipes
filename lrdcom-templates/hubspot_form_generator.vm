@@ -210,13 +210,13 @@
 	}
 
 	.hbspt-form .aui-field-select .aui-field-input {
-		background: url(https://www.liferay.com/documents/14/43429917/arrow_down.png/ca985125-5ec8-47aa-b967-fdd622aa4b9a) no-repeat right;
-		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down.svg/a0a0f579-3f2b-4e0f-a590-e4885bad153f);
+		background: url(https://www.liferay.com/documents/14/43429917/arrow_down.png) no-repeat right;
+		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down.svg);
 	}
 
 	.hbspt-form .aui-field-select.field-filled .aui-field-input {
-		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down_selected.png/8ff76a13-df82-4d0a-b37c-75bcbc28ab6e);
-		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down_selected.svg/98ec462b-e825-425b-9f20-b869c1fafb9f);
+		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down_selected.png);
+		background-image: url(https://www.liferay.com/documents/14/43429917/arrow_down_selected.svg);
 	}
 
 	.hbspt-form .aui-field {
