@@ -1,10 +1,16 @@
-<#if validator.isNull(video.data) && image.data?has_content>
-	<#assign style = "style='background-image: url(${image.data});'" />
-<#else>
-	<#assign style = "" />
+<#assign min_height = "400px" />
+
+<#if height?? && height.data?has_content>
+	<#assign min_height = height.data />
 </#if>
 
-<#if validator.isNull(video.data) && opacity.data?has_content>
+<#if validator.isNull(media.video.data) && media.image.data?has_content>
+	<#assign style = "style='background-image: url(${media.image.data}); min-height: ${min_height}'" />
+<#else>
+	<#assign style = "style='min-height: ${min_height};'" />
+</#if>
+
+<#if validator.isNull(media.video.data) && opacity.data?has_content>
 	<#assign opacity_color = opacity.data />
 	<#assign opacity_overlay = "opacity-overlay" />
 <#else>
@@ -14,50 +20,60 @@
 
 <#assign font_color = "light-color" />
 
-<#if video.data?has_content || opacity_color == "#FFF">
+<#if media.video.data?has_content || opacity_color == "#FFF">
 	<#assign font_color = "font-color" />
 </#if>
 
-<div class="align-center block-container justify-center main-banner ${opacity_overlay} ${position.data}" id="article-${.vars['reserved-article-id'].data}" ${style}>
-	<#if video?? && video.data?has_content>
-		<video autoplay="" loop="" width="100%">
-			<source src="${video.data}">
+<#if media.article_id.article_position?? && media.article_id.article_position.data?has_content>
+	<#assign pos_class = media.article_id.article_position.data>
+<#else>
+	<#assign pos_class = position.data>
+</#if>
 
-			<#if fallback_video.data?has_content>
-				<source src="${fallback_video.data}">
+<div class="align-center block-container justify-center main-banner ${opacity_overlay} ${pos_class}" id="article-${.vars['reserved-article-id'].data}" ${style}>
+	<#if media.video?? && media.video.data?has_content>
+		<video autoplay="" loop="" width="100%" style="height: 100%; min-height: ${min_height}">
+			<source src="${media.video.data}">
+
+			<#if media.fallback_video.data?has_content>
+				<source src="${media.fallback_video.data}">
 			</#if>
 
-			<#if image.data?has_content>
-				<img alt="banner image" class="aui-w100" src="${image.data}">
+			<#if media.image.data?has_content>
+				<img alt="banner image" class="aui-w100" src="${media.image.data}">
 			</#if>
 		</video>
 	</#if>
 
-	<div class="block ${font_color} main-banner-content max-med">
-		<#if heading.data?has_content>
-			<div class="page-heading">
-				<h1>${heading.data}</h1>
+	<#if media.article_id?? && media.article_id.data?has_content>
+		<#assign journal_content_util = staticUtil["com.liferay.portlet.journalcontent.util.JournalContentUtil"] />
+		<#assign content_display = journal_content_util.getDisplay(groupId, media.article_id.data, "", locale, xmlRequest) />
 
-				<#if sub_heading.data?has_content>
-					<p class="${font_color}">${sub_heading.data}</p>
-				</#if>
-			</div>
-		</#if>
-	</div>
+		${content_display.getContent()}
+	<#else>
+		<div class="block ${font_color} main-banner-content max-med">
+			<#if heading.data?has_content>
+				<div class="page-heading">
+					<h1>${heading.data}</h1>
+
+					<#if sub_heading.data?has_content>
+						<p class="${font_color}">${sub_heading.data}</p>
+					</#if>
+				</div>
+			</#if>
+		</div>
+	</#if>
 </div>
-
-<#assign min_height = "400px" />
-
-<#if height?? && height.data?has_content>
-	<#assign min_height = height.data />
-</#if>
 
 <style type="text/css">
 	.aui .main-banner {
 		background-position: center;
 		background-size: cover;
-		min-height: ${min_height};
 		overflow: hidden;
+		position: relative;
+	}
+
+	.aui .main-banner .lego-article {
 		position: relative;
 	}
 
@@ -127,7 +143,7 @@
 		}
 	}
 
-	<#if video?? && video.data?has_content>
+	<#if media.video?? && media.video.data?has_content>
 		.aui .main-banner {
 			overflow: hidden;
 			position: relative;
@@ -136,20 +152,18 @@
 		.aui .main-banner video {
 			bottom: 0;
 			left: 0;
-			min-height: ${min_height};
 			min-width: 100%;
 			object-fit: cover !important;
 			position: absolute;
 		}
 
 		@media (max-width: 720px)
-			.top-banner .video {
-				background: url(${image.data}) no-repeat center center;
-				background-size: cover;
+			.top-banner source {
+				display: none;
 			}
 	</#if>
 
 	<#if css?? && css.data?has_content>
-			${css.data}
+		${css.data}
 	</#if>
 </style>

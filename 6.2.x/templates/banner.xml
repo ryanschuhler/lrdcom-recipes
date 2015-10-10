@@ -1,35 +1,95 @@
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="image" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="media" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="image" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Image]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="video" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Video]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="fallback_video" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Fallback Video]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="article_id" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="article_position" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+				<dynamic-element name="option8597" type="option" value="justify-start">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Left]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option8598" type="option" value="justify-center">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Center]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option8599" type="option" value="justify-end">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Right]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Article Position]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[[""]]]>
+					</entry>
+					<entry name="tip">
+						<![CDATA[]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Article ID]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
 		<meta-data locale="en_US">
 			<entry name="label">
-				<![CDATA[Image]]>
-			</entry>
-			<entry name="predefinedValue">
-				<![CDATA[]]>
-			</entry>
-			<entry name="tip">
-				<![CDATA[]]>
-			</entry>
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="video" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
-		<meta-data locale="en_US">
-			<entry name="label">
-				<![CDATA[Video]]>
-			</entry>
-			<entry name="predefinedValue">
-				<![CDATA[]]>
-			</entry>
-			<entry name="tip">
-				<![CDATA[]]>
-			</entry>
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" localizable="true" name="fallback_video" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
-		<meta-data locale="en_US">
-			<entry name="label">
-				<![CDATA[Fallback Video]]>
+				<![CDATA[media]]>
 			</entry>
 			<entry name="predefinedValue">
 				<![CDATA[]]>
