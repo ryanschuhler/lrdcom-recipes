@@ -25,12 +25,12 @@
 </#if>
 
 <#if media.article_id.article_position?? && media.article_id.article_position.data?has_content>
-	<#assign pos_class = media.article_id.article_position.data>
+	<#assign position_class = media.article_id.article_position.data>
 <#else>
-	<#assign pos_class = position.data>
+	<#assign position_class = position.data>
 </#if>
 
-<div class="align-center block-container justify-center main-banner ${opacity_overlay} ${pos_class}" id="article-${.vars['reserved-article-id'].data}" ${style}>
+<div class="align-center block-container justify-center main-banner ${opacity_overlay} ${position_class}" id="article-${.vars['reserved-article-id'].data}" ${style}>
 	<#if media.video?? && media.video.data?has_content>
 		<video autoplay="" loop="" width="100%" style="height: 100%; min-height: ${min_height}">
 			<source src="${media.video.data}">
