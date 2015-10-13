@@ -33,3 +33,9 @@
 		</#list>
 	</div>
 </div>
+
+<#if custom_js?? && custom_js.data != "">
+	<script>
+		${custom_js.data}
+	</script>
+</#if>
