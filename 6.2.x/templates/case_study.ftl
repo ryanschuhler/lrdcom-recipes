@@ -46,6 +46,11 @@
 		visibility: visible;
 	}
 
+	.case-study .quote-section .quote {
+		font-weight: bolder;
+		padding: 1em 0;
+	}
+
 	.case-study-heading {
 		border-bottom: 1px solid #909295;
 		margin-bottom: 1em;
@@ -102,41 +107,20 @@
 		display: none;
 	}
 
-	.quote {
-		font-size: 1.5em;
-		font-weight: bolder;
-		padding: .5em 0;
+	.quote .triangle {
+		border-color: currentColor;
 	}
 
-	.quote-left, .quote-right {
-		display: inline-block;
-	}
-
-	.quote-left {
-		border-bottom: 10px solid transparent;
-		border-left: 10px solid currentColor;
-		border-right: 10px solid transparent;
-		border-top: 10px solid currentColor;
-	}
-
-	.quote-right {
-		border-bottom: 10px solid currentColor;
-		border-left: 10px solid transparent;
-		border-right: 10px solid currentColor;
-		border-top: 10px solid transparent;
-		float: right;
-	}
-
-	.quotee {
+	.quote-author {
 		font-size: 1.25em;
 	}
 
-	.quotee-info {
+	.author-info {
 		font-size: 1.1em;
 	}
 
 	.quote-source {
-		padding-top: 2em;
+		padding-top: 1em;
 	}
 
 	.stat {
@@ -222,7 +206,13 @@
 			<div class="btn-wrapper">
 				<#list asset.siblings as asset_url>
 					<#if asset_url?has_content>
-						<a class="btn" href="${asset_url.data}" target="_blank">${localize("case-study", "Case Study")}</a>
+						<#assign btn_text = localize("case-study", "Case Study") />
+
+						<#if asset_url.button_text.data?has_content>
+							<#assign btn_text = asset_url.button_text.data />
+						</#if>
+
+						<a class="btn" href="${asset_url.data}" target="_blank">${btn_text}</a>
 					</#if>
 				</#list>
 			</div>
@@ -231,21 +221,24 @@
 		<#if quote.data?has_content>
 			<div class="block large-padding-vertical right-block quote-panel w30">
 				<div class="quote-section">
-					<span class="accent-color quote-left"></span><span class="accent-color quote-left"></span>
 
-					<div class="primary-color quote">
+					<div class="max-med primary-color quote">
+						<span class="accent-color triangle upper-left"></span>
+						<span class="accent-color second-triangle triangle upper-left"></span>
+						<span class="accent-color lower-right triangle"></span>
+						<span class="accent-color lower-right second-triangle triangle"></span>
+
 						${quote.data}
 					</div>
 
-					<span class="accent-color quote-right"></span><span class="accent-color quote-right"></span>
 
 					<div class="alt-font-color quote-source">
-						<div class="quotee">
+						<div class="quote-author">
 							${quote.quotee.data}
 						</div>
 
 						<#if quote.quotee_info.data?has_content>
-							<div class="quotee-info">
+							<div class="author-info">
 								${quote.quotee_info.data}
 							</div>
 						</#if>
