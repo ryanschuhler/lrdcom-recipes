@@ -1,0 +1,15 @@
+@import 'normalize';
+@import 'github-light';
+@import 'styles';
+
+header {
+	nav {
+		ul {
+			margin-bottom: 0;
+		}
+		
+		li {
+			list-style-type: none;
+		}
+	}	
+}
