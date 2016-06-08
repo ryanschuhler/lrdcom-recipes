@@ -2,6 +2,15 @@
 @import 'github-light';
 @import 'styles';
 
+html {
+  overflow-y: scroll;
+}
+
+ul {
+	padding-left: 20px;
+}
+
+
 header {
 	nav {
 		ul {
@@ -10,6 +19,58 @@ header {
 		
 		li {
 			list-style-type: none;
+
+			&.dropdown {
+				cursor: pointer;
+				position: relative; 
+
+				&.active {
+					i.fa-caret-down {
+						display: none;
+					}
+
+					i.fa-caret-up {
+						display: block;
+					}
+				}
+
+				i {
+					position: absolute;
+					right: 10px;
+					top: 0px;
+
+					&.fa-caret-down {
+						display: block;
+					}
+
+					&.fa-caret-up {
+						display: none;
+					}
+				}
+
+				ul {
+					display: none;
+				}
+			}
+
+			&.dropdown + ul {
+				max-height: 0;
+				overflow: hidden;
+				transition: all .25s ease-in;	
+			}
+
+			&.dropdown.active + ul {
+				max-height: 300px;
+				overflow: hidden;
+				transition: all .25s ease-in;
+			}
+
+			a {
+
+				&.active {
+					font-weight: bold;
+				}
+			}
 		}
 	}	
 }

@@ -10,16 +10,16 @@ var fileinclude = require('gulp-file-include');
 gulp.task('sass', function() {
     return sass('src/css/*.scss', { style: 'compressed' })
         .pipe(concat('app.css'))
-        .pipe(gulp.dest('src/css'))
+        .pipe(gulp.dest('src/'))
 });
 
 // Compile and minify js
 gulp.task('scripts', function() {
     return gulp.src([
-            'src/js/app.js'
+            'src/js/*.js'
         ])
         .pipe(concat('app.js'))
-        .pipe(gulp.dest('src/js'));
+        .pipe(gulp.dest('src/'));
 });
 
 // Turn markdown files into HTML
