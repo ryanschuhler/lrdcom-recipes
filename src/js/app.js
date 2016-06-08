@@ -20,6 +20,12 @@ window.addEventListener('popstate', function(e) {
 // when users load friendly url, got o that url
 $(document).ready(function() {
 	var hash = window.location.hash;
-	hash = hash.replace("#/", "");
-	changePage(hash);
+
+	if (hash === "#/" || hash.length === 0) {
+		changePage('home');	
+	} else {
+		hash = hash.replace("#/", "");
+		changePage(hash);	
+	}
+	
 });
