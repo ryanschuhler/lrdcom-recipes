@@ -19,12 +19,6 @@ gulp.task('scripts', function() {
             'src/js/app.js'
         ])
         .pipe(concat('app.js'))
-        .pipe(minify({
-            ext: {
-                min: '.min.js'
-            },
-            noSource: true
-        }))
         .pipe(gulp.dest('src/js'));
 });
 
