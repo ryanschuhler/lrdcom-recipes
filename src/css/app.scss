@@ -1,76 +1,85 @@
 @import 'normalize';
-@import 'github-light';
-@import 'styles';
+@import 'main';
 
 html {
   overflow-y: scroll;
 }
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+body {
+	display: none;
+
+	.page-bg {
+		opacity: 0;
+		transition: opacity .3s ease-in;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: -1;
+		background: 
+	        linear-gradient( rgba(0, 0, 0, 0.6), 
+	        rgba(0, 0, 0, 0.6)), 
+	        url(../src/images/home_bg-1.jpg);
+	    background-size: cover;
+	}
+}
+
+#main {
+	min-height: 80vh
+}
+
+blockquote {
+	font-weight: 200;
+	font-style: italic;
+	letter-spacing: 0;
+	color: #cecece;
+	text-transform: none;
+	margin-top: -2em;
+	line-height: 1em;
+	padding-left: 1em;
+
+	p {
+		margin: 0;
+	}
+}
 
 ul {
-	padding-left: 20px;
+	padding-left: 0px;
+}
+
+header {
+	a.logo {
+		transition: all .25s ease-in;
+
+		&:hover {
+			opacity: 0.5;
+		}
+	}
 }
 
 
-header {
-	nav {
-		ul {
-			margin-bottom: 0;
-		}
-		
+#menu {
+	.inner {
 		li {
 			list-style-type: none;
+			font-weight: 200;
 
-			&.dropdown {
-				cursor: pointer;
-				position: relative; 
-
-				&.active {
-					i.fa-caret-down {
-						display: none;
-					}
-
-					i.fa-caret-up {
-						display: block;
-					}
-				}
-
-				i {
-					position: absolute;
-					right: 10px;
-					top: 0px;
-
-					&.fa-caret-down {
-						display: block;
-					}
-
-					&.fa-caret-up {
-						display: none;
-					}
-				}
-
-				ul {
-					display: none;
-				}
-			}
-
-			&.dropdown + ul {
-				max-height: 0;
-				overflow: hidden;
-				transition: all .25s ease-in;	
-			}
-
-			&.dropdown.active + ul {
-				max-height: 300px;
-				overflow: hidden;
-				transition: all .25s ease-in;
+			&.category {
+				line-height: 1.5em;	
+				font-size: 1.2em;
+				font-weight: 500;
 			}
 
 			a {
+				font-size: 15px;
+				line-height: 20px;
 
 				&.active {
 					font-weight: bold;
 				}
 			}
 		}
-	}	
+	}
 }

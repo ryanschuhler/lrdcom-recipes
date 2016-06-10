@@ -1,6 +1,14 @@
-# Case Study
+# Case Studies
+> Adding new case studies to Liferay.com 
 
 Please note, before adding a Case Study to the site, consider whether to have DESIGN create an svg (scalable vector graphic) logo for the Case Study. Case Studies that are Highlighted include the company’s logo. If the Case Study is going to be a Highlighted study, please create that ticket first and then link it to the LRIS ticket.
+
+```
+Code sample
+function sampleCode() {
+    alert('do something');
+}
+```
 
 Important information about the logo request made to design: 
 Please try to provide Design with an svg. This may require hunting online through google image search.

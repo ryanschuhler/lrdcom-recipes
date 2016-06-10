@@ -16,7 +16,11 @@ gulp.task('sass', function() {
 // Compile and minify js
 gulp.task('scripts', function() {
     return gulp.src([
-            'src/js/*.js'
+            'src/js/skel.min.js',
+            'src/js/util.js',
+            'src/js/main.js',
+            'src/js/navigation.js',
+            'src/js/background.js',
         ])
         .pipe(concat('app.js'))
         .pipe(gulp.dest('src/'));
