@@ -19,8 +19,10 @@ gulp.task('scripts', function() {
             'src/js/skel.min.js',
             'src/js/util.js',
             'src/js/main.js',
+            'src/js/routes.js',
             'src/js/navigation.js',
             'src/js/background.js',
+            'src/js/init.js'
         ])
         .pipe(concat('app.js'))
         .pipe(gulp.dest('src/'));
