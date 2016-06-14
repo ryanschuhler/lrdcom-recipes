@@ -1,0 +1,23 @@
+#menu {
+	.inner {
+		li {
+			list-style-type: none;
+			font-weight: 200;
+
+			&.category {
+				line-height: 1.5em;	
+				font-size: 1.2em;
+				font-weight: 500;
+			}
+
+			a {
+				font-size: 15px;
+				line-height: 20px;
+
+				&.active {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}

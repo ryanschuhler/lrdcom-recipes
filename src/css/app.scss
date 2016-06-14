@@ -30,29 +30,6 @@ body {
 	}
 }
 
-#main {
-	min-height: 80vh
-}
-
-blockquote {
-	font-weight: 200;
-	font-style: italic;
-	letter-spacing: 0;
-	color: #cecece;
-	text-transform: none;
-	margin-top: -2em;
-	line-height: 1em;
-	padding-left: 1em;
-
-	p {
-		margin: 0;
-	}
-}
-
-ul {
-	padding-left: 0px;
-}
-
 header {
 	a.logo {
 		transition: all .25s ease-in;
@@ -63,27 +40,37 @@ header {
 	}
 }
 
+ul {
+	padding-left: 0px;
+}
 
-#menu {
-	.inner {
-		li {
-			list-style-type: none;
-			font-weight: 200;
+// articles styling
+#main {
+	min-height: 80vh
 
-			&.category {
-				line-height: 1.5em;	
-				font-size: 1.2em;
-				font-weight: 500;
-			}
+	blockquote {
+		font-weight: 200;
+		font-style: italic;
+		letter-spacing: 0;
+		color: #cecece;
+		text-transform: none;
+		margin-top: -2em;
+		line-height: 1em;
+		padding-left: 1em;
+	}
 
-			a {
-				font-size: 15px;
-				line-height: 20px;
+	p {
+		margin: 0;
+	}
 
-				&.active {
-					font-weight: bold;
-				}
-			}
-		}
+	iframe {
+		width: 100%;
 	}
 }
+
+
+
+
+
+
+
