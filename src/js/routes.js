@@ -51,29 +51,19 @@ var routes = (function() {
 
 
 	// load page to correct routes on initial load
-	var initialRoute = (function() {
+	var setInitialRoute = function() {
 		if (!sessionStorage.redirect) {
 			changePage('home', "init");
 		} else {
 			let url = sessionStorage.redirect;
-			var page = url.slice(url.lastIndexOf('/') + 1, url.length);
-			alert('changing to page: ' + page);
+			let page = url.slice(url.lastIndexOf('/') + 1, url.length);
 			changePage(page, "init");
 		}
-	})();
-
-	// when users load friendly url, got o that url
-	// var hash = window.location.hash;
-
-	// if (hash === "#/" || hash.length === 0) {
-	// 	changePage('home', "init");	
-	// } else {
-	// 	hash = hash.replace("#/", "");
-	// 	changePage(hash, "init");
-	// }
+	};
 
 	return {
-		changePage: changePage
+		changePage: changePage,
+		setInitialRoute: setInitialRoute
 	}
 
 })();
