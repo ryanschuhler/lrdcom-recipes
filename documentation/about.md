@@ -1,3 +1,3 @@
 # About Page
 
-this is about page
+I'm ryan and i'm going to make changes to this page.
