@@ -25,12 +25,4 @@ var navigation = (function() {
 		routes.changePage('home')
 	});
 
-	var buildNavigation() {
-
-	}
-
-	return {
-		buildNavigation: buildNavigation
-	}
-
 })(routes);

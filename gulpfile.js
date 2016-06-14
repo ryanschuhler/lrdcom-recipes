@@ -16,6 +16,10 @@ gulp.task('sass', function() {
 // Compile and minify js
 gulp.task('scripts', function() {
     return gulp.src([
+            // plugins
+             'src/js/ext/jquery.flexslider-min.js',
+
+            // our files
             'src/js/skel.min.js',
             'src/js/util.js',
             'src/js/main.js',

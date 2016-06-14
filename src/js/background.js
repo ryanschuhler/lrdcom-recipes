@@ -38,5 +38,13 @@ var background = (function() {
 		})
 	}
 
-	changeBackground('page-bg', 'home_bg');
+	 $('.flexslider').flexslider({
+	 	controlNav: false,
+	 	directionNav: false,
+	 	randomize: true
+	 });
+
+
+
+	// changeBackground('page-bg', 'home_bg');
 })();
