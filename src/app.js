@@ -800,9 +800,14 @@ var routes = (function() {
 		$body.removeClass(function(index, css){
 			return (css.match (/(^|\s)page-\S+/g) || []).join(' ');
 		});
+
 		$body.addClass('page-'+page);
 	}
 	
+	var loadErrorPage = function() {
+		bodyClassChange('404');
+		section.load('src/pages/404.html');
+	}
 
 	var changePage = function(page, mode, alterHistory) {
 		bodyClassChange(page);
@@ -814,23 +819,38 @@ var routes = (function() {
 		// if on initial page load, load content instantly
 		if (mode == "init") {
 			$body.hide();
-			section.load('src/pages/' + page + '.html', function() {
-				$body.fadeIn(1000);	
-				if (alterHistory) {
-					history.pushState(page, null, page);	
+			section.load(
+				'src/pages/' + page + '.html', 
+				function(response, status, xhr) {
+					if (alterHistory) {
+						history.pushState(page, null, page);	
+					}
+
+					if (status !== "success") {
+						loadErrorPage();
+					}
+
+					$body.fadeIn(1000);	
+					
 				}
-			});
+			);
 			
 		} 
 		else {
 			section.fadeOut(200, function() {
 				setTimeout(function() {
-					section.load('src/pages/' + page + '.html', function() {
-						section.fadeIn(350);
-						if (alterHistory) {
-							history.pushState(page, null, page);	
+					section.load('src/pages/' + page + '.html', 
+						function(response, status, xhr) {
+							if (alterHistory) {
+								history.pushState(page, null, page);	
+							}
+							if (status !== "success") {
+								loadErrorPage();
+							}
+
+							section.fadeIn(350);
 						}
-					})	
+					)	
 				}, 300)
 			});
 		}
@@ -840,9 +860,7 @@ var routes = (function() {
 	window.addEventListener('popstate', function(e) {
 		changePage(e.state, "normal", false)
 		bodyClassChange(e.state);
-		navigationUI.findActiveNav(e.state)
 	})
-
 
 	// load page to correct routes on initial load
 	var setInitialRoute = function() {
@@ -850,6 +868,7 @@ var routes = (function() {
 			changePage('home', "init");
 		} else {
 			let url = sessionStorage.redirect;
+			delete sessionStorage.redirect;
 			let page = url.slice(url.lastIndexOf('/') + 1, url.length);
 			changePage(page, "init");
 		}
@@ -942,4 +961,5 @@ var background = (function() {
 var init = (function() {
 	// set initial URL route
 	routes.setInitialRoute();
+	// routes.changePage("something", "init");
 })();
