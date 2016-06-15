@@ -26,6 +26,7 @@ gulp.task('scripts', function() {
             'src/js/routes.js',
             'src/js/navigation.js',
             'src/js/background.js',
+            'src/js/search.js',
             'src/js/init.js'
         ])
         .pipe(concat('app.js'))
@@ -49,10 +50,20 @@ gulp.task('fileinclude', function() {
     .pipe(gulp.dest('./'));
 });
 
+gulp.task('buildindex', function() {
+    return gulp.src([
+        'src/pages/*.html',
+        '!src/pages/home.html',
+        '!src/pages/404.html',
+        ])
+        .pipe(concat('searchindex.html'))
+        .pipe(gulp.dest('src/searchIndex/'));
+});
+
 // Watch for changes
 gulp.task('watch', function() {
     // Watch .html files
-    gulp.watch('src/**/*.html', ['fileinclude']);
+    gulp.watch('src/**/*.html', ['fileinclude', 'buildindex']);
     // Watch .js files
     gulp.watch('src/js/*.js', ['scripts']);
     // Watch .scss files

@@ -71,7 +71,7 @@ var routes = (function() {
 	// load page to correct routes on initial load
 	var setInitialRoute = function() {
 		if (!sessionStorage.redirect) {
-			changePage('home', "init");
+			changePage('home', "init", false);
 		} else {
 			let url = sessionStorage.redirect;
 			delete sessionStorage.redirect;
