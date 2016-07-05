@@ -84,3 +84,9 @@
 		</#if>
 	</div>
 </div>
+
+<#if source?? && source.data?has_content>
+	<div class="source-text">
+		${source.data}
+	</div>
+</#if>
