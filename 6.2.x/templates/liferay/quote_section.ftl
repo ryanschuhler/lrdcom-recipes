@@ -18,12 +18,7 @@
 		</#if>
 
 		<div class="large-padding max-med quote">
-			<span class="${quote_css_class}" ${quote_attrs}>${quote.data}</span>
-
-			<div class="triangle upper-left"></div>
-			<div class="triangle upper-left second-triangle"></div>
-			<div class="lower-right triangle"></div>
-			<div class="lower-right triangle second-triangle"></div>
+			<p class="${quote_css_class}" ${quote_attrs}>${quote.data}</p>
 		</div>
 	</#if>
 
