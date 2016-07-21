@@ -8,8 +8,9 @@
 4. [Seeing Changes Locally](#seeing-changes-locally)
 
 ## Setting Up
-1. Run `npm install` on the root to install all dependencies. 
-2. Run `gulp`. 
+1. Run `gem install sass` to install [SASS](http://sass-lang.com/install) on computer 
+2. Run `npm install` on the root to install all dependencies. 
+3. Run `gulp`. 
 
 *It's now watching for changes.*
 

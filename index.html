@@ -1,17 +1,17 @@
 <!doctype html>
 <html>
-    
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Lrdcom-recipes by ryanschuhler</title>
     <script>
-        // (function(){ 
-        //     var redirect = sessionStorage.redirect; 
+        // (function(){
+        //     var redirect = sessionStorage.redirect;
         //     delete sessionStorage.redirect;
-        //     if (redirect && redirect != location.href) { 
+        //     if (redirect && redirect != location.href) {
         //         history.replaceState(null, null, redirect);
-        //     } 
+        //     }
         // })();
     </script>
 
@@ -27,7 +27,7 @@
 
     <div class="page-bg">
         <div class="overlay"></div>
-        
+
         <div class="flexslider">
           <ul class="slides">
             <li>
@@ -42,25 +42,37 @@
           </ul>
         </div>
     </div>
-    
+
     <div id="wrapper">
         <!-- Header -->
-         <header id="header">
+        <header id="header">
     <div class="inner">
-      
+
         <a href="index.html" class="logo">
             <span class="symbol"><img src="src/images/liferay_logo.png" alt="" /></span><span class="title">Liferay.com Documentation</span>
         </a>
-      
+
         <nav>
             <ul>
+                <li><a class="open-search" href="#">Search</a></li>
                 <li><a href="#menu">Menu</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-        
+        <!-- Search Bar -->
+        <div class="align-center block-container justify-start search-container hide">
+	<div class="search-input-container">
+		<input class="search-input" placeholder="Start typing..." type="text" />
+		<svg height="64" viewBox="0 0 32 32" width="64" xmlns="http://www.w3.org/2000/svg"><title/><path d="M19.427 21.427c-1.39.99-3.09 1.573-4.927 1.573C9.806 23 6 19.194 6 14.5S9.806 6 14.5 6 23 9.806 23 14.5c0 1.837-.583 3.537-1.573 4.927l5.585 5.585c.55.55.546 1.43 0 1.976l-.024.024c-.544.544-1.43.546-1.976 0l-5.585-5.585zM14.5 21c3.59 0 6.5-2.91 6.5-6.5S18.09 8 14.5 8 8 10.91 8 14.5s2.91 6.5 6.5 6.5z" fill="#157EFB" fill-rule="evenodd"/></svg>
+	</div>
+
+	<div class="search-results-container">
+
+	</div>
+</div>
+
         <!-- Menu -->
          <nav id="menu">
     <li class="category">
@@ -88,7 +100,7 @@
         <!-- Main -->
         <div id="main">
             <div class="inner">
-               
+
             </div>
         </div>
         <!-- Footer -->
@@ -100,7 +112,7 @@
         </ul>
     </div>
 </footer>
-        
+
     </div>
     <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="src/app.js"></script>

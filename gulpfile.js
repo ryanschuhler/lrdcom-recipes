@@ -16,17 +16,24 @@ gulp.task('sass', function() {
 // Compile and minify js
 gulp.task('scripts', function() {
     return gulp.src([
-            // plugins
-             'src/js/ext/jquery.flexslider-min.js',
+            // external plugins
+            'src/js/plugins/lunr.min.js',
+            'src/js/plugins/jquery.flexslider-min.js',
+            'src/js/plugins/skel.min.js',
 
-            // our files
-            'src/js/skel.min.js',
-            'src/js/util.js',
-            'src/js/main.js',
-            'src/js/routes.js',
-            'src/js/navigation.js',
-            'src/js/background.js',
-            'src/js/search.js',
+            // // core
+            'src/js/core/routes.js',
+            'src/js/core/search.js',
+            'src/js/core.js',
+
+            // // ui
+            'src/js/ui/phantom.js',
+            'src/js/ui/navigation.js',
+            'src/js/ui/uihelper.js',
+            'src/js/ui/background.js',
+            'src/js/ui/keyboard.js',
+
+            // // init
             'src/js/init.js'
         ])
         .pipe(concat('app.js'))
@@ -65,7 +72,7 @@ gulp.task('watch', function() {
     // Watch .html files
     gulp.watch('src/**/*.html', ['fileinclude', 'buildindex']);
     // Watch .js files
-    gulp.watch('src/js/*.js', ['scripts']);
+    gulp.watch('src/js/**/*.js', ['scripts']);
     // Watch .scss files
     gulp.watch('src/**/*.scss', ['sass']);
     // Watch .md files
@@ -73,4 +80,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'sass', 'markdown', 'fileinclude', 'watch']);
+gulp.task('default', ['scripts', 'sass', 'markdown', 'fileinclude', 'buildindex', 'watch']);
