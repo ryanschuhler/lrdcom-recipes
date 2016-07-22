@@ -2,16 +2,18 @@ var search = (function() {
 
 	var model = (function() {
 		var decodeHTML = function(html) {
-			var txt = document.createElement("textarea");
+			var txt = document.createElement('textarea');
+
 			txt.innerHTML = html;
 			return txt.value;
 		};
 
 		var strip = function(html) {
-		   var tmp = document.createElement("DIV");
-		   tmp.innerHTML = html;
+			var tmp = document.createElement('div');
 
-		   return tmp.textContent || tmp.innerText || "";
+			tmp.innerHTML = html;
+
+			return tmp.textContent || tmp.innerText || '';
 		};
 
 		var nth_occurrence = function(string, char, nth) {
@@ -20,7 +22,8 @@ var search = (function() {
 
 			if (nth == 1) {
 				return first_index;
-			} else {
+			}
+			else {
 				var string_after_first_occurrence = string.slice(length_up_to_first_index);
 				var next_occurrence = nth_occurrence(string_after_first_occurrence, char, nth - 1);
 
@@ -34,7 +37,7 @@ var search = (function() {
 
 		var getTitle = function(string) {
 			var beginning = nth_occurrence(string, '">', 1);
-			var end = string.indexOf("</h1>");
+			var end = string.indexOf('</h1>');
 
 			return string.slice(beginning + 2, end);
 		};
@@ -55,14 +58,16 @@ var search = (function() {
 			return strip(body);
 		};
 
-		var cutString = function (s, n) {
-		    var cut = s.indexOf(' ', n);
-		    if(cut == -1) return s;
-		    return s.substring(0, cut);
+		var cutString = function(s, n) {
+			var cut = s.indexOf(' ', n);
+			if (cut == -1) {
+				return s;
+			}
+			return s.substring(0, cut);
 		};
 
 		// initialize + build search index
-		var searchIndex = lunr(function () {
+		var searchIndex = lunr(function() {
 			this.ref('page');
 			this.field('title');
 			this.field('body');
@@ -71,36 +76,38 @@ var search = (function() {
 		var store = {};
 
 		var buildIndex = function(index) {
-			$.ajax({
-				url: 'src/searchIndex/searchindex.html',
-				success: function(result) {
-					// get collection of text in array format
-					resultsArray = result.split("h1 id=");
+			$.ajax(
+				{
+					url: 'src/searchIndex/searchindex.html',
+					success: function(result) {
+						// get collection of text in array format
+						resultsArray = result.split('h1 id=');
 
-					for (var x = 0; x < resultsArray.length; x++) {
-						// decode HTML
-						var decoded = decodeHTML(resultsArray[x]);
-						var currentTitle = getTitle(decoded);
-						var currentPage = getPage(decoded);
-						var currentBody = cutString(getBody(decoded), 300);
-						currentBody += "...";
+						for (var x = 0; x < resultsArray.length; x++) {
+							// decode HTML
+							var decoded = decodeHTML(resultsArray[x]);
+							var currentTitle = getTitle(decoded);
+							var currentPage = getPage(decoded);
+							var currentBody = cutString(getBody(decoded), 300);
+							currentBody += '...';
 
-						// add each article to search index
-						searchIndex.add({
-							title: currentTitle,
-							page: currentPage,
-							body: currentBody.slice(0, 5)
-						});
+							// add each article to search index
+							searchIndex.add({
+								body: currentBody.slice(0, 5),
+								page: currentPage,
+								title: currentTitle
+							});
 
-						// add it to our data store
-						store[currentPage] = {
-							title: currentTitle,
-							body: currentBody,
-							urlTitle: currentPage
-						};
+							// add it to our data store
+							store[currentPage] = {
+								body: currentBody,
+								title: currentTitle,
+								urlTitle: currentPage
+							};
+						}
 					}
 				}
-			});
+			);
 		};
 
 		var getSearchResults = function(term) {
@@ -121,28 +128,39 @@ var search = (function() {
 		var $searchContainer = $('.search-container');
 		var $searchInput = $('.search-input');
 
-		$('.open-search').on('click', function(e) {
-			e.preventDefault();
-			toggleSearch('show');
-		});
+		$('.open-search').on(
+			'click',
+			function(e) {
+				e.preventDefault();
+				toggleSearch('show');
+			}
+		);
 
-		$searchInput.on('keyup', function() {
-			var currentSearch = $(this).val();
-			var searchResults = getSearchResults(currentSearch);
-			populateResults(searchResults);
-		});
+		$searchInput.on(
+			'keyup',
+			function() {
+				var currentSearch = $(this).val();
+				var searchResults = getSearchResults(currentSearch);
+				populateResults(searchResults);
+			}
+		);
 
-		$('.search-results-container').on('click', 'article', function(e) {
-			toggleSearch('hide');
-			routes.changePage($(this).attr('class'));
-		});
+		$('.search-results-container').on(
+			'click',
+			'article',
+			function(e) {
+				toggleSearch('hide');
+				routes.changePage($(this).attr('class'));
+			}
+		);
 
 		var toggleSearch = function(mode) {
 			$searchContainer.removeClass('hide show');
 
 			if (mode === 'hide') {
 				$searchContainer.addClass('hide');
-			} else if (mode === 'show') {
+			}
+			else if (mode === 'show') {
 				$searchContainer.addClass('show');
 				$('.search-input').focus();
 			}
@@ -150,18 +168,16 @@ var search = (function() {
 
 		var populateResults = function(seachResultsArray) {
 			var $resultsContainer = $('.search-results-container');
-
-			// generate html
 			var html = '';
 
 			for (var x = 0; x < seachResultsArray.length; x++) {
 				html += '<article class="' + seachResultsArray[x].urlTitle + '"">';
-				html += 	'<h2>';
-				html += 		seachResultsArray[x].title;
-				html += 	'</h2>';
-				html += 	'<p>';
-				html += 		seachResultsArray[x].body;
-				html += 	'</p>';
+				html += '<h2>';
+				html += seachResultsArray[x].title;
+				html += '</h2>';
+				html += '<p>';
+				html += seachResultsArray[x].body;
+				html += '</p>';
 				html += '</article>';
 			}
 

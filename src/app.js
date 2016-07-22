@@ -17,7 +17,7 @@ var routes = (function() {
 	var section = $('#main .inner');
 
 	var bodyClassChange = function(page) {
-		$body.removeClass(function(index, css){
+		$body.removeClass(function(index, css) {
 			return (css.match (/(^|\s)page-\S+/g) || []).join(' ');
 		});
 
@@ -57,7 +57,8 @@ var routes = (function() {
 		else {
 			section.fadeOut(200, function() {
 				setTimeout(function() {
-					section.load('src/pages/' + page + '.html',
+					section.load(
+						'src/pages/' + page + '.html',
 						function(response, status, xhr) {
 							if (alterHistory) {
 								history.pushState(page, null, page);
@@ -104,16 +105,18 @@ var search = (function() {
 
 	var model = (function() {
 		var decodeHTML = function(html) {
-			var txt = document.createElement("textarea");
+			var txt = document.createElement('textarea');
+
 			txt.innerHTML = html;
 			return txt.value;
 		};
 
 		var strip = function(html) {
-		   var tmp = document.createElement("DIV");
-		   tmp.innerHTML = html;
+			var tmp = document.createElement('div');
 
-		   return tmp.textContent || tmp.innerText || "";
+			tmp.innerHTML = html;
+
+			return tmp.textContent || tmp.innerText || '';
 		};
 
 		var nth_occurrence = function(string, char, nth) {
@@ -122,7 +125,8 @@ var search = (function() {
 
 			if (nth == 1) {
 				return first_index;
-			} else {
+			}
+			else {
 				var string_after_first_occurrence = string.slice(length_up_to_first_index);
 				var next_occurrence = nth_occurrence(string_after_first_occurrence, char, nth - 1);
 
@@ -136,7 +140,7 @@ var search = (function() {
 
 		var getTitle = function(string) {
 			var beginning = nth_occurrence(string, '">', 1);
-			var end = string.indexOf("</h1>");
+			var end = string.indexOf('</h1>');
 
 			return string.slice(beginning + 2, end);
 		};
@@ -157,14 +161,16 @@ var search = (function() {
 			return strip(body);
 		};
 
-		var cutString = function (s, n) {
-		    var cut = s.indexOf(' ', n);
-		    if(cut == -1) return s;
-		    return s.substring(0, cut);
+		var cutString = function(s, n) {
+			var cut = s.indexOf(' ', n);
+			if (cut == -1) {
+				return s;
+			}
+			return s.substring(0, cut);
 		};
 
 		// initialize + build search index
-		var searchIndex = lunr(function () {
+		var searchIndex = lunr(function() {
 			this.ref('page');
 			this.field('title');
 			this.field('body');
@@ -173,36 +179,38 @@ var search = (function() {
 		var store = {};
 
 		var buildIndex = function(index) {
-			$.ajax({
-				url: 'src/searchIndex/searchindex.html',
-				success: function(result) {
-					// get collection of text in array format
-					resultsArray = result.split("h1 id=");
+			$.ajax(
+				{
+					url: 'src/searchIndex/searchindex.html',
+					success: function(result) {
+						// get collection of text in array format
+						resultsArray = result.split('h1 id=');
 
-					for (var x = 0; x < resultsArray.length; x++) {
-						// decode HTML
-						var decoded = decodeHTML(resultsArray[x]);
-						var currentTitle = getTitle(decoded);
-						var currentPage = getPage(decoded);
-						var currentBody = cutString(getBody(decoded), 300);
-						currentBody += "...";
+						for (var x = 0; x < resultsArray.length; x++) {
+							// decode HTML
+							var decoded = decodeHTML(resultsArray[x]);
+							var currentTitle = getTitle(decoded);
+							var currentPage = getPage(decoded);
+							var currentBody = cutString(getBody(decoded), 300);
+							currentBody += '...';
 
-						// add each article to search index
-						searchIndex.add({
-							title: currentTitle,
-							page: currentPage,
-							body: currentBody.slice(0, 5)
-						});
+							// add each article to search index
+							searchIndex.add({
+								body: currentBody.slice(0, 5),
+								page: currentPage,
+								title: currentTitle
+							});
 
-						// add it to our data store
-						store[currentPage] = {
-							title: currentTitle,
-							body: currentBody,
-							urlTitle: currentPage
-						};
+							// add it to our data store
+							store[currentPage] = {
+								body: currentBody,
+								title: currentTitle,
+								urlTitle: currentPage
+							};
+						}
 					}
 				}
-			});
+			);
 		};
 
 		var getSearchResults = function(term) {
@@ -223,28 +231,39 @@ var search = (function() {
 		var $searchContainer = $('.search-container');
 		var $searchInput = $('.search-input');
 
-		$('.open-search').on('click', function(e) {
-			e.preventDefault();
-			toggleSearch('show');
-		});
+		$('.open-search').on(
+			'click',
+			function(e) {
+				e.preventDefault();
+				toggleSearch('show');
+			}
+		);
 
-		$searchInput.on('keyup', function() {
-			var currentSearch = $(this).val();
-			var searchResults = getSearchResults(currentSearch);
-			populateResults(searchResults);
-		});
+		$searchInput.on(
+			'keyup',
+			function() {
+				var currentSearch = $(this).val();
+				var searchResults = getSearchResults(currentSearch);
+				populateResults(searchResults);
+			}
+		);
 
-		$('.search-results-container').on('click', 'article', function(e) {
-			toggleSearch('hide');
-			routes.changePage($(this).attr('class'));
-		});
+		$('.search-results-container').on(
+			'click',
+			'article',
+			function(e) {
+				toggleSearch('hide');
+				routes.changePage($(this).attr('class'));
+			}
+		);
 
 		var toggleSearch = function(mode) {
 			$searchContainer.removeClass('hide show');
 
 			if (mode === 'hide') {
 				$searchContainer.addClass('hide');
-			} else if (mode === 'show') {
+			}
+			else if (mode === 'show') {
 				$searchContainer.addClass('show');
 				$('.search-input').focus();
 			}
@@ -252,18 +271,16 @@ var search = (function() {
 
 		var populateResults = function(seachResultsArray) {
 			var $resultsContainer = $('.search-results-container');
-
-			// generate html
 			var html = '';
 
 			for (var x = 0; x < seachResultsArray.length; x++) {
 				html += '<article class="' + seachResultsArray[x].urlTitle + '"">';
-				html += 	'<h2>';
-				html += 		seachResultsArray[x].title;
-				html += 	'</h2>';
-				html += 	'<p>';
-				html += 		seachResultsArray[x].body;
-				html += 	'</p>';
+				html += '<h2>';
+				html += seachResultsArray[x].title;
+				html += '</h2>';
+				html += '<p>';
+				html += seachResultsArray[x].body;
+				html += '</p>';
 				html += '</article>';
 			}
 
@@ -281,6 +298,7 @@ var search = (function() {
 		toggleSearch: view.toggleSearch
 	};
 })();
+
 /*
 	core.js
 	Manages application-wide functionality
@@ -302,194 +320,188 @@ var core = (function() {
 
 (function($) {
 
-    skel.breakpoints({
-        xlarge: '(max-width: 1680px)',
-        large: '(max-width: 1280px)',
-        medium: '(max-width: 980px)',
-        small: '(max-width: 736px)',
-        xsmall: '(max-width: 480px)'
-    });
+	skel.breakpoints({
+		xlarge: '(max-width: 1680px)',
+		large: '(max-width: 1280px)',
+		medium: '(max-width: 980px)',
+		small: '(max-width: 736px)',
+		xsmall: '(max-width: 480px)'
+	});
 
-    $(function() {
+	$(function() {
 
-        var $window = $(window),
-            $body = $('body');
+		var $window = $(window),
+			$body = $('body');
 
-        // Disable animations/transitions until the page has loaded.
-        $body.addClass('is-loading');
+		// Disable animations/transitions until the page has loaded.
+		$body.addClass('is-loading');
 
-        $window.on('load', function() {
-            window.setTimeout(function() {
-                $body.removeClass('is-loading');
-            }, 100);
-        });
+		$window.on('load', function() {
+			window.setTimeout(function() {
+				$body.removeClass('is-loading');
+			}, 100);
+		});
 
-        // Touch?
-        if (skel.vars.touch)
-            $body.addClass('is-touch');
+		// Touch?
+		if (skel.vars.touch)
+			$body.addClass('is-touch');
 
-        // Forms.
-        var $form = $('form');
+		// Forms.
+		var $form = $('form');
 
-        // Auto-resizing textareas.
-        $form.find('textarea').each(function() {
+		// Auto-resizing textareas.
+		$form.find('textarea').each(function() {
 
-            var $this = $(this),
-                $wrapper = $('<div class="textarea-wrapper"></div>'),
-                $submits = $this.find('input[type="submit"]');
+			var $this = $(this),
+				$wrapper = $('<div class="textarea-wrapper"></div>'),
+				$submits = $this.find('input[type="submit"]');
 
-            $this
-                .wrap($wrapper)
-                .attr('rows', 1)
-                .css('overflow', 'hidden')
-                .css('resize', 'none')
-                .on('keydown', function(event) {
+			$this
+				.wrap($wrapper)
+				.attr('rows', 1)
+				.css('overflow', 'hidden')
+				.css('resize', 'none')
+				.on('keydown', function(event) {
 
-                    if (event.keyCode == 13 && event.ctrlKey) {
+					if (event.keyCode == 13 && event.ctrlKey) {
 
-                        event.preventDefault();
-                        event.stopPropagation();
+						event.preventDefault();
+						event.stopPropagation();
 
-                        $(this).blur();
+						$(this).blur();
 
-                    }
+					}
 
-                })
-                .on('blur focus', function() {
-                    $this.val($.trim($this.val()));
-                })
-                .on('input blur focus --init', function() {
+				})
+				.on('blur focus', function() {
+					$this.val($.trim($this.val()));
+				})
+				.on('input blur focus --init', function() {
 
-                    $wrapper
-                        .css('height', $this.height());
+					$wrapper
+						.css('height', $this.height());
 
-                    $this
-                        .css('height', 'auto')
-                        .css('height', $this.prop('scrollHeight') + 'px');
+					$this
+						.css('height', 'auto')
+						.css('height', $this.prop('scrollHeight') + 'px');
 
-                })
-                .on('keyup', function(event) {
+				})
+				.on('keyup', function(event) {
 
-                    if (event.keyCode == 9)
-                        $this
-                        .select();
+					if (event.keyCode == 9)
+						$this
+						.select();
 
-                })
-                .triggerHandler('--init');
+				})
+				.triggerHandler('--init');
 
-            // Fix.
-            if (skel.vars.browser == 'ie' || skel.vars.mobile)
-                $this
-                .css('max-height', '10em')
-                .css('overflow-y', 'auto');
+			// Fix.
+			if (skel.vars.browser == 'ie' || skel.vars.mobile)
+				$this
+				.css('max-height', '10em')
+				.css('overflow-y', 'auto');
 
-        });
+		});
 
-        // Fix: Placeholder polyfill.
-        $form.placeholder();
+		// Fix: Placeholder polyfill.
+		$form.placeholder();
 
-        // Prioritize "important" elements on medium.
-        skel.on('+medium -medium', function() {
-            $.prioritize(
-                '.important\\28 medium\\29',
-                skel.breakpoint('medium').active
-            );
-        });
+		// Prioritize "important" elements on medium.
+		skel.on('+medium -medium', function() {
+			$.prioritize(
+				'.important\\28 medium\\29',
+				skel.breakpoint('medium').active
+			);
+		});
 
-        // Menu.
-        var $menu = $('#menu');
+		// Menu.
+		var $menu = $('#menu');
 
-        $menu.wrapInner('<div class="inner"></div>');
+		$menu.wrapInner('<div class="inner"></div>');
 
-        $menu._locked = false;
+		$menu._locked = false;
 
-        $menu._lock = function() {
+		$menu._lock = function() {
 
-            if ($menu._locked)
-                return false;
+			if ($menu._locked)
+				return false;
 
-            $menu._locked = true;
+			$menu._locked = true;
 
-            window.setTimeout(function() {
-                $menu._locked = false;
-            }, 350);
+			window.setTimeout(function() {
+				$menu._locked = false;
+			}, 350);
 
-            return true;
+			return true;
 
-        };
+		};
 
-        $menu._show = function() {
+		$menu._show = function() {
 
-            if ($menu._lock())
-                $body.addClass('is-menu-visible');
+			if ($menu._lock())
+				$body.addClass('is-menu-visible');
 
-        };
+		};
 
-        $menu._hide = function() {
+		$menu._hide = function() {
 
-            if ($menu._lock())
-                $body.removeClass('is-menu-visible');
+			if ($menu._lock())
+				$body.removeClass('is-menu-visible');
 
-        };
+		};
 
-        $menu._toggle = function() {
+		$menu._toggle = function() {
 
-            if ($menu._lock())
-                $body.toggleClass('is-menu-visible');
+			if ($menu._lock())
+				$body.toggleClass('is-menu-visible');
 
-        };
+		};
 
-        $menu
-            .appendTo($body)
-            .on('click', function(event) {
-                event.stopPropagation();
-            })
-            .on('click', 'a', function(event) {
+		$menu
+			.appendTo($body)
+			.on('click', function(event) {
+				event.stopPropagation();
+			})
+			.on('click', 'a', function(event) {
 
-                var href = $(this).attr('href');
+				var href = $(this).attr('href');
 
-                event.preventDefault();
-                event.stopPropagation();
+				event.preventDefault();
+				event.stopPropagation();
 
-                // Hide.
-                $menu._hide();
+				// Hide.
+				$menu._hide();
 
-                // Redirect.
-                if (href == '#menu')
-                    return;
+				// Redirect.
+				if (href == '#menu')
+					return;
 
-                window.setTimeout(function() {
-                    window.location.href = href;
-                }, 350);
+				window.setTimeout(function() {
+					window.location.href = href;
+				}, 350);
 
-            })
-            .append('<a class="close" href="#menu">Close</a>');
+			})
+			.append('<a class="close" href="#menu">Close</a>');
 
-        $body
-            .on('click', 'a[href="#menu"]', function(event) {
+		$body
+			.on('click', 'a[href="#menu"]', function(event) {
+				event.stopPropagation();
+				event.preventDefault();
 
-                event.stopPropagation();
-                event.preventDefault();
+				$menu._toggle();
 
-                // Toggle.
-                $menu._toggle();
+			})
+			.on('click', function(event) {
+				$menu._hide();
+			})
+			.on('keydown', function(event) {
+				// Hide on escape.
+				if (event.keyCode == 27)
+					$menu._hide();
 
-            })
-            .on('click', function(event) {
+			});
 
-                // Hide.
-                $menu._hide();
-
-            })
-            .on('keydown', function(event) {
-
-                // Hide on escape.
-                if (event.keyCode == 27)
-                    $menu._hide();
-
-            });
-
-    });
+	});
 
 })(jQuery);
 
@@ -504,16 +516,16 @@ var navigation = (function() {
 
 		e.stopPropagation();
 		e.preventDefault();
-		$navListAnchor.removeClass("active");
+		$navListAnchor.removeClass('active');
 		$(this).addClass('active');
 
-		$("a.close").trigger("click");
+		$('a.close').trigger('click');
 
 		// change page
 		routes.changePage($section_name);
 	});
 
-	$('a.logo').on("click", function(e) {
+	$('a.logo').on('click', function(e) {
 		e.preventDefault();
 		routes.changePage('home');
 	});
@@ -527,25 +539,25 @@ var navigation = (function() {
 	 */
 	$.fn.navList = function() {
 
-		var	$this = $(this);
-			$a = $this.find('a'),
+		var $this = $(this);
+		$a = $this.find('a'),
 			b = [];
 
 		$a.each(function() {
 
-			var	$this = $(this),
+			var $this = $(this),
 				indent = Math.max(0, $this.parents('li').length - 1),
 				href = $this.attr('href'),
 				target = $this.attr('target');
 
 			b.push(
 				'<a ' +
-					'class="link depth-' + indent + '"' +
-					( (typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
-					( (typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
+				'class="link depth-' + indent + '"' +
+				((typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
+				((typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
 				'>' +
-					'<span class="indent-' + indent + '"></span>' +
-					$this.text() +
+				'<span class="indent-' + indent + '"></span>' +
+				$this.text() +
 				'</a>'
 			);
 
@@ -563,255 +575,253 @@ var navigation = (function() {
 	$.fn.panel = function(userConfig) {
 
 		// No elements?
-			if (this.length == 0)
-				return $this;
+		if (this.length == 0)
+			return $this;
 
 		// Multiple elements?
-			if (this.length > 1) {
+		if (this.length > 1) {
 
-				for (var i=0; i < this.length; i++)
-					$(this[i]).panel(userConfig);
+			for (var i = 0; i < this.length; i++)
+				$(this[i]).panel(userConfig);
 
-				return $this;
+			return $this;
 
-			}
+		}
 
 		// Vars.
-			var	$this = $(this),
-				$body = $('body'),
-				$window = $(window),
-				id = $this.attr('id'),
-				config;
+		var $this = $(this),
+			$body = $('body'),
+			$window = $(window),
+			id = $this.attr('id'),
+			config;
 
 		// Config.
-			config = $.extend({
+		config = $.extend({
 
-				// Delay.
-					delay: 0,
+			// Delay.
+			delay: 0,
 
-				// Hide panel on link click.
-					hideOnClick: false,
+			// Hide panel on link click.
+			hideOnClick: false,
 
-				// Hide panel on escape keypress.
-					hideOnEscape: false,
+			// Hide panel on escape keypress.
+			hideOnEscape: false,
 
-				// Hide panel on swipe.
-					hideOnSwipe: false,
+			// Hide panel on swipe.
+			hideOnSwipe: false,
 
-				// Reset scroll position on hide.
-					resetScroll: false,
+			// Reset scroll position on hide.
+			resetScroll: false,
 
-				// Reset forms on hide.
-					resetForms: false,
+			// Reset forms on hide.
+			resetForms: false,
 
-				// Side of viewport the panel will appear.
-					side: null,
+			// Side of viewport the panel will appear.
+			side: null,
 
-				// Target element for "class".
-					target: $this,
+			// Target element for "class".
+			target: $this,
 
-				// Class to toggle.
-					visibleClass: 'visible'
+			// Class to toggle.
+			visibleClass: 'visible'
 
-			}, userConfig);
+		}, userConfig);
 
-			// Expand "target" if it's not a jQuery object already.
-				if (typeof config.target != 'jQuery')
-					config.target = $(config.target);
+		// Expand "target" if it's not a jQuery object already.
+		if (typeof config.target != 'jQuery')
+			config.target = $(config.target);
 
 		// Panel.
 
-			// Methods.
-				$this._hide = function(event) {
+		// Methods.
+		$this._hide = function(event) {
 
-					// Already hidden? Bail.
-						if (!config.target.hasClass(config.visibleClass))
-							return;
+			// Already hidden? Bail.
+			if (!config.target.hasClass(config.visibleClass))
+				return;
 
-					// If an event was provided, cancel it.
-						if (event) {
+			// If an event was provided, cancel it.
+			if (event) {
 
-							event.preventDefault();
-							event.stopPropagation();
+				event.preventDefault();
+				event.stopPropagation();
 
-						}
+			}
 
-					// Hide.
-						config.target.removeClass(config.visibleClass);
+			// Hide.
+			config.target.removeClass(config.visibleClass);
 
-					// Post-hide stuff.
-						window.setTimeout(function() {
+			// Post-hide stuff.
+			window.setTimeout(function() {
 
-							// Reset scroll position.
-								if (config.resetScroll)
-									$this.scrollTop(0);
+				// Reset scroll position.
+				if (config.resetScroll)
+					$this.scrollTop(0);
 
-							// Reset forms.
-								if (config.resetForms)
-									$this.find('form').each(function() {
-										this.reset();
-									});
+				// Reset forms.
+				if (config.resetForms)
+					$this.find('form').each(function() {
+						this.reset();
+					});
 
-						}, config.delay);
+			}, config.delay);
 
-				};
+		};
 
-			// Vendor fixes.
-				$this
-					.css('-ms-overflow-style', '-ms-autohiding-scrollbar')
-					.css('-webkit-overflow-scrolling', 'touch');
+		// Vendor fixes.
+		$this
+			.css('-ms-overflow-style', '-ms-autohiding-scrollbar')
+			.css('-webkit-overflow-scrolling', 'touch');
 
-			// Hide on click.
-				if (config.hideOnClick) {
+		// Hide on click.
+		if (config.hideOnClick) {
 
-					$this.find('a')
-						.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
+			$this.find('a')
+				.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
 
-					$this
-						.on('click', 'a', function(event) {
+			$this
+				.on('click', 'a', function(event) {
 
-							var $a = $(this),
-								href = $a.attr('href'),
-								target = $a.attr('target');
+					var $a = $(this),
+						href = $a.attr('href'),
+						target = $a.attr('target');
 
-							if (!href || href == '#' || href == '' || href == '#' + id)
-								return;
+					if (!href || href == '#' || href == '' || href == '#' + id)
+						return;
 
-							// Cancel original event.
-								event.preventDefault();
-								event.stopPropagation();
+					// Cancel original event.
+					event.preventDefault();
+					event.stopPropagation();
 
-							// Hide panel.
-								$this._hide();
+					// Hide panel.
+					$this._hide();
 
-							// Redirect to href.
-								window.setTimeout(function() {
+					// Redirect to href.
+					window.setTimeout(function() {
 
-									if (target == '_blank')
-										window.open(href);
-									else
-										window.location.href = href;
+						if (target == '_blank')
+							window.open(href);
+						else
+							window.location.href = href;
 
-								}, config.delay + 10);
+					}, config.delay + 10);
 
-						});
+				});
+
+		}
+
+		// Event: Touch stuff.
+		$this.on('touchstart', function(event) {
+
+			$this.touchPosX = event.originalEvent.touches[0].pageX;
+			$this.touchPosY = event.originalEvent.touches[0].pageY;
+
+		})
+
+		$this.on('touchmove', function(event) {
+
+			if ($this.touchPosX === null || $this.touchPosY === null)
+				return;
+
+			var diffX = $this.touchPosX - event.originalEvent.touches[0].pageX,
+				diffY = $this.touchPosY - event.originalEvent.touches[0].pageY,
+				th = $this.outerHeight(),
+				ts = ($this.get(0).scrollHeight - $this.scrollTop());
+
+			// Hide on swipe?
+			if (config.hideOnSwipe) {
+
+				var result = false,
+					boundary = 20,
+					delta = 50;
+
+				switch (config.side) {
+
+					case 'left':
+						result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX > delta);
+						break;
+
+					case 'right':
+						result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX < (-1 * delta));
+						break;
+
+					case 'top':
+						result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY > delta);
+						break;
+
+					case 'bottom':
+						result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY < (-1 * delta));
+						break;
+
+					default:
+						break;
 
 				}
 
-			// Event: Touch stuff.
-				$this.on('touchstart', function(event) {
+				if (result) {
 
-					$this.touchPosX = event.originalEvent.touches[0].pageX;
-					$this.touchPosY = event.originalEvent.touches[0].pageY;
+					$this.touchPosX = null;
+					$this.touchPosY = null;
+					$this._hide();
 
-				})
+					return false;
 
-				$this.on('touchmove', function(event) {
+				}
 
-					if ($this.touchPosX === null
-					||	$this.touchPosY === null)
-						return;
+			}
 
-					var	diffX = $this.touchPosX - event.originalEvent.touches[0].pageX,
-						diffY = $this.touchPosY - event.originalEvent.touches[0].pageY,
-						th = $this.outerHeight(),
-						ts = ($this.get(0).scrollHeight - $this.scrollTop());
+			// Prevent vertical scrolling past the top or bottom.
+			if (($this.scrollTop() < 0 && diffY < 0) || (ts > (th - 2) && ts < (th + 2) && diffY > 0)) {
 
-					// Hide on swipe?
-						if (config.hideOnSwipe) {
+				event.preventDefault();
+				event.stopPropagation();
 
-							var result = false,
-								boundary = 20,
-								delta = 50;
+			}
 
-							switch (config.side) {
+		});
 
-								case 'left':
-									result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX > delta);
-									break;
+		// Event: Prevent certain events inside the panel from bubbling.
+		$this.on('click touchend touchstart touchmove', function(event) {
+			event.stopPropagation();
+		});
 
-								case 'right':
-									result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX < (-1 * delta));
-									break;
+		// Event: Hide panel if a child anchor tag pointing to its ID is clicked.
+		$this.on('click', 'a[href="#' + id + '"]', function(event) {
 
-								case 'top':
-									result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY > delta);
-									break;
+			event.preventDefault();
+			event.stopPropagation();
 
-								case 'bottom':
-									result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY < (-1 * delta));
-									break;
+			config.target.removeClass(config.visibleClass);
 
-								default:
-									break;
-
-							}
-
-							if (result) {
-
-								$this.touchPosX = null;
-								$this.touchPosY = null;
-								$this._hide();
-
-								return false;
-
-							}
-
-						}
-
-					// Prevent vertical scrolling past the top or bottom.
-						if (($this.scrollTop() < 0 && diffY < 0)
-						|| (ts > (th - 2) && ts < (th + 2) && diffY > 0)) {
-
-							event.preventDefault();
-							event.stopPropagation();
-
-						}
-
-				});
-
-			// Event: Prevent certain events inside the panel from bubbling.
-				$this.on('click touchend touchstart touchmove', function(event) {
-					event.stopPropagation();
-				});
-
-			// Event: Hide panel if a child anchor tag pointing to its ID is clicked.
-				$this.on('click', 'a[href="#' + id + '"]', function(event) {
-
-					event.preventDefault();
-					event.stopPropagation();
-
-					config.target.removeClass(config.visibleClass);
-
-				});
+		});
 
 		// Body.
 
-			// Event: Hide panel on body click/tap.
-				$body.on('click touchend', function(event) {
-					$this._hide(event);
-				});
+		// Event: Hide panel on body click/tap.
+		$body.on('click touchend', function(event) {
+			$this._hide(event);
+		});
 
-			// Event: Toggle.
-				$body.on('click', 'a[href="#' + id + '"]', function(event) {
+		// Event: Toggle.
+		$body.on('click', 'a[href="#' + id + '"]', function(event) {
 
-					event.preventDefault();
-					event.stopPropagation();
+			event.preventDefault();
+			event.stopPropagation();
 
-					config.target.toggleClass(config.visibleClass);
+			config.target.toggleClass(config.visibleClass);
 
-				});
+		});
 
 		// Window.
 
-			// Event: Hide on ESC.
-				if (config.hideOnEscape)
-					$window.on('keydown', function(event) {
+		// Event: Hide on ESC.
+		if (config.hideOnEscape)
+			$window.on('keydown', function(event) {
 
-						if (event.keyCode == 27)
-							$this._hide(event);
+				if (event.keyCode == 27)
+					$this._hide(event);
 
-					});
+			});
 
 		return $this;
 
@@ -824,216 +834,214 @@ var navigation = (function() {
 	$.fn.placeholder = function() {
 
 		// Browser natively supports placeholders? Bail.
-			if (typeof (document.createElement('input')).placeholder != 'undefined')
-				return $(this);
+		if (typeof(document.createElement('input')).placeholder != 'undefined')
+			return $(this);
 
 		// No elements?
-			if (this.length == 0)
-				return $this;
+		if (this.length == 0)
+			return $this;
 
 		// Multiple elements?
-			if (this.length > 1) {
+		if (this.length > 1) {
 
-				for (var i=0; i < this.length; i++)
-					$(this[i]).placeholder();
+			for (var i = 0; i < this.length; i++)
+				$(this[i]).placeholder();
 
-				return $this;
+			return $this;
 
-			}
+		}
 
 		// Vars.
-			var $this = $(this);
+		var $this = $(this);
 
 		// Text, TextArea.
-			$this.find('input[type=text],textarea')
-				.each(function() {
+		$this.find('input[type=text],textarea')
+			.each(function() {
 
-					var i = $(this);
+				var i = $(this);
 
-					if (i.val() == ''
-					||  i.val() == i.attr('placeholder'))
-						i
-							.addClass('polyfill-placeholder')
-							.val(i.attr('placeholder'));
+				if (i.val() == '' || i.val() == i.attr('placeholder'))
+					i
+					.addClass('polyfill-placeholder')
+					.val(i.attr('placeholder'));
 
-				})
-				.on('blur', function() {
+			})
+			.on('blur', function() {
 
-					var i = $(this);
+				var i = $(this);
 
-					if (i.attr('name').match(/-polyfill-field$/))
-						return;
+				if (i.attr('name').match(/-polyfill-field$/))
+					return;
 
-					if (i.val() == '')
-						i
-							.addClass('polyfill-placeholder')
-							.val(i.attr('placeholder'));
+				if (i.val() == '')
+					i
+					.addClass('polyfill-placeholder')
+					.val(i.attr('placeholder'));
 
-				})
-				.on('focus', function() {
+			})
+			.on('focus', function() {
 
-					var i = $(this);
+				var i = $(this);
 
-					if (i.attr('name').match(/-polyfill-field$/))
-						return;
+				if (i.attr('name').match(/-polyfill-field$/))
+					return;
 
-					if (i.val() == i.attr('placeholder'))
-						i
-							.removeClass('polyfill-placeholder')
-							.val('');
+				if (i.val() == i.attr('placeholder'))
+					i
+					.removeClass('polyfill-placeholder')
+					.val('');
 
-				});
+			});
 
 		// Password.
-			$this.find('input[type=password]')
-				.each(function() {
+		$this.find('input[type=password]')
+			.each(function() {
 
-					var i = $(this);
-					var x = $(
-								$('<div>')
-									.append(i.clone())
-									.remove()
-									.html()
-									.replace(/type="password"/i, 'type="text"')
-									.replace(/type=password/i, 'type=text')
-					);
+				var i = $(this);
+				var x = $(
+					$('<div>')
+					.append(i.clone())
+					.remove()
+					.html()
+					.replace(/type="password"/i, 'type="text"')
+					.replace(/type=password/i, 'type=text')
+				);
 
-					if (i.attr('id') != '')
-						x.attr('id', i.attr('id') + '-polyfill-field');
+				if (i.attr('id') != '')
+					x.attr('id', i.attr('id') + '-polyfill-field');
 
-					if (i.attr('name') != '')
-						x.attr('name', i.attr('name') + '-polyfill-field');
+				if (i.attr('name') != '')
+					x.attr('name', i.attr('name') + '-polyfill-field');
 
-					x.addClass('polyfill-placeholder')
-						.val(x.attr('placeholder')).insertAfter(i);
+				x.addClass('polyfill-placeholder')
+					.val(x.attr('placeholder')).insertAfter(i);
 
-					if (i.val() == '')
-						i.hide();
-					else
+				if (i.val() == '')
+					i.hide();
+				else
+					x.hide();
+
+				i
+					.on('blur', function(event) {
+
+						event.preventDefault();
+
+						var x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
+
+						if (i.val() == '') {
+
+							i.hide();
+							x.show();
+
+						}
+
+					});
+
+				x
+					.on('focus', function(event) {
+
+						event.preventDefault();
+
+						var i = x.parent().find('input[name=' + x.attr('name').replace('-polyfill-field', '') + ']');
+
 						x.hide();
 
-					i
-						.on('blur', function(event) {
+						i
+							.show()
+							.focus();
 
-							event.preventDefault();
+					})
+					.on('keypress', function(event) {
 
-							var x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
+						event.preventDefault();
+						x.val('');
 
-							if (i.val() == '') {
+					});
 
-								i.hide();
-								x.show();
-
-							}
-
-						});
-
-					x
-						.on('focus', function(event) {
-
-							event.preventDefault();
-
-							var i = x.parent().find('input[name=' + x.attr('name').replace('-polyfill-field', '') + ']');
-
-							x.hide();
-
-							i
-								.show()
-								.focus();
-
-						})
-						.on('keypress', function(event) {
-
-							event.preventDefault();
-							x.val('');
-
-						});
-
-				});
+			});
 
 		// Events.
-			$this
-				.on('submit', function() {
+		$this
+			.on('submit', function() {
 
-					$this.find('input[type=text],input[type=password],textarea')
-						.each(function(event) {
+				$this.find('input[type=text],input[type=password],textarea')
+					.each(function(event) {
 
-							var i = $(this);
+						var i = $(this);
 
-							if (i.attr('name').match(/-polyfill-field$/))
-								i.attr('name', '');
+						if (i.attr('name').match(/-polyfill-field$/))
+							i.attr('name', '');
 
-							if (i.val() == i.attr('placeholder')) {
-
-								i.removeClass('polyfill-placeholder');
-								i.val('');
-
-							}
-
-						});
-
-				})
-				.on('reset', function(event) {
-
-					event.preventDefault();
-
-					$this.find('select')
-						.val($('option:first').val());
-
-					$this.find('input,textarea')
-						.each(function() {
-
-							var i = $(this),
-								x;
+						if (i.val() == i.attr('placeholder')) {
 
 							i.removeClass('polyfill-placeholder');
+							i.val('');
 
-							switch (this.type) {
+						}
 
-								case 'submit':
-								case 'reset':
-									break;
+					});
 
-								case 'password':
-									i.val(i.attr('defaultValue'));
+			})
+			.on('reset', function(event) {
 
-									x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
+				event.preventDefault();
 
-									if (i.val() == '') {
-										i.hide();
-										x.show();
-									}
-									else {
-										i.show();
-										x.hide();
-									}
+				$this.find('select')
+					.val($('option:first').val());
 
-									break;
+				$this.find('input,textarea')
+					.each(function() {
 
-								case 'checkbox':
-								case 'radio':
-									i.attr('checked', i.attr('defaultValue'));
-									break;
+						var i = $(this),
+							x;
 
-								case 'text':
-								case 'textarea':
-									i.val(i.attr('defaultValue'));
+						i.removeClass('polyfill-placeholder');
 
-									if (i.val() == '') {
-										i.addClass('polyfill-placeholder');
-										i.val(i.attr('placeholder'));
-									}
+						switch (this.type) {
 
-									break;
+							case 'submit':
+							case 'reset':
+								break;
 
-								default:
-									i.val(i.attr('defaultValue'));
-									break;
+							case 'password':
+								i.val(i.attr('defaultValue'));
 
-							}
-						});
+								x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
 
-				});
+								if (i.val() == '') {
+									i.hide();
+									x.show();
+								} else {
+									i.show();
+									x.hide();
+								}
+
+								break;
+
+							case 'checkbox':
+							case 'radio':
+								i.attr('checked', i.attr('defaultValue'));
+								break;
+
+							case 'text':
+							case 'textarea':
+								i.val(i.attr('defaultValue'));
+
+								if (i.val() == '') {
+									i.addClass('polyfill-placeholder');
+									i.val(i.attr('placeholder'));
+								}
+
+								break;
+
+							default:
+								i.val(i.attr('defaultValue'));
+								break;
+
+						}
+					});
+
+			});
 
 		return $this;
 
@@ -1049,113 +1057,75 @@ var navigation = (function() {
 		var key = '__prioritize';
 
 		// Expand $elements if it's not already a jQuery object.
-			if (typeof $elements != 'jQuery')
-				$elements = $($elements);
+		if (typeof $elements != 'jQuery')
+			$elements = $($elements);
 
 		// Step through elements.
-			$elements.each(function() {
+		$elements.each(function() {
 
-				var	$e = $(this), $p,
-					$parent = $e.parent();
+			var $e = $(this),
+				$p,
+				$parent = $e.parent();
 
-				// No parent? Bail.
-					if ($parent.length == 0)
-						return;
+			// No parent? Bail.
+			if ($parent.length == 0)
+				return;
 
-				// Not moved? Move it.
-					if (!$e.data(key)) {
+			// Not moved? Move it.
+			if (!$e.data(key)) {
 
-						// Condition is false? Bail.
-							if (!condition)
-								return;
+				// Condition is false? Bail.
+				if (!condition)
+					return;
 
-						// Get placeholder (which will serve as our point of reference for when this element needs to move back).
-							$p = $e.prev();
+				// Get placeholder (which will serve as our point of reference for when this element needs to move back).
+				$p = $e.prev();
 
-							// Couldn't find anything? Means this element's already at the top, so bail.
-								if ($p.length == 0)
-									return;
+				// Couldn't find anything? Means this element's already at the top, so bail.
+				if ($p.length == 0)
+					return;
 
-						// Move element to top of parent.
-							$e.prependTo($parent);
+				// Move element to top of parent.
+				$e.prependTo($parent);
 
-						// Mark element as moved.
-							$e.data(key, $p);
+				// Mark element as moved.
+				$e.data(key, $p);
 
-					}
+			}
 
-				// Moved already?
-					else {
+			// Moved already?
+			else {
 
-						// Condition is true? Bail.
-							if (condition)
-								return;
+				// Condition is true? Bail.
+				if (condition)
+					return;
 
-						$p = $e.data(key);
+				$p = $e.data(key);
 
-						// Move element back to its original location (using our placeholder).
-							$e.insertAfter($p);
+				// Move element back to its original location (using our placeholder).
+				$e.insertAfter($p);
 
-						// Unmark element as moved.
-							$e.removeData(key);
+				// Unmark element as moved.
+				$e.removeData(key);
 
-					}
+			}
 
-			});
+		});
 
 	};
 
 })(jQuery);
+
 var background = (function() {
-	var findNumOfImages = function() {
-		return new Promise(function(resolve, reject) {
-			var count = 0;
-
-			$.ajax({
-				url: 'src/images/',
-				success: function(data) {
-					$(data).find("li > a").each(function() {
-						var pathname = $(this).context.pathname;
-
-						if (pathname.indexOf("_bg") > -1) {
-							count ++;
-						}
-					})
-					resolve(count);
-				}
-			});
-		}); 		
-	}
-	
-	var getRandomInt = function(min, max) {
-	    return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
-
-	var changeBackground = function(className, imagePreface) {
-		var $sectionToChange = $('.' + className);
-		findNumOfImages().then(function(data) {
-
-			var backgroundNo = getRandomInt(1, data);
-			var background = imagePreface + '-' + backgroundNo;
-			
-			$sectionToChange.css({
-				'background': "linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(src/images/" + background + '.jpg)',
-				'background-size' : 'cover'
-			})
-			
-		})
-	}
-
-	 $('.flexslider').flexslider({
-	 	controlNav: false,
-	 	directionNav: false,
-	 	randomize: true
-	 });
-
-
-
-	// changeBackground('page-bg', 'home_bg');
+	$('.flexslider').flexslider(
+		{
+			controlNav: false,
+			directionNav: false,
+			randomize: true
+		}
+	);
 })();
+
 /*
 	keyboard.js
 	Manages keyboard shortcuts

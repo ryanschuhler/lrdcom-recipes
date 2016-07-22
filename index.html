@@ -3,21 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta content="chrome=1" http-equiv="X-UA-Compatible">
     <title>Lrdcom-recipes by ryanschuhler</title>
-    <script>
-        // (function(){
-        //     var redirect = sessionStorage.redirect;
-        //     delete sessionStorage.redirect;
-        //     if (redirect && redirect != location.href) {
-        //         history.replaceState(null, null, redirect);
-        //     }
-        // })();
-    </script>
 
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,400italic,700,700italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="src/app.css">
-    <meta name="viewport" content="width=device-width">
+    <link href="src/app.css" rel="stylesheet">
+    <meta content="width=device-width" name="viewport">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -48,8 +40,11 @@
         <header id="header">
     <div class="inner">
 
-        <a href="index.html" class="logo">
-            <span class="symbol"><img src="src/images/liferay_logo.png" alt="" /></span><span class="title">Liferay.com Documentation</span>
+        <a class="logo" href="index.html">
+            <span class="symbol">
+                <img alt="Liferay Logo" src="src/images/liferay_logo.png" />
+            </span>
+            <span class="title">Liferay.com Documentation</span>
         </a>
 
         <nav>
@@ -62,15 +57,13 @@
 </header>
 
         <!-- Search Bar -->
-        <div class="align-center block-container justify-start search-container hide">
+        <div class="align-center block-container hide justify-start search-container">
 	<div class="search-input-container">
 		<input class="search-input" placeholder="Start typing..." type="text" />
 		<svg height="64" viewBox="0 0 32 32" width="64" xmlns="http://www.w3.org/2000/svg"><title/><path d="M19.427 21.427c-1.39.99-3.09 1.573-4.927 1.573C9.806 23 6 19.194 6 14.5S9.806 6 14.5 6 23 9.806 23 14.5c0 1.837-.583 3.537-1.573 4.927l5.585 5.585c.55.55.546 1.43 0 1.976l-.024.024c-.544.544-1.43.546-1.976 0l-5.585-5.585zM14.5 21c3.59 0 6.5-2.91 6.5-6.5S18.09 8 14.5 8 8 10.91 8 14.5s2.91 6.5 6.5 6.5z" fill="#157EFB" fill-rule="evenodd"/></svg>
 	</div>
 
-	<div class="search-results-container">
-
-	</div>
+	<div class="search-results-container"></div>
 </div>
 
         <!-- Menu -->
@@ -79,20 +72,14 @@
         General
     </li>
     <ul>
-        <li><a href="#" class="tickets">Creating Tickets</a></li>
+        <li><a class="tickets" href="#">Creating Tickets</a></li>
     </ul>
     <li class="category">
         Updating Content
     </li>
     <ul>
-        <li><a href="" class="localization">Localization</a></li>
-        <li><a href="" class="landing-page-creation">Landing Page Creation</a></li>
-<!--         <li><a href="" class="resources">Resources / Downloads</a></li>
-        <li><a href="" class="partners">Partners</a></li>
-        <li><a href="" class="training">Training Classes</a></li>
-        <li><a href="" class="events">Events</a></li>
-        <li><a href="" class="press-release">Press Releases</a></li>
-        <li><a href="" class="case-study">Case Studies</a></li> -->
+        <li><a class="localization" href="#">Localization</a></li>
+        <li><a class="landing-page-creation" href="#">Landing Page Creation</a></li>
     </ul>
 </nav>
 
@@ -114,7 +101,7 @@
 </footer>
 
     </div>
-    <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="src/app.js"></script>
 </body>
 

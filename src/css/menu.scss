@@ -1,15 +1,15 @@
 #menu {
-	background: #575c78;
-	
+	background: #575C78;
+
 	.inner {
 		li {
-			list-style-type: none;
 			font-weight: 200;
+			list-style-type: none;
 
 			&.category {
-				line-height: 1.5em;	
 				font-size: 1.2em;
 				font-weight: 500;
+				line-height: 1.5em;
 			}
 
 			a {

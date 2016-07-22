@@ -3,7 +3,7 @@ var routes = (function() {
 	var section = $('#main .inner');
 
 	var bodyClassChange = function(page) {
-		$body.removeClass(function(index, css){
+		$body.removeClass(function(index, css) {
 			return (css.match (/(^|\s)page-\S+/g) || []).join(' ');
 		});
 
@@ -43,7 +43,8 @@ var routes = (function() {
 		else {
 			section.fadeOut(200, function() {
 				setTimeout(function() {
-					section.load('src/pages/' + page + '.html',
+					section.load(
+						'src/pages/' + page + '.html',
 						function(response, status, xhr) {
 							if (alterHistory) {
 								history.pushState(page, null, page);

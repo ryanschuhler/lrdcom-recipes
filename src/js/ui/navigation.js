@@ -9,16 +9,16 @@ var navigation = (function() {
 
 		e.stopPropagation();
 		e.preventDefault();
-		$navListAnchor.removeClass("active");
+		$navListAnchor.removeClass('active');
 		$(this).addClass('active');
 
-		$("a.close").trigger("click");
+		$('a.close').trigger('click');
 
 		// change page
 		routes.changePage($section_name);
 	});
 
-	$('a.logo').on("click", function(e) {
+	$('a.logo').on('click', function(e) {
 		e.preventDefault();
 		routes.changePage('home');
 	});
