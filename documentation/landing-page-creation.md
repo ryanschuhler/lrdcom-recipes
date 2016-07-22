@@ -22,42 +22,52 @@ Landing pages are actually web content articles with a series of embedded web co
 
 ## Editing Rules
 ### Article
-- element: blank
-- class: `max-med`
+- class: `max-med` `large-padding-vertical`
 
 ### Section
-- element: blank
-- class: `large-padding-vertical`
+- text field: blank
+- class: blank
 
 ### Block
-- element: blank
+- text field: blank
 - class: `standard-padding-vertical`
 
 ### Element
 ##### Headers
-- element: blank
-- tag: `h2`
+- text field: blank
+- tag: `h2`, `h3`, or `h4`
+- content: header text
 - class: blank
 
 ##### Paragraphs
-- element: blank
+- text field: blank
 - tag: `p`
+- content: paragraph text (see additional editing rules for special use cases)
 - class: `small-padding-vertical`
 
 ##### Source text
-- element: blank
+- text field: blank
 - tag: `div` or blank
+- content: source text
 - class: `source-text`
 
 ##### Pull Quotes
-- element: blank
+- text field: blank
 - tag: `div` or blank
+- content: pull quote text
 - class: `pull-quote-left` or `pull-quote-right` and `dxp-primary-color`
 
 ##### Images
-- element: `alt` and `src` i.e. `alt=“brief description of image” src=“/documents/folder-number/folder-number/name-of-image.jpg”`
+- text field: `alt` and `src` i.e. `alt=“brief description of image” src=“/documents/folder-number/folder-number/name-of-image.jpg”`
 - tag: `img`
+- content: blank
 - class: blank
+
+##### Lists
+- text field: blank
+- tag: `ul`
+- content: wrap each list item in `<li></li>` (i.e. <li>Your content here</li>)
+- class: `small-padding-vertical`
 
 ## Additional Editing Rules
 - Add a new block for each header.
@@ -67,3 +77,5 @@ Landing pages are actually web content articles with a series of embedded web co
 - Images should be uploaded to the documents and media folder corresponding to the landing page category they will be used in (i.e. /RESOURCES/LANDING PAGES/DIGITAL CONTENT HUB).
 
 - You can retrieve image URLs by clicking on the image in Docs and Media and clicking on “URL” on the right hand side.
+
+- When referencing a cited source, wrap the source number in `<sup></sup>` (i.e. "Some idea taken from a specific source<sup>1</sup>.").
