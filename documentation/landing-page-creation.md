@@ -27,7 +27,7 @@ Landing pages are actually web content articles with a series of embedded web co
 
 ### Section
 - element: blank
-- class: blank
+- class: `large-padding-vertical`
 
 ### Block
 - element: blank
