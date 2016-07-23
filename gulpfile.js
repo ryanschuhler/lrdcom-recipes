@@ -1,12 +1,12 @@
 // Include gulp & gulp plugins
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
-var sass = require('gulp-ruby-sass');
-var minify = require('gulp-minify');
-var markdown = require('gulp-markdown');
-var fileinclude = require('gulp-file-include');
 var directoryMap = require("gulp-directory-map");
+var fileinclude = require('gulp-file-include');
+var markdown = require('gulp-markdown');
+var minify = require('gulp-minify');
+var runSequence = require('run-sequence');
+var sass = require('gulp-ruby-sass');
 
 // Compile SASS
 gulp.task('sass', function() {
@@ -17,7 +17,8 @@ gulp.task('sass', function() {
 
 // Compile and minify js
 gulp.task('scripts', function() {
-    return gulp.src([
+    return gulp.src(
+        [
             // external plugins
             'src/js/plugins/lunr.min.js',
             'src/js/plugins/jquery.flexslider-min.js',
@@ -26,7 +27,9 @@ gulp.task('scripts', function() {
             // // core
             'src/js/core/routes.js',
             'src/js/core/search/search.js',
+            'src/js/core/stringUtil.js',
             'src/js/core.js',
+
 
             // // ui
             'src/js/ui/phantom.js',
@@ -37,9 +40,10 @@ gulp.task('scripts', function() {
 
             // // init
             'src/js/init.js'
-        ])
-        .pipe(concat('app.js'))
-        .pipe(gulp.dest('src/'));
+        ]
+    )
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('src/'));
 });
 
 // Build navigation
@@ -50,7 +54,7 @@ gulp.task('buildNavigationIndex', function() {
         '!src/pages/404.html',
         ])
         .pipe(directoryMap({
-            filename: 'urls.json'
+            filename: 'navigation.json'
         }))
         .pipe(gulp.dest('src/js/ui/navigation'));
 });
@@ -72,6 +76,7 @@ gulp.task('fileinclude', function() {
         .pipe(gulp.dest('./'));
 });
 
+// build our search index
 gulp.task('buildindex', function() {
     return gulp.src([
             'src/pages/**/*.html',
@@ -91,7 +96,7 @@ gulp.task('watch', function() {
     // Watch .scss files
     gulp.watch('src/**/*.scss', ['sass']);
     // Watch .md files
-    gulp.watch('documentation/*.md', ['markdown', 'buildNavigationIndex']);
+    gulp.watch('documentation/**/*.md', ['markdown', 'buildNavigationIndex']);
 });
 
 gulp.task('default', function(callback) {

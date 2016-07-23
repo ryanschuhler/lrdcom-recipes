@@ -1,10 +1,15 @@
 #menu {
 	background: #575C78;
+	padding: 3em;
 
-	.inner {
+	ul {
+		padding: 0;
+		margin-bottom: 1em;
+
 		li {
 			font-weight: 200;
 			list-style-type: none;
+			padding: 0;
 
 			&.category {
 				font-size: 1.2em;
@@ -13,6 +18,7 @@
 			}
 
 			a {
+				color: #FFF;
 				font-size: 15px;
 				line-height: 20px;
 

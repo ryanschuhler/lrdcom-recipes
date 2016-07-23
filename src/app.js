@@ -18,10 +18,10 @@ var routes = (function() {
 
 	var bodyClassChange = function(page) {
 		$body.removeClass(function(index, css) {
-			return (css.match (/(^|\s)page-\S+/g) || []).join(' ');
+			return (css.match(/(^|\s)page-\S+/g) || []).join(' ');
 		});
 
-		$body.addClass('page-'+page);
+		$body.addClass('page-' + page);
 	};
 
 	var loadErrorPage = function() {
@@ -54,6 +54,8 @@ var routes = (function() {
 				}
 			);
 		}
+
+		// otherwise, change it to the page in parameter
 		else {
 			section.fadeOut(200, function() {
 				setTimeout(function() {
@@ -77,17 +79,16 @@ var routes = (function() {
 	};
 
 	// when users go back and forth
-	window.addEventListener('popstate', function(e) {
-		changePage(e.state, "normal", false);
-		bodyClassChange(e.state);
-	});
+	// $(window).on('popstate', function(e) {
+	// 	changePage(e.state, "normal", false);
+	// 	bodyClassChange(e.state);
+	// });
 
 	// load page to correct routes on initial load
 	var setInitialRoute = function() {
 		if (!sessionStorage.redirect) {
 			changePage('home', "init", false);
-		}
-		else {
+		} else {
 			let url = sessionStorage.redirect;
 			delete sessionStorage.redirect;
 			let page = url.slice(url.lastIndexOf('/') + 1, url.length);
@@ -101,53 +102,19 @@ var routes = (function() {
 	};
 
 })();
+
 var search = (function() {
-
 	var model = (function() {
-		var decodeHTML = function(html) {
-			var txt = document.createElement('textarea');
-
-			txt.innerHTML = html;
-			return txt.value;
-		};
-
-		var strip = function(html) {
-			var tmp = document.createElement('div');
-
-			tmp.innerHTML = html;
-
-			return tmp.textContent || tmp.innerText || '';
-		};
-
-		var nth_occurrence = function(string, char, nth) {
-			var first_index = string.indexOf(char);
-			var length_up_to_first_index = first_index + 1;
-
-			if (nth == 1) {
-				return first_index;
-			}
-			else {
-				var string_after_first_occurrence = string.slice(length_up_to_first_index);
-				var next_occurrence = nth_occurrence(string_after_first_occurrence, char, nth - 1);
-
-				if (next_occurrence === -1) {
-					return -1;
-				} else {
-					return length_up_to_first_index + next_occurrence;
-				}
-			}
-		};
-
 		var getTitle = function(string) {
-			var beginning = nth_occurrence(string, '">', 1);
+			var beginning = stringUtil.nth_occurrence(string, '">', 1);
 			var end = string.indexOf('</h1>');
 
 			return string.slice(beginning + 2, end);
 		};
 
 		var getPage = function(string) {
-			var beginning = nth_occurrence(string, '"', 1);
-			var end = nth_occurrence(string, '"', 2);
+			var beginning = stringUtil.nth_occurrence(string, '"', 1);
+			var end = stringUtil.nth_occurrence(string, '"', 2);
 			var page = string.slice(beginning + 1, end);
 
 			return page;
@@ -155,18 +122,10 @@ var search = (function() {
 
 		var getBody = function(string) {
 			var lookingFor = '</h1>';
-			var beginning = nth_occurrence(string, lookingFor, 1);
+			var beginning = stringUtil.nth_occurrence(string, lookingFor, 1);
 			var body = string.slice(beginning + lookingFor.length, string.length);
 
-			return strip(body);
-		};
-
-		var cutString = function(s, n) {
-			var cut = s.indexOf(' ', n);
-			if (cut == -1) {
-				return s;
-			}
-			return s.substring(0, cut);
+			return stringUtil.stripHTML(body);
 		};
 
 		// initialize + build search index
@@ -181,17 +140,17 @@ var search = (function() {
 		var buildIndex = function(index) {
 			$.ajax(
 				{
-					url: 'src/searchIndex/searchindex.html',
+					url: 'src/js/core/search/searchindex.html',
 					success: function(result) {
 						// get collection of text in array format
 						resultsArray = result.split('h1 id=');
 
 						for (var x = 0; x < resultsArray.length; x++) {
 							// decode HTML
-							var decoded = decodeHTML(resultsArray[x]);
+							var decoded = stringUtil.decodeHTML(resultsArray[x]);
 							var currentTitle = getTitle(decoded);
 							var currentPage = getPage(decoded);
-							var currentBody = cutString(getBody(decoded), 300);
+							var currentBody = stringUtil.cutString(getBody(decoded), 300);
 							currentBody += '...';
 
 							// add each article to search index
@@ -299,6 +258,71 @@ var search = (function() {
 	};
 })();
 
+var stringUtil = (function() {
+	var cutString = function(s, n) {
+		var cut = s.indexOf(' ', n);
+		if (cut == -1) {
+			return s;
+		}
+		return s.substring(0, cut);
+	};
+
+	var decodeHTML = function(html) {
+		var txt = document.createElement('textarea');
+
+		txt.innerHTML = html;
+		return txt.value;
+	};
+
+	var nth_occurrence = function(string, char, nth) {
+		var first_index = string.indexOf(char);
+		var length_up_to_first_index = first_index + 1;
+
+		if (nth == 1) {
+			return first_index;
+		}
+		else {
+			var string_after_first_occurrence = string.slice(length_up_to_first_index);
+			var next_occurrence = nth_occurrence(string_after_first_occurrence, char, nth - 1);
+
+			if (next_occurrence === -1) {
+				return -1;
+			} else {
+				return length_up_to_first_index + next_occurrence;
+			}
+		}
+	};
+
+	var replaceAll = function(string, search, replacement) {
+	    return string.replace(new RegExp(search, 'g'), replacement);
+	};
+
+	var removeFileName = function(fileString) {
+		return fileString.slice(0, fileString.indexOf('.'));
+	};
+
+	var stripHTML = function(html) {
+		var tmp = document.createElement('div');
+
+		tmp.innerHTML = html;
+
+		return tmp.textContent || tmp.innerText || '';
+	};
+
+	var toTitleCase = function (str) {
+    	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	};
+
+	return {
+		cutString: cutString,
+		decodeHTML: decodeHTML,
+		nth_occurrence: nth_occurrence,
+		replaceAll: replaceAll,
+		removeFileName: removeFileName,
+		stripHTML: stripHTML,
+		toTitleCase: toTitleCase
+	};
+})();
 /*
 	core.js
 	Manages application-wide functionality
@@ -506,31 +530,125 @@ var core = (function() {
 })(jQuery);
 
 var navigation = (function() {
-	var $navListDropdown = $('nav#menu li.dropdown');
-	var $navListUL = $('.dropdown ul');
-	var $navListAnchor = $('nav#menu a');
-	var $body = $('body');
 
-	$navListAnchor.on("click", function(e) {
-		var $section_name = $(this).attr('class');
+	var model = (function() {
+		var getNavigationStructure = function() {
+			return new Promise(function(resolve, reject) {
+				$.ajax(
+					{
+						url: 'src/js/ui/navigation/navigation.json',
+						success: function(result) {
+							resolve(result);
+						},
+						error: function(err) {
+							console.error(err);
+						}
+					}
+				);
+			});
+		};
 
-		e.stopPropagation();
-		e.preventDefault();
-		$navListAnchor.removeClass('active');
-		$(this).addClass('active');
+		return {
+			getNavigationStructure: getNavigationStructure
+		};
+	})();
 
-		$('a.close').trigger('click');
+	var controller = (function(model) {
+		var formatFileName = function(file) {
+			var formattedName = file;
 
-		// change page
-		routes.changePage($section_name);
-	});
+			// remove file name
+			formattedName = stringUtil.removeFileName(formattedName);
 
-	$('a.logo').on('click', function(e) {
-		e.preventDefault();
-		routes.changePage('home');
-	});
+			// make title case
+			formattedName = stringUtil.toTitleCase(formattedName);
+
+			// // remove "-"
+			formattedName = stringUtil.replaceAll(formattedName, "-", " ");
+
+			return formattedName;
+		};
+
+		var buildNavigation = function(navSelector) {
+			model.getNavigationStructure()
+				.then(function(navigationStructureJSON) {
+					var topNav = '<ul>';
+					var bottomNav = '<ul>';
+
+					for (var property in navigationStructureJSON) {
+						if (navigationStructureJSON.hasOwnProperty(property)) {
+
+							// if this has object within it, build out a subnav
+							if (typeof navigationStructureJSON[property] === "object") {
+								var subNavObject = navigationStructureJSON[property];
+								var categoryName = property;
+
+								topNav += '<li class="category">' + property;
+								topNav += '<ul>';
+
+								for (var subNavProperty in subNavObject) {
+									if (subNavObject.hasOwnProperty(subNavProperty)) {
+										topNav += '<li>';
+										topNav += '<a class="' + stringUtil.removeFileName(subNavProperty) + '" href="#">' + formatFileName(subNavProperty) + '</a>';
+										topNav += '</li>';
+									}
+								}
+
+								topNav += '</ul></li>';
+							}
+
+							// otherwise, just list out the links on the main nav at the bottom
+							else {
+								bottomNav += '<li>';
+								bottomNav += '<a href="#" class="' + property + '">' + formatFileName(property) + '</a>';
+								bottomNav += '</li>';
+							}
+						}
+					}
+
+					topNav += '</ul>';
+					bottomNav += '</ul>';
+
+					return topNav + bottomNav;
+				})
+				.then(function(navigationHTML) {
+					$(navSelector).html(navigationHTML);
+				});
+		};
+
+		return {
+			buildNavigation: buildNavigation
+		};
+	})(model);
+
+	var view = (function(){
+		var $navMenu = $('nav#menu');
+        var $body = $('body');
+
+		$navMenu.on("click", 'a', function(e) {
+	        var $section_name = $(this).attr('class');
+
+	        e.stopPropagation();
+	        e.preventDefault();
+	        $('nav#menu a').removeClass('active');
+	        $(this).addClass('active');
+	        $('a.close').trigger('click');
+	        routes.changePage($section_name);
+	    });
+
+	    $('a.logo').on('click', function(e) {
+	        e.preventDefault();
+	        routes.changePage('home');
+	    });
+
+	})();
+
+	return {
+		buildNavigation: controller.buildNavigation
+	};
 
 })(routes);
+
 (function($) {
 
 	/**
@@ -1148,5 +1266,7 @@ var keyboard = (function() {
 })(search);
 
 var init = (function() {
+
+	navigation.buildNavigation('#menu');
 
 })();
