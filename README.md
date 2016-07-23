@@ -14,20 +14,15 @@
 
 *It's now watching for changes.*
 
-## Updating Existing Docs
+## Creating/Updating Docs
 1. Make sure gulp is running. See [Setting Up](#setting-up).
 2. Make changes in `/documentation`
 3. Add and push changes to git.
 
 *See them live at the [external site](http://ryanschuhler.github.io/lrdcom-recipes/)*
 
-## Creating New Docs
-1. Make sure gulp is running. See [Setting Up](#setting-up).
-2. Make new `.md` file in `/documentation`.
-3. Add it to `navigation.html` in `/src/templates/` (follow pattern)
-4. Add and push changes to git
 
-*Soon to be deprecated in favor of automatically generated nav*
 
-## Seeing Changes Locally
+
+**Seeing Changes Locally**
 If you want to see changes locally before pushing to live, run `python -m SimpleHTTPServer` on the root and head to `localhost:8000`
