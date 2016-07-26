@@ -84,4 +84,4 @@ Landing pages are actually web content articles with a series of embedded web co
 
 - When referencing a cited source, wrap the source number in `<sup>` and `</sup>` (i.e. "Some idea taken from a specific source\<sup\>1\</sup\>.").
 
-- When creating a link, wrap the link text in `<a href="http://www.example.com">` and `</a>` (i.e. "To search the web use [Google](http://www.google.com)" should be written "To search the web use \<a href=\"http://www.google.com\"\>Google\</a\>")
+- When creating a link, wrap the link text in `<a href="http://www.example.com">` and `</a>` (i.e. "To search the web use [Google](http://www.google.com)" should be written 'To search the web use \<a href="http://www.google.com"\>Google\</a\>'')
