@@ -66,8 +66,11 @@ Landing pages are actually web content articles with a series of embedded web co
 ##### Lists
 - text field: blank
 - tag: `ul`
-- content: wrap each list item in `<li></li>` (i.e. <li>Your content here</li>)
+- content: wrap each list item in `<li></li>` (i.e. \<li\>Your content here\</li\>)
 - class: `small-padding-vertical`
+
+##### Tables
+
 
 ## Additional Editing Rules
 - Add a new block for each header.
@@ -78,4 +81,6 @@ Landing pages are actually web content articles with a series of embedded web co
 
 - You can retrieve image URLs by clicking on the image in Docs and Media and clicking on “URL” on the right hand side.
 
-- When referencing a cited source, wrap the source number in `<sup></sup>` (i.e. "Some idea taken from a specific source<sup>1</sup>.").
+- When referencing a cited source, wrap the source number in `<sup>` and `</sup>` (i.e. "Some idea taken from a specific source\<sup\>1\</sup\>.").
+
+- When creating a link, wrap the link text in `<a href="http://www.example.com">` and `</a>` (i.e. "To search the web use [Google](http://www.google.com)" should be written "To search the web use <a href="http://www.google.com">Google</a>")
