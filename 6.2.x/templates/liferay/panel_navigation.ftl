@@ -1,84 +1,81 @@
-<div class="track standard-padding block-container align-center justify-space-around ${Color.data} ${track_class.data}">
-	<#if SVG_Icon.data?has_content>
-		<figure class="small-padding">
-			${SVG_Icon.data}	
-		</figure>
-	</#if>
+<#assign article_namespace = "article${.vars['reserved-article-id'].data}" />
 
-	<#if Title.data?has_content>
-		<h3>${Title.data}</h3>
-	</#if>
+<#assign container_css_class = "" />
 
-	<#if Description.data?has_content>
-		<p>${Description.data}</p>
-	</#if>
-	
-	<#if Link_Href.data?has_content>
-		<a href="${Link_Href.data}" class="cta">${Link_Text.data} <svg class="cta-icon" height="10" width="8"><use xlink:href="#caret" /></svg></a>
-	</#if>
+<#if css_class.data?has_content>
+	<#assign container_css_class = css_class.data />
+</#if>
+
+<div class="align-center block-container justify-center ${container_css_class}" id="${article_namespace}">
+	<#list panel_url.siblings as panel>
+		<#assign panel_href = "javascript:;" />
+
+		<#if panel.data?has_content>
+			<#assign panel_href = panel.data />
+		</#if>
+
+		<#assign panel_css = "" />
+
+		<#if panel.panel_css_class.data?has_content>
+			<#assign panel_css = panel.panel_css_class.data />
+		</#if>
+
+		<div class="block preview-block tablet-w50">
+			<a class="panel panel-${panel_index + 1} standard-padding-horizontal text-center ${panel_css}" href="${panel_href}">
+				<#if panel.svg_icon.data?has_content>
+					<div class="large-padding-vertical">
+						${panel.svg_icon.data}
+					</div>
+				</#if>
+				<#if panel.heading.data?has_content>
+					<h2>${panel.heading.data}</h2>
+				</#if>
+
+				<#if panel.description.data?has_content>
+					<p class="font-color panel-description">${panel.description.data}</p>
+				</#if>
+
+				<#if panel.cta_text.data?has_content>
+					<#assign cta_css_class = "cta standard-padding-vertical text-center" />
+
+					<#if panel.cta_text.cta_css_class.data?has_content>
+						<#assign cta_css_class = cta_css_class + " panel.cta_text.cta_css_class.data" />
+					</#if>
+
+					<div class="${cta_css_class}">
+						${panel.cta_text.data}
+						<svg class="cta-icon" height="10" width="8"><use xlink:href="#caret" /></svg>
+					</div>
+				</#if>
+			</a>
+		</div>
+	</#list>
 </div>
 
 <style>
-	.track {
-		border: 1px solid #CCC;
-		flex-direction: column;
-		margin: 1em;
-		min-height: 380px;
-		text-align: center;
+#${article_namespace} .panel {
+	border-color: transparent;
+}
+
+#${article_namespace} .panel {
+	padding-bottom: 3em;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+}
+
+<#list panel_url.siblings as panel>
+	<#assign hover_color = panel.panel_hover_color.data />
+
+	#${article_namespace} .panel-${panel_index + 1}:hover {
+		border-color: ${hover_color};
 	}
 
-	.track a {
-		margin-top: 1em;
+	#${article_namespace} .panel-${panel_index + 1}:hover h2 {
+		color: ${hover_color};
 	}
 
-	.track figure {
-		max-height: 80px;
+	#${article_namespace} .panel-${panel_index + 1} h2 {
+		color: ${panel.heading.heading_color.data};
 	}
-
-	.track:hover {
-		cursor: pointer;
-	}
-
-	.track.red:hover {
-		border: 1px solid #911f2d;
-	}
-
-	.track.red h3 {
-		color: #911f2d;
-	}
-
-	.track.green:hover {
-		border: 1px solid #1f7f44;
-	}
-
-	.track.green h3 {
-		color: #1f7f44;
-	}
-
-	.track.orange:hover {
-		border: 1px solid #f1aa49;
-	}
-
-	.track.orange h3 {
-		color: #f1aa49;
-	}
+</#list>
 </style>
-
-<script>
-AUI().use(
-	'aui-dialog', 'aui-base',
-	function(A) {
-		A.one('.track.${Color.data}').delegate(
-			'click',
-			function(el) {
-				el.preventDefault();
-
-				if ('${Link_Href.data}' != '') {
-                    window.location.href='${Link_Href.data}';
-				}
-			},
-			".track"
-		);
-	}
-);
-</script>
