@@ -1,4 +1,9 @@
 <#assign article_namespace = "article${.vars['reserved-article-id'].data}" />
+<#assign layout_service = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService") />
+<#assign theme_display = request["theme-display"] />
+<#assign plid = theme_display["plid"] />
+<#assign layout = layout_service.getLayout(plid?number) />
+<#assign hasUpdatePermissons = layoutPermission.contains(permissionChecker, layout, "UPDATE")/>
 
 <#assign container_css_class = "" />
 
@@ -28,11 +33,37 @@
 					</div>
 				</#if>
 				<#if panel.heading.data?has_content>
-					<h2>${panel.heading.data}</h2>
+					<#assign heading_attrs = "" />
+					<#assign heading_css_class = "" />
+
+					<#if hasUpdatePermissons>
+						<#assign heading_attrs = "
+							data-article-id='${.vars[\"reserved-article-id\"].data}'
+							data-level-path='${panel.heading.name}::0'
+						" />
+						<#assign heading_css_class = "live-edit" />
+					</#if>
+
+					<h2 class="${heading_css_class}" ${heading_attrs}>
+						${panel.heading.data}
+					</h2>
 				</#if>
 
 				<#if panel.description.data?has_content>
-					<p class="font-color panel-description">${panel.description.data}</p>
+					<#assign description_attrs = "" />
+					<#assign description_css_class = "font-color panel-description" />
+
+					<#if hasUpdatePermissons>
+						<#assign description_attrs = "
+							data-article-id='${.vars[\"reserved-article-id\"].data}'
+							data-level-path='${panel.description.name}::0'
+						" />
+						<#assign description_css_class = description_css_class + " live-edit" />
+					</#if>
+
+					<p class="${description_css_class}" ${description_attrs}>
+						${panel.description.data}
+					</p>
 				</#if>
 
 				<#if panel.cta_text.data?has_content>
