@@ -20,7 +20,7 @@
 			<#assign panel_css = panel.panel_css_class.data />
 		</#if>
 
-		<div class="block preview-block tablet-w50">
+		<div class="block card-block preview-block tablet-w50 responsive-w50">
 			<a class="panel panel-${panel_index + 1} standard-padding-horizontal text-center ${panel_css}" href="${panel_href}">
 				<#if panel.svg_icon.data?has_content>
 					<div class="large-padding-vertical">
