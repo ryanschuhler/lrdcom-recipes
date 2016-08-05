@@ -1,4 +1,9 @@
 <#assign article_namespace = "article${.vars['reserved-article-id'].data}" />
+<#assign layout_service = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService") />
+<#assign theme_display = request["theme-display"] />
+<#assign plid = theme_display["plid"] />
+<#assign layout = layout_service.getLayout(plid?number) />
+<#assign hasUpdatePermissons = layoutPermission.contains(permissionChecker, layout, "UPDATE")/>
 
 <div class="align-center block-container justify-center" id="${article_namespace}">
 	<#list cta_url.siblings as cta>
@@ -13,12 +18,37 @@
 				<#if cta.svg_icon.data?has_content>
 					<div>${cta.svg_icon.data}</div>
 				</#if>
+
 				<#if cta.heading.data?has_content>
-					<h2>${cta.heading.data}</h2>
+					<#assign heading_attrs = "" />
+					<#assign heading_css_class = "" />
+
+					<#if hasUpdatePermissons>
+						<#assign heading_attrs = "
+							data-article-id='${.vars[\"reserved-article-id\"].data}'
+							data-level-path='${panel.heading.name}::0'
+						" />
+						<#assign heading_css_class = "live-edit" />
+					</#if>
+
+					<h2 class="${heading_css_class}" ${heading_attrs}>${cta.heading.data}</h2>
 				</#if>
 
 				<#if cta.description.data?has_content>
-					<p class="font-color">${cta.description.data}</p>
+					<#assign description_attrs = "" />
+					<#assign description_css_class = "font-color" />
+
+					<#if hasUpdatePermissons>
+						<#assign description_attrs = "
+							data-article-id='${.vars[\"reserved-article-id\"].data}'
+							data-level-path='${panel.description.name}::0'
+						" />
+						<#assign description_css_class = description_css_class + " live-edit" />
+					</#if>
+
+					<p class="${description_css_class}" ${description_attrs}>
+						${cta.description.data}
+					</p>
 				</#if>
 
 				<#if cta.cta_text.data?has_content>
