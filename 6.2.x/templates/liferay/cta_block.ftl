@@ -7,8 +7,14 @@
 			<#assign cta_href = cta.data />
 		</#if>
 
+		<#assign css_class = "" />
+
+		<#if cta.css_class.data?has_content>
+			<#assign css_class = cta.css_class.data />
+		</#if>
+
 		<div class="block card-block preview-block">
-			<a class="large-padding-vertical cta-${cta_index + 1} cta-block standard-padding-horizontal text-center" href="${cta_href}">
+			<a class="${css_class} large-padding-vertical cta-${cta_index + 1} cta-block standard-padding-horizontal text-center" href="${cta_href}">
 				<#if cta.svg_icon.data?has_content>
 					<div>${cta.svg_icon.data}</div>
 				</#if>
