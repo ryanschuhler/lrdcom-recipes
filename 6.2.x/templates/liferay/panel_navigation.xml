@@ -1,0 +1,259 @@
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="panel_url" readOnly="false" repeatable="true" required="false" showLabel="true" type="text" width="medium">
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="svg_icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="large">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[SVG Icon]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="heading" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="medium">
+			<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="heading_color" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+				<dynamic-element name="option13875" type="option" value="#DF584C">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Red]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13876" type="option" value="#E8C41E">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Yellow]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13877" type="option" value="#34B88B">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Green]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13878" type="option" value="#365D9E">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Blue]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13879" type="option" value="#6A708B">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Grey]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13880" type="option" value="#88ABBD">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Cool-Grey]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13881" type="option" value="#E7773F">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Orange]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13882" type="option" value="#44A5AA">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Teal]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option13883" type="option" value="#675F9A">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[DXP Purple]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Heading Color]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[["#6A708B"]]]>
+					</entry>
+					<entry name="tip">
+						<![CDATA[]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Heading]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="description" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="large">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Description]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="cta_text" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="medium">
+			<dynamic-element dataType="string" indexType="keyword" localizable="true" name="cta_css_class" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[CTA CSS Class]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[]]>
+					</entry>
+					<entry name="tip">
+						<![CDATA[]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[CTA Text]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="panel_hover_color" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+			<dynamic-element name="option15754" type="option" value="#DF584C">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Red]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15755" type="option" value="#e8c41e">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Yellow]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15756" type="option" value="#34b88b">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Green]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15757" type="option" value="#365d9e">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Blue]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15758" type="option" value="#6a708b">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Grey]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15759" type="option" value="#88abbd">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Cool-Grey]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15760" type="option" value="#E7773F">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Orange]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15761" type="option" value="#44A5AA">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Teal]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option15762" type="option" value="#675F9A">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[DXP Purple]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Panel Hover Color]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[["#6a708b"]]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="panel_css_class" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Panel CSS Class]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+				<entry name="tip">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Panel URL]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[]]>
+			</entry>
+			<entry name="tip">
+				<![CDATA[]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="css_class" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Section CSS Class]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[]]>
+			</entry>
+			<entry name="tip">
+				<![CDATA[]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+</root>
