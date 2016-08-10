@@ -15,6 +15,7 @@
 				<a aria-label="Share on LinkedIn" class="share-linkedin social-icon" href="https://www.linkedin.com/shareArticle?mini=true&url=${current_url}&title=${htmlUtil.escapeURL(summary_text)}&summary=${htmlUtil.escapeURL(summary_text)}&source=${current_url}" target="_blank"><span class="icon icon-linkedin"></span></a>
 				<a aria-label="Share on Twitter" class="share-twitter social-icon" href="https://twitter.com/intent/tweet/?text=${current_url}&url=${current_url}" target="_blank"><span class="icon icon-twitter"></span></a>
 			</div>
+
 			<div class="mobile-nav-button">
 				<svg height="44" width="40"><use xlink:href="#moreIcon"></use></svg>
 			</div>
@@ -293,9 +294,9 @@
 				var head = document.head || document.getElementsByTagName('head')[0];
 
 				style = document.createElement('style');
-
 				style.type = 'text/css';
 				style.appendChild(document.createTextNode(css));
+
 				head.appendChild(style);
 			}
 
