@@ -19,7 +19,7 @@
 <#if heading.data?has_content || subheading.data?has_content>
 	<div class="${css_class} ${heading.heading_alignment.data}" id="heading-${.vars['reserved-article-id'].data}">
 		<#if preheading?? && preheading.data?has_content>
-			<#assign preheading_css_class = preheading.preheading_color.data + " preheading w100 " + preheading.preheading_alignment.data />
+			<#assign preheading_css_class = preheading.preheading_color.data + " preheading small-caps w100 " + preheading.preheading_alignment.data />
 			<#assign preheading_attrs = "" />
 
 			<#if hasUpdatePermissons>
@@ -31,7 +31,7 @@
 			</#if>
 
 			<p class="${preheading_css_class}" ${preheading_attrs}>
-				${preheading.data?upper_case}
+				<small>${preheading.data}</small>
 			</p>
 
 		</#if>
