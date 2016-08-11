@@ -197,7 +197,6 @@
 		.content-hub .nav-wrapper {
 			background: rgba(255, 255, 255, 0.9);
 			max-width: 320px;
-			opacity: 1;
 			position: fixed;
 			right: 0;
 			top: 100% !important;
