@@ -22,7 +22,7 @@ Landing pages are actually web content articles with a series of embedded web co
 
 ## Editing Rules
 ### Article
-- class: `max-med` `large-padding-vertical`
+- class: `max-med`
 
 ### Section
 - text field: blank
@@ -55,7 +55,7 @@ Landing pages are actually web content articles with a series of embedded web co
 - text field: blank
 - tag: `div` or blank
 - content: pull quote text
-- class: `pull-quote-left` or `pull-quote-right` and `dxp-primary-color`
+- class: `pull-quote-left` or `pull-quote-right` and `dxp-primary-color`, `pull-quote`, and `standard-padding`
 
 ##### Images
 - text field: `alt` and `src` i.e. `alt=“brief description of image” src=“/documents/folder-number/folder-number/name-of-image.jpg”`
@@ -76,7 +76,9 @@ Landing pages are actually web content articles with a series of embedded web co
 ## Additional Editing Rules
 - Add a new block for each header.
 
-- When using a paragraph to begin an article it should be in its own block and the `p` element should receive the class `drop-cap` in addition to `small-padding-vertical`.
+- Introduction paragraphs should be in their own block and should receive the class `introduction` in addition to `small-padding-vertiacl`.
+
+- When articles begin with a paragraph instead of a header, the `p` element should receive the class `drop-cap` in addition to `small-padding-vertical`.
 
 - Images should be uploaded to the documents and media folder corresponding to the landing page category they will be used in (i.e. /RESOURCES/LANDING PAGES/DIGITAL CONTENT HUB).
 
