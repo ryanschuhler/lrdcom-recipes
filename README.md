@@ -3,9 +3,8 @@
 
 ## Table of Contents
 1. [Setting Up](#setting-up)
-2. [Updating Existing Docs](#updating-existing-docs)
-3. [Creating New Docs](#creating-new-docs)
-4. [Seeing Changes Locally](#seeing-changes-locally)
+2. [Creating/Updating Docs](#creating-updating-docs)
+3. [Seeing Changes Locally](#seeing-changes-locally)
 
 ## Setting Up
 1. Run `gem install sass` to install [SASS](http://sass-lang.com/install) on computer 
@@ -21,8 +20,5 @@
 
 *See them live at the [external site](http://ryanschuhler.github.io/lrdcom-recipes/)*
 
-
-
-
-**Seeing Changes Locally**
+##Seeing Changes Locally
 If you want to see changes locally before pushing to live, run `python -m SimpleHTTPServer` on the root and head to `localhost:8000`

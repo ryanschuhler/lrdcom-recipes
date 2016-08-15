@@ -3,13 +3,6 @@
 
 Please note, before adding a Case Study to the site, consider whether to have DESIGN create an svg (scalable vector graphic) logo for the Case Study. Case Studies that are Highlighted include the company’s logo. If the Case Study is going to be a Highlighted study, please create that ticket first and then link it to the LRIS ticket.
 
-```
-Code sample
-function sampleCode() {
-    alert('do something');
-}
-```
-
 Important information about the logo request made to design: 
 Please try to provide Design with an svg. This may require hunting online through google image search.
 Request logo be: size of 226x64 - or view box size of 0 0 226 64
@@ -70,4 +63,7 @@ Solutions
 Add Preview copy to the Abstract section (found in the navigation on the right, above the Publish/Drafts/Cancel Buttons).
 Abstract must be 140 characters or less.
 Click Publish
+
 On the associated JIRA ticket, set the Workflow status to “Waiting for Approval” and assign it to “LR Information Services”. Someone on the Webteam will double-check your work!
+
+**PLEASE NOTE: If a case study that you have added is showing up twice, it may be because both the article and the case study PDF are categorized. The case study PDF should have no categories. **
