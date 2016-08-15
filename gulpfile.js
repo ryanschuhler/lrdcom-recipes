@@ -61,7 +61,7 @@ gulp.task('buildNavigationIndex', function() {
 
 // Turn markdown files into HTML
 gulp.task('markdown', function() {
-    return gulp.src('documentation/*.md')
+    return gulp.src('documentation/**/*.md')
         .pipe(markdown())
         .pipe(gulp.dest('src/pages'));
 });
