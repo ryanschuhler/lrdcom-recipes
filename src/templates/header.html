@@ -1,18 +1,61 @@
-<header id="header">
+<header id="header" ng-controller="navController">
     <div class="inner">
-
-        <a class="logo" href="index.html">
+        <a class="logo" ui-sref='home'>
             <span class="symbol">
                 <img alt="Liferay Logo" src="src/images/liferay_logo.png" />
             </span>
             <span class="title">Liferay.com Documentation</span>
         </a>
-
         <nav>
             <ul>
-                <li><a class="open-search" href="#">Search</a></li>
-                <li><a href="#menu">Menu</a></li>
+                <li>
+                    <a class="block-container align-center open-search" href="#" ng-click="openSearch()">
+                        <!-- search icon -->
+                        <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 139 139" height="24px" id="Find" version="1.1" viewBox="0 0 139 139" width="24px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M127.558,111.961L100.249,84.65c4.64-7.387,7.333-16.118,7.333-25.488c0-26.509-21.49-47.996-47.998-47.996  c-26.508,0-47.996,21.487-47.996,47.996c0,26.51,21.487,47.995,47.996,47.995c10.197,0,19.642-3.188,27.414-8.605l26.984,26.986  c1.875,1.873,4.333,2.806,6.788,2.806c2.458,0,4.913-0.933,6.791-2.806C131.308,121.787,131.308,115.711,127.558,111.961z   M59.584,91.607c-17.917,0-32.443-14.525-32.443-32.443S41.667,26.72,59.584,26.72c17.918,0,32.443,14.526,32.443,32.444  S77.502,91.607,59.584,91.607z"/></svg>    
+                    </a>
+                </li>
+                <li>
+                    <a class="block-container align-center toggleMenu" href="#" ng-click="toggleMenu();">
+                        <!-- menu icon -->
+                        <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 32 32" height="24px" id="Слой_1" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="More_Vertical"><path d="M16,8c2.209,0,4-1.791,4-4c0-2.209-1.791-4-4-4s-4,1.791-4,4C12,6.209,13.791,8,16,8z M16,2   c1.105,0,2,0.896,2,2s-0.895,2-2,2s-2-0.895-2-2S14.895,2,16,2z" fill="#121313"/><path d="M16,24c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4s4-1.791,4-4C20,25.791,18.209,24,16,24z M16,30   c-1.105,0-2-0.895-2-2s0.895-2,2-2s2,0.896,2,2S17.105,30,16,30z" fill="#121313"/><path d="M16,12c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4s4-1.791,4-4C20,13.791,18.209,12,16,12z M16,18   c-1.105,0-2-0.895-2-2s0.895-2,2-2s2,0.896,2,2S17.105,18,16,18z" fill="#121313"/></g><g/><g/><g/><g/><g/><g/></svg>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
+
+    <pageslide ps-open="checked" onclose="closeMenu">
+        <nav class="menu z10">
+            <ul>
+                <li>General</li>
+                <li>
+                    <ul>
+                        <li><a ng-click="toggleMenu()" ui-sref='about'>About</a></li>
+                    </ul>
+                </li>
+                <li>Digital Content Hub</li>
+                <li>
+                    <ul>
+                        <li><a ng-click="toggleMenu()" ui-sref="landing-pages">Landing Pages</a></li>
+                    </ul>
+                </li>
+                <li>Updating Content</li>
+                <li>
+                    <ul>
+                        <li><a ng-click="toggleMenu()" ui-sref="case-studies">Case Studies</a></li>
+                        <li><a ng-click="toggleMenu()" ui-sref="localization">Localization</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+          <!--   <ul ng-repeat="categories in data">
+                <li>
+                    {{categories}}
+                    <ul ng-repeat="pages in categories">
+                        <li><a ui-sref="{{pages[0]}}">{{pages}}</a></li>
+                    </ul>
+                </li>
+            </ul> -->
+        </nav>
+    </pageslide>
 </header>

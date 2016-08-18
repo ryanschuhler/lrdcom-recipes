@@ -89,6 +89,7 @@ var search = (function() {
 			'click',
 			function(e) {
 				e.preventDefault();
+				console.log("clicked");
 				toggleSearch('show');
 			}
 		);

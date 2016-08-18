@@ -2,103 +2,127 @@
 <p>Landing pages are actually web content articles with a series of embedded web content articles. This allows us to easily create and launched a new landing page without much work. However there are a few manual steps necessary.</p>
 <h2 id="steps-to-create-a-new-landing-page-">Steps to create a new landing page:</h2>
 <ol>
-<li>Navigate to the landing page admin page <a href="&quot;http://www.liferay.com/resources/admin&quot;">www.liferay.com/resources/admin</a></li>
-<li>Select the desired landing page template and click &quot;Create&quot;</li>
-<li>You will be redirected to a new landing page</li>
-<li>Update Landing Page Title and URL<ol>
-<li>Copy the current URL and save it for step 5</li>
-<li>Scroll to the bottom and click &quot;Edit Landing Page&quot;</li>
-<li>Update title to reflect desired friendly URL (i.e. desired friendly URL: /your-new-landing-page, title: Your New Landing Page)</li>
-<li>Save changes by clicking &quot;Publish&quot;</li>
-<li>Navigate to the URL from step 1</li>
-<li>Scroll to the bottom and click &quot;Update URL&quot;</li>
-<li>The URL for your landing page should now be www.liferay.com/resources/your-new-landing-page</li>
-</ol>
-</li>
-<li>Update embedded article titles<ol>
-<li>For each embedded article click on the &quot;Edit&quot; link on the left below the article</li>
-<li>Prepend the existing title with the landing page title (i.e. &quot;DCH Banner - /resources&quot; &gt; &quot;Your New Landing Page DCH Banner - /resources&quot;)</li>
-<li>Save changes by clicking &quot;Publish&quot;</li>
-</ol>
-</li>
-<li>Edit content</li>
+    <li>Navigate to the landing page admin page <a href="&quot;http://www.liferay.com/resources/admin&quot;">www.liferay.com/resources/admin</a>
+    </li>
+    <li>Select the desired landing page template and click &quot;Create&quot;</li>
+    <li>You will be redirected to a new landing page</li>
+    <li>Update Landing Page Title and URL
+        <ol>
+            <li>Copy the current URL and save it for step 5</li>
+            <li>Scroll to the bottom and click &quot;Edit Landing Page&quot;</li>
+            <li>Update title to reflect desired friendly URL (i.e. desired friendly URL: /your-new-landing-page, title: Your New Landing Page)</li>
+            <li>Save changes by clicking &quot;Publish&quot;</li>
+            <li>Navigate to the URL from step 1</li>
+            <li>Scroll to the bottom and click &quot;Update URL&quot;</li>
+            <li>The URL for your landing page should now be www.liferay.com/resources/your-new-landing-page</li>
+        </ol>
+    </li>
+    <li>Update embedded article titles
+        <ol>
+            <li>For each embedded article click on the &quot;Edit&quot; link on the left below the article</li>
+            <li>Prepend the existing title with the landing page title (i.e. &quot;DCH Banner - /resources&quot; &gt; &quot;Your New Landing Page DCH Banner - /resources&quot;)</li>
+            <li>Save changes by clicking &quot;Publish&quot;</li>
+        </ol>
+    </li>
+    <li>Edit content</li>
 </ol>
 <h2 id="editing-rules">Editing Rules</h2>
 <h3 id="article">Article</h3>
 <ul>
-<li>class: <code>max-med</code></li>
+    <li>class: <code>max-med</code>
+    </li>
 </ul>
 <h3 id="section">Section</h3>
 <ul>
-<li>text field: blank</li>
-<li>class: blank</li>
+    <li>text field: blank</li>
+    <li>class: blank</li>
 </ul>
 <h3 id="block">Block</h3>
 <ul>
-<li>text field: blank</li>
-<li>class: <code>standard-padding-vertical</code></li>
+    <li>text field: blank</li>
+    <li>class: <code>standard-padding-vertical</code>
+    </li>
 </ul>
 <h3 id="element">Element</h3>
 <h5 id="headers">Headers</h5>
 <ul>
-<li>text field: blank</li>
-<li>tag: <code>h2</code>, <code>h3</code>, or <code>h4</code></li>
-<li>content: header text</li>
-<li>class: blank</li>
+    <li>text field: blank</li>
+    <li>tag: <code>h2</code>, <code>h3</code>, or <code>h4</code>
+    </li>
+    <li>content: header text</li>
+    <li>class: blank</li>
 </ul>
 <h5 id="paragraphs">Paragraphs</h5>
 <ul>
-<li>text field: blank</li>
-<li>tag: <code>p</code></li>
-<li>content: paragraph text (see additional editing rules for special use cases)</li>
-<li>class: <code>small-padding-vertical</code></li>
+    <li>text field: blank</li>
+    <li>tag: <code>p</code>
+    </li>
+    <li>content: paragraph text (see additional editing rules for special use cases)</li>
+    <li>class: <code>small-padding-vertical</code>
+    </li>
 </ul>
 <h5 id="source-text">Source text</h5>
 <ul>
-<li>text field: blank</li>
-<li>tag: <code>div</code> or blank</li>
-<li>content: source text</li>
-<li>class: <code>source-text</code></li>
+    <li>text field: blank</li>
+    <li>tag: <code>div</code> or blank</li>
+    <li>content: source text</li>
+    <li>class: <code>source-text</code>
+    </li>
 </ul>
 <h5 id="pull-quotes">Pull Quotes</h5>
 <ul>
-<li>text field: blank</li>
-<li>tag: <code>div</code> or blank</li>
-<li>content: pull quote text</li>
-<li>class: <code>pull-quote-left</code> or <code>pull-quote-right</code> and <code>dxp-primary-color</code>, <code>pull-quote</code>, and <code>standard-padding</code></li>
+    <li>text field: blank</li>
+    <li>tag: <code>div</code> or blank</li>
+    <li>content: pull quote text</li>
+    <li>class: <code>pull-quote-left</code> or <code>pull-quote-right</code> and <code>dxp-primary-color</code>, <code>pull-quote</code>, and <code>standard-padding</code>
+    </li>
 </ul>
 <h5 id="images">Images</h5>
 <ul>
-<li>text field: <code>alt</code> and <code>src</code> i.e. <code>alt=“brief description of image” src=“/documents/folder-number/folder-number/name-of-image.jpg”</code></li>
-<li>tag: <code>img</code></li>
-<li>content: blank</li>
-<li>class: blank</li>
+    <li>text field: <code>alt</code> and <code>src</code> i.e. <code>alt=“brief description of image” src=“/documents/folder-number/folder-number/name-of-image.jpg”</code>
+    </li>
+    <li>tag: <code>img</code>
+    </li>
+    <li>content: blank</li>
+    <li>class: blank</li>
 </ul>
 <h5 id="lists">Lists</h5>
 <ul>
-<li>text field: blank</li>
-<li>tag: <code>ul</code></li>
-<li>content: wrap each list item in <code>&lt;li&gt;&lt;/li&gt;</code> (i.e. \<li\>Your content here\</li\>)</li>
-<li>class: <code>small-padding-vertical</code></li>
+    <li>text field: blank</li>
+    <li>tag: <code>ul</code>
+    </li>
+    <li>content: wrap each list item in <code>&lt;li&gt;&lt;/li&gt;</code> (i.e. \
+        <li\>Your content here\</li\>)</li>
+    <li>class: <code>small-padding-vertical</code>
+    </li>
 </ul>
 <h5 id="tables">Tables</h5>
 <ul>
-<li>Please check back soon for documentation on tables.</li>
+    <li>Please check back soon for documentation on tables.</li>
 </ul>
 <h2 id="additional-editing-rules">Additional Editing Rules</h2>
 <ul>
-<li><p>Add a new block for each header.</p>
-</li>
-<li><p>Introduction paragraphs should be in their own block and should receive the class <code>introduction</code> in addition to <code>small-padding-vertiacl</code>.</p>
-</li>
-<li><p>When articles begin with a paragraph instead of a header, the <code>p</code> element should receive the class <code>drop-cap</code> in addition to <code>small-padding-vertical</code>.</p>
-</li>
-<li><p>Images should be uploaded to the documents and media folder corresponding to the landing page category they will be used in (i.e. /RESOURCES/LANDING PAGES/DIGITAL CONTENT HUB).</p>
-</li>
-<li><p>You can retrieve image URLs by clicking on the image in Docs and Media and clicking on “URL” on the right hand side.</p>
-</li>
-<li><p>When referencing a cited source, wrap the source number in <code>&lt;sup&gt;</code> and <code>&lt;/sup&gt;</code> (i.e. &quot;Some idea taken from a specific source\<sup\>1\</sup\>.&quot;).</p>
-</li>
-<li><p>When creating a link, wrap the link text in <code>&lt;a href=&quot;http://www.example.com&quot;&gt;</code> and <code>&lt;/a&gt;</code> (i.e. &quot;To search the web use <a href="http://www.google.com">Google</a>&quot; should be written &quot;To search the web use <code>&lt;a href=&quot;http://www.google.com&quot;&gt;</code>Google<code>&lt;/a&gt;</code>&quot;)</p>
-</li>
+    <li>
+        <p>Add a new block for each header.</p>
+    </li>
+    <li>
+        <p>Introduction paragraphs should be in their own block and should receive the class <code>introduction</code> in addition to <code>small-padding-vertiacl</code>.</p>
+    </li>
+    <li>
+        <p>When articles begin with a paragraph instead of a header, the <code>p</code> element should receive the class <code>drop-cap</code> in addition to <code>small-padding-vertical</code>.</p>
+    </li>
+    <li>
+        <p>Images should be uploaded to the documents and media folder corresponding to the landing page category they will be used in (i.e. /RESOURCES/LANDING PAGES/DIGITAL CONTENT HUB).</p>
+    </li>
+    <li>
+        <p>You can retrieve image URLs by clicking on the image in Docs and Media and clicking on “URL” on the right hand side.</p>
+    </li>
+    <li>
+        <p>When referencing a cited source, wrap the source number in <code>&lt;sup&gt;</code> and <code>&lt;/sup&gt;</code> (i.e. &quot;Some idea taken from a specific source\
+            <sup\>1\</sup\>.&quot;).</p>
+    </li>
+    <li>
+        <p>When creating a link, wrap the link text in <code>&lt;a href=&quot;http://www.example.com&quot;&gt;</code> and <code>&lt;/a&gt;</code> (i.e. &quot;To search the web use <a href="http://www.google.com">Google</a>&quot; should be written &quot;To search
+            the web use <code>&lt;a href=&quot;http://www.google.com&quot;&gt;</code>Google<code>&lt;/a&gt;</code>&quot;)</p>
+    </li>
 </ul>

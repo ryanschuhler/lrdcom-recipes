@@ -1,12 +1,14 @@
-#menu {
+.menu {
 	background: #575C78;
 	padding: 3em;
+	height: 100%;
 
 	ul {
 		padding: 0;
 		margin-bottom: 1em;
 
 		li {
+			color: #fff;
 			font-weight: 200;
 			list-style-type: none;
 			padding: 0;
@@ -22,8 +24,9 @@
 				font-size: 15px;
 				line-height: 20px;
 
-				&.active {
-					font-weight: bold;
+				&:hover {
+					cursor: pointer;
+					opacity: 0.8;
 				}
 			}
 		}

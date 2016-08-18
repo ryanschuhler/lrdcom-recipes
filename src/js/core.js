@@ -6,9 +6,9 @@
 var core = (function() {
 
 	// set initial URL route
-	routes.setInitialRoute();
+	// routes.setInitialRoute();
 
 	// build our index
 	search.buildIndex();
 
-})(search, routes);
+})(search);
