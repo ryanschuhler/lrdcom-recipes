@@ -19,6 +19,7 @@ Title article as Company Name.
 Note that the title will be used to create the url (ie “Autozone” url will be “/resources/case-studies/autozone”)
 Fill in all applicable fields (if applicable, copy content from current case studies https://www.liferay.com/products/liferay-portal/stories)
 Use the repeatable fields of Subheading and Summary Paragraph to add all content from case study to page
+
 Note, html code must be used for any bullet points. They may be made in the following markup: 
 <ul>
 <li>Listed item</li>

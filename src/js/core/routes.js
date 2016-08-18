@@ -16,6 +16,7 @@ var routes = (function() {
 	};
 
 	var changePage = function(page, mode, alterHistory) {
+		console.log(page);
 		bodyClassChange(page);
 
 		if (alterHistory === undefined) {
@@ -65,10 +66,10 @@ var routes = (function() {
 	};
 
 	// when users go back and forth
-	// $(window).on('popstate', function(e) {
-	// 	changePage(e.state, "normal", false);
-	// 	bodyClassChange(e.state);
-	// });
+	$(window).on('popstate', function(e) {
+		changePage(e.state, "normal", false);
+		bodyClassChange(e.state);
+	});
 
 	// load page to correct routes on initial load
 	var setInitialRoute = function() {

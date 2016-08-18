@@ -58,7 +58,7 @@ var navigation = (function() {
 								for (var subNavProperty in subNavObject) {
 									if (subNavObject.hasOwnProperty(subNavProperty)) {
 										topNav += '<li>';
-										topNav += '<a class="' + stringUtil.removeFileName(subNavProperty) + '" href="#">' + formatFileName(subNavProperty) + '</a>';
+										topNav += '<a class="' + encodeURI(property) + '/' + stringUtil.removeFileName(subNavProperty) + '" href="#">' + formatFileName(subNavProperty) + '</a>';
 										topNav += '</li>';
 									}
 								}
