@@ -8,18 +8,18 @@ body.page-home {
     }
 
     h1 {
-        font-weight: 200;
-        letter-spacing: 0;
+        font-weight: 100;
+        letter-spacing: -6px;
+        font-size: 6em;
+        line-height: 1em;
+        margin-bottom: 0.5em;
     }
-    header {
-        a,
-        svg,
-        path {
-            fill: #cecece;
-            color: #cecece
-        }    
-    }
-    
+
+    svg,
+    path {
+        fill: #cecece;
+    }    
+
 
     .page-bg {
         z-index: -1;
@@ -48,6 +48,14 @@ body.page-home {
             min-width: 100%;
             max-width: 10000%!important; //over ride any existing responsive image styling
             margin: 0 auto!important;
+        }
+    }
+
+    #footer {
+        background-color: rgba(255, 255, 255, 0.1);
+
+        li {
+            color: rgba(255, 255, 255, 0.3);
         }
     }
 }

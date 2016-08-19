@@ -1,6 +1,6 @@
 lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/404');
 
 	$locationProvider.html5Mode({
         enabled: true,
@@ -16,6 +16,11 @@ lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	       }
 		})
 
+		.state('404', {
+		    // no url defined
+		    template: '<div>error</div>',
+		  })
+
 		.state('about', {
 			url: '/about',
 			templateUrl: 'src/pages/about.html',
@@ -29,8 +34,13 @@ lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 			templateUrl: 'src/pages/General/tickets.html'
 		})
 
-		.state('landing-pages', {
-			url: '/landing-pages',
+		.state('events-app', {
+			url: '/events-app',
+			templateUrl: 'src/pages/Events App/events-app.html'
+		})
+
+		.state('landing-page-creation', {
+			url: '/landing-page-creation',
 			templateUrl: 'src/pages/Digital Content Hub/landing-page-creation.html'
 		})
 
@@ -43,4 +53,5 @@ lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 			url: '/case-studies',
 			templateUrl: 'src/pages/Updating Content/case-study.html'
 		});
+
 });

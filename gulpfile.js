@@ -9,11 +9,12 @@ var prettify = require('gulp-html-prettify');
 var livereload = require('gulp-livereload');
 var runSequence = require('run-sequence');
 var sass = require('gulp-ruby-sass');
+var connect = require('gulp-connect');
 
 // Compile SASS
 gulp.task('sass', function() {
-    return sass('src/css/*.scss', { style: 'compressed' })
-        .pipe(concat('app.css'))
+    return sass('src/css/**/*.scss', { style: 'compressed' })
+        .pipe(concat('app.min.css'))
         .pipe(gulp.dest('src/'))
 });
 
@@ -21,14 +22,14 @@ gulp.task('sass', function() {
 gulp.task('scripts', function() {
     return gulp.src(
         [
-            // external plugins
-            'src/js/plugins/lunr.min.js',
-            'src/js/plugins/jquery.flexslider-min.js',
-            'src/js/plugins/skel.min.js',
-
             // angular
             'node_modules/angular/angular.min.js',
 
+            // external plugins
+            'node_modules/lunr/lunr.min.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/flexslider/jquery.flexslider-min.js',
+            
             // angular third party modules
             'node_modules/angular-ui-router/release/angular-ui-router.min.js',
             'node_modules/angular-ui-router-anim-in-out/anim-in-out.js',
@@ -36,38 +37,29 @@ gulp.task('scripts', function() {
             'node_modules/angular-animate/angular-animate.min.js',
             'node_modules/angular-hotkeys/build/hotkeys.min.js',
 
-            // angular modules
+            // application level modules
             'src/app/app.module.js',
             'src/app/app.routes.js',
+            'src/app/app.config.js',
+
+            'src/app/services/stringUtils.js',
+            'src/app/directives/app.directives.js',
 
                 // navigation
-                'src/app/nav/nav.module.js',
-                'src/app/nav/nav.model.js',
-                'src/app/nav/nav.controller.js',
+                'src/app/modules/nav/nav.module.js',
+                'src/app/modules/nav/nav.model.js',
+                'src/app/modules/nav/nav.controller.js',
 
                 // search
-                'src/app/search/search.module.js',
-                'src/app/search/search.model.js',
-                'src/app/search/search.controller.js',
+                'src/app/modules/search/search.module.js',
+                'src/app/modules/search/search.model.js',
+                'src/app/modules/search/search.controller.js',
 
-            // // core
-            'src/js/core/routes.js',
-            'src/js/core/search/search.js',
-            'src/js/core/stringUtil.js',
-            'src/js/core.js',
-
-            // // ui
-            'src/js/ui/phantom.js',
-            'src/js/ui/navigation/navigation.js',
-            'src/js/ui/uihelper.js',
-            'src/js/ui/background.js',
-            'src/js/ui/keyboard.js',
-
-            // // init
-            'src/js/init.js'
+                // background
+                'src/app/modules/background/background.js',
         ]
     )
-    .pipe(concat('app.js'))
+    .pipe(concat('app.min.js'))
     .pipe(gulp.dest('src/'));
 });
 
@@ -81,7 +73,7 @@ gulp.task('buildNavigationIndex', function() {
         .pipe(directoryMap({
             filename: 'navigation.json'
         }))
-        .pipe(gulp.dest('src/js/ui/navigation'));
+        .pipe(gulp.dest('src/app/modules/nav/'));
 });
 
 // Turn markdown files into HTML
@@ -100,26 +92,57 @@ gulp.task('buildindex', function() {
             '!src/pages/404.html',
         ])
         .pipe(concat('searchindex.html'))
-        .pipe(gulp.dest('src/js/core/search/'));
+        .pipe(gulp.dest('src/app/modules/search/'));
+});
+
+gulp.task('connect', function() {
+    connect.server({
+        livereload: true
+    });
 });
 
 gulp.task('refresh', function() {
     return gulp.src([
-        'client/index.html'
+        'index.html'
     ])
-    .pipe(livereload());
+    .pipe(connect.reload());
 })
 
 // Watch for changes
 gulp.task('watch', function() {
+
     // Watch .html files
-    gulp.watch('src/**/*.html', ['buildindex', 'refresh']);
+    gulp.watch('src/**/*.html', function(callback) {
+        runSequence(
+            'buildindex', 
+            'refresh'
+        );
+    });
+
     // Watch .js files
-    gulp.watch('src/**/*.js', ['scripts', 'refresh']);
+    gulp.watch('src/**/*.js', function(callback) {
+        runSequence(
+           'scripts', 
+           'refresh'
+        );
+    });
+
     // Watch .scss files
-    gulp.watch('src/**/*.scss', ['sass','refresh']);
+    gulp.watch('src/**/*.scss', function(callback) {
+        runSequence(
+            'sass',
+            'refresh'
+        )
+    });
+
     // Watch .md files
-    gulp.watch('documentation/**/*.md', ['markdown', 'buildNavigationIndex', 'refresh']);
+    gulp.watch('documentation/**/*.md', function(callback) {
+        runSequence(
+            'markdown', 
+            'buildNavigationIndex',
+            'refresh'
+        );
+    });
 });
 
 gulp.task('default', function(callback) {
@@ -129,6 +152,8 @@ gulp.task('default', function(callback) {
         'markdown',
         'buildindex',
         'buildNavigationIndex',
-        'watch'
+        'watch',
+        'connect',
+        'refresh'
     )
 });

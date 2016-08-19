@@ -1391,6 +1391,8 @@ body.is-touch .tiles article .content {
     -ms-transition: opacity 0.45s ease;
     transition: opacity 0.45s ease;
     opacity: 1;
+    position: relative;
+    min-height: 100vh;
 }
 
 #menu {
@@ -1585,6 +1587,9 @@ body.is-menu-visible #menu .close {
     padding: 1em 0 1em 0;
     background-color: #f6f6f6;
     font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 

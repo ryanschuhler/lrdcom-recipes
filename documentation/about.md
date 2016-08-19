@@ -1,3 +1,3 @@
-# About Page
+# Welcome to the Liferay.com Guides
 
-I'm ryan and i'm going to make changes to this page.
+To make the process of changing content easier and to ensure quality integrity, these guides have been written for our valued content authors.

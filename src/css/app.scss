@@ -1,7 +1,19 @@
+// base styles
 @import 'normalize';
 @import 'main';
 @import 'utilities';
 @import 'anim-in-out';
+
+// plugins
+
+
+// modules
+@import 'modules/search';
+@import 'modules/menu';
+@import 'modules/bottomNav';
+
+// pages
+@import 'pages/home';
 
 html {
   overflow-y: scroll;
@@ -44,8 +56,6 @@ header {
 }
 
 #main {
-	min-height: 80vh;
-
 	blockquote {
 		color: #CECECE;
 		font-style: italic;
@@ -66,48 +76,3 @@ header {
 	}
 }
 
-.search-container {
-	@extend .fill;
-	background: rgba(0, 0, 0, 0.9);
-	flex-direction: column;
-	padding: 4em 0;
-	transition: all 0.25s ease-in;
-
-	.search-input-container {
-		position: relative;
-		width: 70%;
-
-		input {
-			font-size: 3em;
-			font-weight: 100;
-			height: auto;
-		}
-
-		svg {
-			position: absolute;
-			right: 10px;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-	}
-
-	.search-results-container {
-		padding: 2em 0;
-		text-align: left;
-		width: 70%;
-
-		article {
-			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-			margin-bottom: 1.5em;
-
-			&:hover {
-				border-bottom: 1px solid #EFFF39;
-				cursor: pointer;
-			}
-
-			p {
-				font-size: 0.8em;
-			}
-		}
-	}
-}

@@ -13,9 +13,10 @@ const lrdcom = angular.module(
 	]
 );
 
-lrdcom.controller('mainController', function($scope) {
-	$scope.data = "hi";
-	$scope.name = 'phil';
+lrdcom.controller('mainController', function($scope, $rootScope, $state) {
+	$rootScope.$on('$stateChangeError', function(event) {
+        console.log("404");
+    });
 });
 
 lrdcom.directive('routeCssClassnames', function($rootScope) {

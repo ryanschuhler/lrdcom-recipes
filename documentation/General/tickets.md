@@ -1,8 +1,8 @@
 # Tickets
-> How to effectively request Website and collateral design services using Liferay's JIRA system.
+## Sometimes, you need help. 
 
-Follow these guidelines to ensure that your ticket will be completed both really fast and well:
- 
+*Here's how to effectively request Website and collateral design services using Liferay's JIRA system.*
+
 ## STEP 1: Initiation
 
 New site requests should be approved by a Marketing lead based on completeness of requirements and appropriate justification.
