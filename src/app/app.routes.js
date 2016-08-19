@@ -1,6 +1,6 @@
 lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	
-	$urlRouterProvider.otherwise('/404');
+	$urlRouterProvider.otherwise('/');
 
 	$locationProvider.html5Mode({
         enabled: true,
