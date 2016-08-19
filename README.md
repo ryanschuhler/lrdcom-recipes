@@ -1,4 +1,6 @@
-# Lrdcom External Docs
+# Liferay.com Guide
+Easy guides for content authors making changes to Liferay.com
+
 *For adding docs to our [external site](http://ryanschuhler.github.io/lrdcom-recipes/)*
 
 ## Table of Contents
