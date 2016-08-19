@@ -1,20 +1,20 @@
-/*
-	keyboard.js
-	Manages keyboard shortcuts
-*/
+// /*
+// 	keyboard.js
+// 	Manages keyboard shortcuts
+// */
 
-var keyboard = (function() {
+// var keyboard = (function() {
 
-    $(document).keyup(function(e) {
-    	// escape key
-        if (e.keyCode == 27) {
-            search.toggleSearch('hide');
-        }
+//     $(document).keyup(function(e) {
+//     	// escape key
+//         if (e.keyCode == 27) {
+//             search.toggleSearch('hide');
+//         }
 
-        else if (e.keyCode == 191) {
-            search.toggleSearch('show');
-        }
+//         else if (e.keyCode == 191) {
+//             search.toggleSearch('show');
+//         }
 
-    });
+//     });
 
-})(search);
+// })(search);

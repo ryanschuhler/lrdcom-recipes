@@ -1,34 +1,34 @@
-var search = (function() {
-	var model = (function() {
-		var getTitle = function(string) {
-			var beginning = stringUtil.nth_occurrence(string, '">', 1);
-			var end = string.indexOf('</h1>');
+// var search = (function() {
+	// var model = (function() {
+		// var getTitle = function(string) {
+		// 	var beginning = stringUtil.nth_occurrence(string, '">', 1);
+		// 	var end = string.indexOf('</h1>');
 
-			return string.slice(beginning + 2, end);
-		};
+		// 	return string.slice(beginning + 2, end);
+		// };
 
-		var getPage = function(string) {
-			var beginning = stringUtil.nth_occurrence(string, '"', 1);
-			var end = stringUtil.nth_occurrence(string, '"', 2);
-			var page = string.slice(beginning + 1, end);
+		// var getPage = function(string) {
+		// 	var beginning = stringUtil.nth_occurrence(string, '"', 1);
+		// 	var end = stringUtil.nth_occurrence(string, '"', 2);
+		// 	var page = string.slice(beginning + 1, end);
 
-			return page;
-		};
+		// 	return page;
+		// };
 
-		var getBody = function(string) {
-			var lookingFor = '</h1>';
-			var beginning = stringUtil.nth_occurrence(string, lookingFor, 1);
-			var body = string.slice(beginning + lookingFor.length, string.length);
+		// var getBody = function(string) {
+		// 	var lookingFor = '</h1>';
+		// 	var beginning = stringUtil.nth_occurrence(string, lookingFor, 1);
+		// 	var body = string.slice(beginning + lookingFor.length, string.length);
 
-			return stringUtil.stripHTML(body);
-		};
+		// 	return stringUtil.stripHTML(body);
+		// };
 
-		// initialize + build search index
-		var searchIndex = lunr(function() {
-			this.ref('page');
-			this.field('title');
-			this.field('body');
-		});
+		// // initialize + build search index
+		// var searchIndex = lunr(function() {
+		// 	this.ref('page');
+		// 	this.field('title');
+		// 	this.field('body');
+		// });
 
 		var store = {};
 
@@ -67,89 +67,89 @@ var search = (function() {
 			);
 		};
 
-		var getSearchResults = function(term) {
-			var resultsArray = searchIndex.search(term);
+// 		var getSearchResults = function(term) {
+// 			var resultsArray = searchIndex.search(term);
 
-			return resultsArray.map(function(result) {
-				return store[result.ref];
-			});
-		};
+// 			return resultsArray.map(function(result) {
+// 				return store[result.ref];
+// 			});
+// 		};
 
-		return {
-			buildIndex: buildIndex,
-			getSearchResults: getSearchResults
-		};
-	})();
+// 		return {
+// 			buildIndex: buildIndex,
+// 			getSearchResults: getSearchResults
+// 		};
+// 	})();
 
-	var view = (function(getSearchResults, getBody) {
-		var $searchContainer = $('.search-container');
-		var $searchInput = $('.search-input');
+// 	var view = (function(getSearchResults, getBody) {
+// 		var $searchContainer = $('.search-container');
+// 		var $searchInput = $('.search-input');
 
-		$('.open-search').on(
-			'click',
-			function(e) {
-				e.preventDefault();
-				console.log("clicked");
-				toggleSearch('show');
-			}
-		);
+// 		$('.open-search').on(
+// 			'click',
+// 			function(e) {
+// 				e.preventDefault();
+// 				console.log("clicked");
+// 				toggleSearch('show');
+// 			}
+// 		);
 
-		$searchInput.on(
-			'keyup',
-			function() {
-				var currentSearch = $(this).val();
-				var searchResults = getSearchResults(currentSearch);
-				populateResults(searchResults);
-			}
-		);
+// 		$searchInput.on(
+// 			'keyup',
+// 			function() {
+// 				var currentSearch = $(this).val();
+// 				var searchResults = getSearchResults(currentSearch);
+// 				populateResults(searchResults);
+// 			}
+// 		);
 
-		$('.search-results-container').on(
-			'click',
-			'article',
-			function(e) {
-				toggleSearch('hide');
-				routes.changePage($(this).attr('class'));
-			}
-		);
+// 		$('.search-results-container').on(
+// 			'click',
+// 			'article',
+// 			function(e) {
+// 				toggleSearch('hide');
+// 				routes.changePage($(this).attr('class'));
+// 			}
+// 		);
 
-		var toggleSearch = function(mode) {
-			$searchContainer.removeClass('hide show');
+// 		var toggleSearch = function(mode) {
+// 			$searchContainer.removeClass('hide show');
 
-			if (mode === 'hide') {
-				$searchContainer.addClass('hide');
-			}
-			else if (mode === 'show') {
-				$searchContainer.addClass('show');
-				$('.search-input').focus();
-			}
-		};
+// 			if (mode === 'hide') {
+// 				$searchContainer.addClass('hide');
+// 			}
+// 			else if (mode === 'show') {
+// 				$searchContainer.addClass('show');
+// 				$('.search-input').focus();
+// 			}
+// 		};
 
-		var populateResults = function(seachResultsArray) {
-			var $resultsContainer = $('.search-results-container');
-			var html = '';
+// 		var populateResults = function(seachResultsArray) {
+// 			var $resultsContainer = $('.search-results-container');
+// 			var html = '';
 
-			for (var x = 0; x < seachResultsArray.length; x++) {
-				html += '<article class="' + seachResultsArray[x].urlTitle + '"">';
-				html += '<h2>';
-				html += seachResultsArray[x].title;
-				html += '</h2>';
-				html += '<p>';
-				html += seachResultsArray[x].body;
-				html += '</p>';
-				html += '</article>';
-			}
+// 			for (var x = 0; x < seachResultsArray.length; x++) {
+// 				html += '<article class="' + seachResultsArray[x].urlTitle + '"">';
+// 				html += '<h2>';
+// 				html += seachResultsArray[x].title;
+// 				html += '</h2>';
+// 				html += '<p>';
+// 				html += seachResultsArray[x].body;
+// 				html += '</p>';
+// 				html += '</article>';
+// 			}
 
-			$resultsContainer.html(html);
-		};
+// 			$resultsContainer.html(html);
+// 		};
 
-		return {
-			toggleSearch: toggleSearch
-		};
+// 		return {
+// 			toggleSearch: toggleSearch
+// 		};
 
-	})(model.getSearchResults, model.getBody);
+// 	})(model.getSearchResults, model.getBody);
 
-	return {
-		buildIndex: model.buildIndex,
-		toggleSearch: view.toggleSearch
-	};
-})();
+// 	return {
+// 		buildIndex: model.buildIndex,
+// 		toggleSearch: view.toggleSearch
+// 	};
+// })();

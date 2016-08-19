@@ -35,6 +35,13 @@ navigation.controller('navController', function($scope, $http, hotkeys) {
         }
     });
 
+    hotkeys.add({
+        combo: '/',
+        callback: function() {
+            $scope.openSearch('show');
+        }
+    });
+
     $http.get('src/js/ui/navigation/navigation.json')
         .then(function(res) {
             $scope.data = res.data;

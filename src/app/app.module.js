@@ -3,6 +3,7 @@ const lrdcom = angular.module(
 	[
 		// my modules
 		'navigation',
+        'search',
 
 		// plugins
 		'ngAnimate',

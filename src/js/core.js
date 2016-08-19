@@ -9,6 +9,5 @@ var core = (function() {
 	// routes.setInitialRoute();
 
 	// build our index
-	search.buildIndex();
-
-})(search);
+	
+})();

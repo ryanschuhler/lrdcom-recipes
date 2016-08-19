@@ -40,10 +40,15 @@ gulp.task('scripts', function() {
             'src/app/app.module.js',
             'src/app/app.routes.js',
 
-            // navigation
-            'src/app/nav/nav.module.js',
-            'src/app/nav/nav.model.js',
-            'src/app/nav/nav.controller.js',
+                // navigation
+                'src/app/nav/nav.module.js',
+                'src/app/nav/nav.model.js',
+                'src/app/nav/nav.controller.js',
+
+                // search
+                'src/app/search/search.module.js',
+                'src/app/search/search.model.js',
+                'src/app/search/search.controller.js',
 
             // // core
             'src/js/core/routes.js',
