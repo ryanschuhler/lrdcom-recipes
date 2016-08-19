@@ -27,6 +27,12 @@
 	align-items: center;
 }
 
+.link {
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 .fill {
 	height: 100%;
 	left: 0;
