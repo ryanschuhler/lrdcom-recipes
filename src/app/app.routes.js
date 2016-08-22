@@ -2,10 +2,10 @@ lrdcom.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	
 	$urlRouterProvider.otherwise('/');
 
-	// $locationProvider.html5Mode({
- //        enabled: false,
- //        requireBase: false
- //    });
+	$locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
 	
 	$stateProvider
 		.state('home', {
