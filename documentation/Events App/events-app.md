@@ -14,7 +14,7 @@ The following menu items are shown:
 - Gallery
 
 Here is how the menu looks with EventConnect enabled
-![front with event connect](../src/images/eventsapp_menu_eventconnect.png "Front Screen with EventConnect enabled")
+![front with event connect](/lrdcom-recipes/src/images/eventsapp_menu_eventconnect.png "Front Screen with EventConnect enabled")
 
 Here is how the menu looks with EventConnect disabled
-![front with event connect](../src/images/eventsapp_menu_noeventconnect.png "Front Screen with EventConnect disabled")
+![front with event connect](/lrdcom-recipes/src/images/eventsapp_menu_noeventconnect.png "Front Screen with EventConnect disabled")
