@@ -13,8 +13,5 @@ To test an event while it is still inactive, please follow these steps.
 1. Open the app ("Select the event..." screen show should).
 2. Hold the title bar (where it says "Select the event...") for a few seconds
 3. The events list should now be surrounded by a red border, and it should be possible now to "enter" the event in the app.
-
-![testing events](/lrdcom-recipes/src/images/access_inactive_events.png "Testing events")
-
-
+    ![testing events](/lrdcom-recipes/src/images/access_inactive_eventsive_msg.png "Testing events")
 4. In case the inactive message is still displayed, try pressing again on the title bar. 
