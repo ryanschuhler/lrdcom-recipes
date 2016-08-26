@@ -36,6 +36,7 @@ gulp.task('scripts', function() {
             'node_modules/angular-pageslide-directive/dist/angular-pageslide-directive.min.js',
             'node_modules/angular-animate/angular-animate.min.js',
             'node_modules/angular-hotkeys/build/hotkeys.min.js',
+            'node_modules/angular-tooltips/dist/angular-tooltips.min.js',
 
             // application level modules
             'src/app/app.module.js',

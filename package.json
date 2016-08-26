@@ -8,6 +8,7 @@
     "angular-animate": "^1.5.8",
     "angular-hotkeys": "^1.7.0",
     "angular-pageslide-directive": "^2.1.0",
+    "angular-tooltips": "^1.1.6",
     "angular-ui-router": "^0.3.1",
     "flexslider": "^2.6.2",
     "gulp": "^3.9.1",
