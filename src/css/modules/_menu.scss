@@ -1,5 +1,5 @@
 .menu {
-	background: #575C78;
+	background: #1c75b9;
 	padding: 3em;
 	height: 100%;
 
@@ -10,6 +10,7 @@
 		li {
 			color: #fff;
 			font-weight: 200;
+			line-height: 23px;
 			list-style-type: none;
 			padding: 0;
 
@@ -20,9 +21,9 @@
 			}
 
 			a {
+				border-width: 0;
 				color: #FFF;
 				font-size: 15px;
-				line-height: 20px;
 
 				&:hover {
 					cursor: pointer;
