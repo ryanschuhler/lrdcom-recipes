@@ -7,71 +7,78 @@
 
     agenda={
         day-2013-1-1={
-        	row-100={
-				end-time=000900,
-				end-time-display=9:00am,
-				extended-sessions= {
-					room-1=001000
-				},
-				sessions={
-					room-1={
-						end-time=000900,
-						map-id=290837,
-						record={},
-						room-name=Grand Ballroom,
-						room-number=1
-					}
-				},
-				start-time=000800,
-				start-time=8:00am
-			}
-		}
-	}
+            row-100={
+                end-time=000900,
+                end-time-display=9:00am,
+                extended-sessions= {
+                    room-1=001000
+                },
+                sessions={
+                    room-1={
+                        end-time=000900,
+                        map-id=290837,
+                    record={},
+            room-name=Grand Ballroom,
+            room-number=1
+          }
+        },
+        start-time=000800,
+        start-time=8:00am
+      }
+    }
+  }
 *#
 
-#macro (mark_as_extended30 $end_time $row_end_time $row_start_time)
-	#if ($end_time > $row_end_time)
-		#set ($extension_count = $extension_count + 1)
-		#set ($next_row = false)
-		#set ($next_row = $day.higherEntry("row-$row_start_time"))
+## get Locale objects for converting dates
+#set ($localeEn = $localeUtil.fromLanguageId("en_US"))
 
-		#if ($next_row)
-			#set($next_row = $next_row.getValue())
-			#set($void = $next_row.get("extended-sessions").put("room-$room_number", $end_time))
+#set ($localePage = $localeUtil.fromLanguageId($agenda_locale.data))
+#set ($timeFormat = $agenda_time_format.data)
+#set ($agendaDateFormat = $agenda_date_format.data)
+#set ($ga_conference_name = $agenda_click_analytics_category.data)
+#set ($admineditlink = $agenda_edit_link.data)
+## if not "none" then defaults to uppercase...
+#set ($texttransform = "none")
+#set ($agendabutton = $enable_agenda_button.data.equalsIgnoreCase("true"))
+#set ($selector_color = "#0067aa")
 
-			#set($next_row_end_time = $integer.parseInt($next_row.get("end-time")))
-			#set($next_row_start_time = $next_row.get("start-time"))
+#set ($show_agenda_with_columns = ($column_view && ($column_view.data == true)))
 
-			#mark_as_extended30($end_time $next_row_end_time $next_row_start_time)
-		#end
-	#end
+#set($void = $portalUtil.setPageSubtitle("", $request))
+
+
+
+
+#macro (mark_as_extended5 $end_time $row_end_time $row_start_time)
+  #if ($end_time > $row_end_time)
+    #set ($extension_count = $extension_count + 1)
+    #set ($next_row = false)
+    #set ($next_row = $day.higherEntry("row-$row_start_time"))
+
+    #if ($next_row)
+      #set($next_row = $next_row.getValue())
+      #set($void = $next_row.get("extended-sessions").put("room-$room_number", $end_time))
+
+      #set($next_row_end_time = $integer.parseInt($next_row.get("end-time")))
+      #set($next_row_start_time = $next_row.get("start-time"))
+
+      #mark_as_extended5($end_time $next_row_end_time $next_row_start_time)
+    #end
+  #end
 #end
 
-#macro (print_empty_sessions31 $after $number_of_sessions)
-	#foreach($i in [1..$number_of_sessions])
-		#if ($after)
-			#set ($room_count = $room_count + 1)
-		#end
 
-		#set ($extensions_time = false)
-		#set ($extensions_time = $extensions.get("room-$room_count"))
 
-		#if (!$after)
-			#set ($room_count = $room_count + 1)
-		#end
 
-		#if (!$extensions_time)
-			<td class="empty-session"></td>
-		#end
-	#end
+#set ($default_col_span = 2)
+
+#if ($show_agenda_with_columns && $validator.isNotNull($num_columns) && $validator.isNotNull($num_columns.data))
+  #set ($default_col_span = $num_columns.data)
 #end
-
-#set ($day_to_print = "day-2014-11-05")
-#set ($default_col_span = 3)
 #set ($integer = 0)
-#set ($link_to_speakers_page = "/web/devcon2014#speakers")
 
-## Prep work for Edit botton
+
+## Prep work for Edit button
 #set ($layout_id = $request.get("theme-display").get("plid"))
 #set ($layout_service = $serviceLocator.findService("com.liferay.portal.service.LayoutLocalService"))
 #set ($layout_long = $getterUtil.getLong($layout_id))
@@ -80,7 +87,7 @@
 
 ## Get DDL Records
 #set ($ddl_records_local_service = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))
-#set ($record_set_id = $getterUtil.getLong($reserved_record_set_id.data))
+#set ($record_set_id = $getterUtil.getLong($record_set_id.data))
 #set ($records = $ddl_records_local_service.getRecords($record_set_id))
 
 ## Create the empty map that will hold all the agenda info
@@ -88,390 +95,1403 @@
 
 ## Loop Through records and place them in the correct place in the map
 #foreach ($record in $records)
-	#if ($record.getFieldValue("display_on_live"))
-		## Get date, start-time, end-time and room for sorting purposes
-		#set ($date = $dateTool.format("yyyy-MM-dd", $record.getFieldValue("date")))
+  #if ($record.getFieldValue("display_on_live") && (!$validator.isNotNull($agenda_filter.data) || ($validator.isNotNull($agenda_filter.data) && $record.getFieldValue("filter_categories").contains($agenda_filter.data))))
 
-		#set ($start_time_hour = $record.getFieldValue("start_time_hour"))
-		#set ($start_time_hour = $stringUtil.replace($start_time_hour, "[", ""))
-		#set ($start_time_hour = $stringUtil.replace($start_time_hour, "]", ""))
-		#set ($start_time_hour = $stringUtil.replace($start_time_hour, '"', ''))
-		#if ($start_time_hour.length() == 1)
-			#set ($start_time_hour_sort = "0" + $start_time_hour)
-		#else
-			#set ($start_time_hour_sort = $start_time_hour)
-		#end
+    ## Get date, start-time, end-time and room for sorting purposes
+    #set ($date = $record.getFieldValue("date"))
 
-		#set ($start_time_minutes = $record.getFieldValue("start_time_minutes"))
-		#set ($start_time_minutes = $stringUtil.replace($start_time_minutes, "[", ""))
-		#set ($start_time_minutes = $stringUtil.replace($start_time_minutes, "]", ""))
-		#set ($start_time_minutes = $stringUtil.replace($start_time_minutes, '"', ''))
-		#if ($start_time_minutes == "0" || $start_time_minutes == "5")
-			#set ($start_time_minutes = "0" + $start_time_minutes)
-		#end
+    #set ($start_time_hour = $record.getFieldValue("start_time_hour"))
+    #set ($start_time_hour = $stringUtil.replace($start_time_hour, "[", ""))
+    #set ($start_time_hour = $stringUtil.replace($start_time_hour, "]", ""))
+    #set ($start_time_hour = $stringUtil.replace($start_time_hour, '"', ''))
 
-		## #set ($start_time_am_pm = $record.getFieldValue("start_time_am_pm"))
-		## #set ($start_time_am_pm = $stringUtil.replace($start_time_am_pm, "[", ""))
-		## #set ($start_time_am_pm = $stringUtil.replace($start_time_am_pm, "]", ""))
-		## #set ($start_time_am_pm = $stringUtil.replace($start_time_am_pm, '"', ''))
-		## #if ($start_time_am_pm == "pm" && $start_time_hour != "12")
-		## 	#set ($start_time_am_pm_sort = "01")
-		## #else
-		## 	#set ($start_time_am_pm_sort = "00")
-		## #end
+    #if ($start_time_hour.length() == 1)
+      #set ($start_time_hour_sort = "0" + $start_time_hour)
+    #else
+      #set ($start_time_hour_sort = $start_time_hour)
+    #end
 
-		#set ($start_time_display = $start_time_hour + ":" + $start_time_minutes)
-		#set ($start_time_sort = $start_time_hour_sort + $start_time_minutes)
+    #set ($start_time_minutes = $record.getFieldValue("start_time_minutes"))
+    #set ($start_time_minutes = $stringUtil.replace($start_time_minutes, "[", ""))
+    #set ($start_time_minutes = $stringUtil.replace($start_time_minutes, "]", ""))
+    #set ($start_time_minutes = $stringUtil.replace($start_time_minutes, '"', ''))
+    #if ($start_time_minutes == "0" || $start_time_minutes == "5")
+      #set ($start_time_minutes = "0" + $start_time_minutes)
+    #end
 
-		#set ($end_time_hour = $record.getFieldValue("end_time_hour"))
-		#set ($end_time_hour = $stringUtil.replace($end_time_hour, "[", ""))
-		#set ($end_time_hour = $stringUtil.replace($end_time_hour, "]", ""))
-		#set ($end_time_hour = $stringUtil.replace($end_time_hour, '"', ''))
-		#if ($end_time_hour.length() == 1)
-			#set ($end_time_hour_sort = "0" + $end_time_hour)
-		#else
-			#set ($end_time_hour_sort = $end_time_hour)
-		#end
+    ## lower case for am pm instead of ampm
+    #set ($startTimeDate = $dateTool.toDate("HH:mm" , $start_time_hour.concat(":").concat($start_time_minutes), $localeEn))
+    #set ($start_time_display = $dateTool.format($timeFormat,$startTimeDate,$localePage).toLowerCase())
 
-		#set ($end_time_minutes = $record.getFieldValue("end_time_minutes"))
-		#set ($end_time_minutes = $stringUtil.replace($end_time_minutes, "[", ""))
-		#set ($end_time_minutes = $stringUtil.replace($end_time_minutes, "]", ""))
-		#set ($end_time_minutes = $stringUtil.replace($end_time_minutes, '"', ''))
-		#if ($end_time_minutes == "0" || $end_time_minutes == "5")
-			#set ($end_time_minutes = "0" + $end_time_minutes)
-		#end
+    #set ($start_time_sort = $start_time_hour_sort + $start_time_minutes)
 
-		## #set ($end_time_am_pm = $record.getFieldValue("end_time_am_pm"))
-		## #set ($end_time_am_pm = $stringUtil.replace($end_time_am_pm, "[", ""))
-		## #set ($end_time_am_pm = $stringUtil.replace($end_time_am_pm, "]", ""))
-		## #set ($end_time_am_pm = $stringUtil.replace($end_time_am_pm, '"', ''))
-		## #if ($end_time_am_pm == "pm" && $end_time_hour != "12")
-		## 	#set ($end_time_am_pm_sort = "01")
-		## #else
-		## 	#set ($end_time_am_pm_sort = "00")
-		## #end
+    #set ($end_time_hour = $record.getFieldValue("end_time_hour"))
+    #set ($end_time_hour = $stringUtil.replace($end_time_hour, "[", ""))
+    #set ($end_time_hour = $stringUtil.replace($end_time_hour, "]", ""))
+    #set ($end_time_hour = $stringUtil.replace($end_time_hour, '"', ''))
 
-		#set ($end_time_display = $end_time_hour + ":" +$end_time_minutes)
-		#set ($end_time_sort = $end_time_hour_sort + $end_time_minutes)
+    #if ($end_time_hour.length() == 1)
+      #set ($end_time_hour_sort = "0" + $end_time_hour)
+    #else
+      #set ($end_time_hour_sort = $end_time_hour)
+    #end
 
-		#set ($room_uuid = $record.getFieldValue("room_uuid"))
-		#set ($room_uuid = $stringUtil.replace($room_uuid, "[", ""))
-		#set ($room_uuid = $stringUtil.replace($room_uuid, "]", ""))
-		#set ($room_uuid = $stringUtil.replace($room_uuid, '"', ''))
+    #set ($end_time_minutes = $record.getFieldValue("end_time_minutes"))
+    #set ($end_time_minutes = $stringUtil.replace($end_time_minutes, "[", ""))
+    #set ($end_time_minutes = $stringUtil.replace($end_time_minutes, "]", ""))
+    #set ($end_time_minutes = $stringUtil.replace($end_time_minutes, '"', ''))
+    #if ($end_time_minutes == "0" || $end_time_minutes == "5")
+      #set ($end_time_minutes = "0" + $end_time_minutes)
+    #end
 
-		#set ($room_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($room_uuid, $groupId))
-		#set ($room_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($room_record_info.recordId)))
+    ## lower case for am pm instead of ampm
+    #set ($endTimeDate = $dateTool.toDate("HH:mm" , $end_time_hour.concat(":").concat($end_time_minutes), $localeEn))
+    #set ($end_time_display = $dateTool.format($timeFormat,$endTimeDate,$localePage).toLowerCase())
+    #set ($end_time_sort = $end_time_hour_sort + $end_time_minutes)
 
-		#if ($room_record)
-			#set ($room_name = $room_record.getFieldValue("room_name"))
-			#set ($room_number = $room_record.getFieldValue("room_number"))
-			#set ($map_id = $room_record.getFieldValue("map_id"))
-		#else
-			#set ($room_name = "")
-			#set ($room_number = 0)
-			#set ($map_id = "")
-		#end
+    #set ($room_uuid = $record.getFieldValue("room_uuid"))
+    #set ($room_uuid = $stringUtil.replace($room_uuid, "[", ""))
+    #set ($room_uuid = $stringUtil.replace($room_uuid, "]", ""))
+    #set ($room_uuid = $stringUtil.replace($room_uuid, '"', ''))
+#set ($room_record_info = false)
+    #set ($room_record = false)
+    #set ($room_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($room_uuid, $groupId))
+    #set ($room_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($room_record_info.recordId)))
 
-		## Create parts of map that dont exist
-		#if (!$agenda.get("day-$date"))
-			#set ($void = $agenda.put("day-$date", $portal.getClass().forName("java.util.TreeMap").newInstance()))
-		#end
+    #if ($room_record)
+      #set ($room_name = $room_record.getFieldValue("room_name"))
+      #set ($room_number = $room_record.getFieldValue("room_number"))
+      #set ($map_id = $room_record.getFieldValue("map_id"))
+    #else
+      #set ($room_name = "")
+      #set ($room_number = 0)
+      #set ($map_id = "")
+    #end
 
-		#if (!$agenda.get("day-$date").get("row-$start_time_sort"))
-			#set ($row_map = $portal.getClass().forName("java.util.TreeMap").newInstance())
-			#set ($void = $row_map.put("end-time", $end_time_sort))
-			#set ($void = $row_map.put("end-time-display", $end_time_display))
-			#set ($void = $row_map.put("extended-sessions", $portal.getClass().forName("java.util.TreeMap").newInstance()))
-			#set ($void = $row_map.put("sessions", $portal.getClass().forName("java.util.TreeMap").newInstance()))
-			#set ($void = $row_map.put("start-time", $start_time_sort))
-			#set ($void = $row_map.put("start-time-display", $start_time_display))
-			#set ($void = $agenda.get("day-$date").put("row-$start_time_sort", $row_map))
-		#end
+    ## Create parts of map that dont exist
+    #if (!$agenda.get("day-$date"))
+      #set ($void = $agenda.put("day-$date", $portal.getClass().forName("java.util.TreeMap").newInstance()))
+    #end
 
-		## Add content to map
-		#set ($existing_row_map = $agenda.get("day-$date").get("row-$start_time_sort"))
-		#set ($existing_session_map = $existing_row_map.get("sessions"))
-		#set ($session_map_info = $portal.getClass().forName("java.util.TreeMap").newInstance())
-		#set ($void = $session_map_info.put("custom-css-class", $record.getFieldValue("custom_css_class")))
-		#set ($void = $session_map_info.put("end-time", $end_time_sort))
-		#set ($void = $session_map_info.put("end-time-display", $end_time_display))
-		#set ($void = $session_map_info.put("map-id", $map_id))
-		#set ($void = $session_map_info.put("room-name", $room_name))
-		#set ($void = $session_map_info.put("record", $record))
-		#set ($void = $session_map_info.put("room-number", $room_number))
-		#set ($void = $existing_session_map.put("room-$room_number", $session_map_info))
-		#set ($void = $existing_row_map.put("sessions", $existing_session_map))
+    #if (!$agenda.get("day-$date").get("row-$start_time_sort"))
+      #set ($row_map = $portal.getClass().forName("java.util.TreeMap").newInstance())
+      #set ($void = $row_map.put("end-time", $end_time_sort))
+      #set ($void = $row_map.put("end-time-display", $end_time_display))
+      #set ($void = $row_map.put("extended-sessions", $portal.getClass().forName("java.util.TreeMap").newInstance()))
+      #set ($void = $row_map.put("sessions", $portal.getClass().forName("java.util.TreeMap").newInstance()))
+      #set ($void = $row_map.put("start-time", $start_time_sort))
+      #set ($void = $row_map.put("start-time-display", $start_time_display))
+      #set ($void = $agenda.get("day-$date").put("row-$start_time_sort", $row_map))
+    #end
 
-		#set ($existing_end_time = $existing_row_map.get("end-time"))
+    ## Add content to map
+    #set ($existing_row_map = $agenda.get("day-$date").get("row-$start_time_sort"))
+    #set ($existing_session_map = $existing_row_map.get("sessions"))
+    #set ($session_map_info = $portal.getClass().forName("java.util.TreeMap").newInstance())
+    #set ($void = $session_map_info.put("custom-css-class", $record.getFieldValue("custom_css_class")))
+    #set ($void = $session_map_info.put("filter-categories", $record.getFieldValue("filter_categories")))
+    #set ($void = $session_map_info.put("is-liferay-seven", $record.getFieldValue("is_liferay_seven")))
+    #set ($void = $session_map_info.put("end-time", $end_time_sort))
+    #set ($void = $session_map_info.put("end-time-display", $end_time_display))
+    #set ($void = $session_map_info.put("map-id", $map_id))
+    #set ($void = $session_map_info.put("room-name", $room_name))
+    #set ($void = $session_map_info.put("record", $record))
+    #set ($int_room_number = $getterUtil.getInteger($room_number))
+    #set ($mod_room_number = 100 + $int_room_number)
+    #set ($void = $session_map_info.put("room-number", $mod_room_number))
+    ##set ($void = $existing_session_map.put("room-$mod_room_number", $session_map_info))
+    ## changed the session map key to title to allow parallel sessions in same room.
+    ## todo - pick something better than title?
 
-		#if ($integer.parseInt($end_time_sort) < $integer.parseInt($existing_end_time))
-			#set ($void = $existing_row_map.put("end-time", $end_time_sort))
-			#set ($void = $existing_row_map.put("end-time-display", $end_time_display))
-		#end
-	#end
+    #set ($session_title = $record.getFieldValue("title"))
+    #set ($void = $existing_session_map.put("room-${mod_room_number}-${session_title}", $session_map_info))
+
+    #set ($void = $existing_row_map.put("sessions", $existing_session_map))
+
+    #set ($existing_end_time = $existing_row_map.get("end-time"))
+
+    #if ($integer.parseInt($end_time_sort) < $integer.parseInt($existing_end_time))
+      #set ($void = $existing_row_map.put("end-time", $end_time_sort))
+      #set ($void = $existing_row_map.put("end-time-display", $end_time_display))
+    #end
+  #end
 #end
 
-#set ($day = $agenda.get("$day_to_print"))
+#set( $tabWidth = 100 / $agenda.keySet().size() )
 
-<div id="agendaWrapper">
-	<table id="agenda-$day_to_print" class="agenda-table">
-		<tr class="track-row">
-			<td></td> 
-			<td class="multi-room-td room-1">Track A</td>
-			<td class="multi-room-td room-2">Track B</td>
-			<td class="multi-room-td room-3">Track C</td>
-		</tr>
-		#foreach ($row in $day)
-			<tr>
-				#set ($room_count = 0)
-				#set ($row_count = $velocityCount)
-				#set ($row_end_time_display = $row.get("end-time-display"))
-				#set ($start_time = $row.get("start-time"))
-				#set ($start_time_display = $row.get("start-time-display"))
 
-				<td class="first-col">$start_time_display - $row_end_time_display</td>
 
-				#foreach ($session in $row.get("sessions"))
-					#set ($custom_css_class = $session.get("custom-css-class"))
-					#set ($end_time = $integer.parseInt($session.get("end-time")))
-					#set ($extensions_time = false)
-					#set ($room_count = $room_count + 1)
-					#set ($room_number = $session.get("room-number"))
-					#set ($row_end_time = $integer.parseInt($row.get("end-time")))
-					#set ($row_sessions_size = $row.get("sessions").size())
+<style type="text/css">
+    #feedbackContainer {
+        display:none
+    }
 
-					## Find all extended sessions and mark them in the next array
-					#set ($extension_count = 1)
-					#mark_as_extended30($end_time $row_end_time $start_time)
+    .lego-image {
+        max-height: 100%;
+        max-width: 100%
+    }
 
-					## Get current rows extensions and generate all empty sessions
-					#set ($extensions = $row.get("extended-sessions"))
-					#set ($number_of_skipped_rooms = $room_number - $room_count)
+    .max-960 {
+        margin: 0 auto;
+        max-width: 960px
+    }
 
-					#if ($number_of_skipped_rooms > 0 && $row_sessions_size > 1)
-						#print_empty_sessions31(false $number_of_skipped_rooms)
-					#end
+    .no-max .max-960 {
+        max-width: none
+    }
 
-					## Set all variables needed for printing the td
-					#set ($end_time_display = $session.get("end-time-display"))
+    .agenda-section .class-toggle {
+        cursor: pointer;
+        margin: 80px auto 40px;
+        max-width: 180px
+    }
 
-					#set ($record = $session.get("record"))
+    #agendaWrapper .aui-toggler-content-expanded {
+        white-space: normal;
+    }
 
-					#set ($session_summary = $record.getFieldValue("session_summary"))
+    #agendaWrapper .aui-toggler-content-expanded p {
+        max-width: 720px
+    }
 
-					#set ($session_type = $record.getFieldValue("session_type"))
-					#set ($session_type = $stringUtil.replace($session_type, "[", ""))
-					#set ($session_type = $stringUtil.replace($session_type, "]", ""))
-					#set ($session_type = $stringUtil.replace($session_type, '"', ''))
+    #agendaPop {
+        max-height: 320px;
+        overflow: hidden;
+        transition: max-height ease-in-out 0.75s;
+    }
 
-					#set ($title = $record.getFieldValue("title"))
+    #agendaPop.class-toggle-active {
+        max-height: 5000px;
+    }
 
-					#set ($pop_up_css_class = "pop-up")
+    #agendaPop .blur-container {
+        background-image: -moz-linear-gradient(to bottom, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 1%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.8) 100%);
+        background-image: -o-linear-gradient(to bottom, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 1%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.8) 100%);
+        background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%, rgba(248, 248, 248, 0)), color-stop(1%, rgba(248, 248, 248, 0)), color-stop(70%, rgba(255, 255, 255, 0.8)), color-stop(100%, rgba(255, 255, 255, 0.8)));
+        background-image: -webkit-linear-gradient(to bottom, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 1%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.8) 100%);
+        background-image: linear-gradient(to bottom, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 1%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.8) 100%);
+        bottom: 0;
+        display: block;
+        height: 80px;
+        position: absolute;
+        width: 100%;
+    }
 
-					#if ($custom_css_class)
-						#set ($pop_up_css_class = "$pop_up_css_class $custom_css_class")
-					#end
+    #agendaPop.class-toggle-active .blur-container {
+        height: 0
+    }
 
-					#if($row_sessions_size == 1 && $extensions.size() == 0)
-						#set ($colspan = "colspan='$default_col_span'")
-					#else
-						#set ($colspan = "")
+    @media(max-width: 720px) {
+        #agendaPop.class-toggle-active {
+            margin: auto;
+            max-width: 480px;
+            top: 0;
+        }
+    }
 
-						#set ($pop_up_css_class = "$pop_up_css_class multi-room-td room-$room_count")
-					#end
+    @media(max-width: 780px) {
+        #agendaPop.class-toggle-active {
+            max-height: 6250px;
+        }
+    }
 
-					#if($extension_count > 1)
-						#set ($rowspan = "rowspan='$extension_count'")
-					#else
-						#set ($rowspan = "")
-					#end
+    @media(max-width: 480px) {
+        #agendaPop.class-toggle-active {
+            margin: auto;
+            max-width: 320px;
+        }
+    }
 
-					#set ($cleantitle = "$title - $speaker_name")
-					#set ($cleantitle = $stringUtil.replace($cleantitle, '"', ''))
-					#set ($cleantitle = $stringUtil.replace($cleantitle, "'", ""))
-					#set ($cleantitle = '')
+    #agendaTabs .select-day {
+        height: 100%;
+    }
 
-					## Print td
-					<td class="$pop_up_css_class" $colspan $rowspan data-slides="$download_url" data-video="$video_url" data-video-tactic-info="$video_map" id="$record.getUuid()" onclick="('send', 'event', 'Conferences - DevCon 2014', 'Agenda Session Clicks', '$cleantitle');">
-						#if ($session_type != "blank" && $session_type != "")
-							<span><b>$session_type:</b></span>
-						#end
+    #agendaTabs.sticky {
+        position: fixed;
+        top: 88px;
+    }
 
-						#if ($title != "")
-							<span class="trigger">$title</span><br>
-						#end 
+    #agendaWrapper {
+        margin: auto;
+        min-height: 670px;
+        overflow: hidden;
+        position: relative;
+    }
 
-						<div class="pop-up-content">
-							<span class="data">
-								<div class="room-session">
-									<i>Room: $session.get("room-name"), Time: $start_time_display - $end_time_display</i><br>
-								</div>
+    #agendaWrapper table {
+        box-sizing: border-box;
+    }
 
-								#set ($speaker_array_uuid = $stringUtil.split($record.getFieldValue("speakers_uuid")))
+    #agendaWrapper tr {
+        border-bottom: 1px solid #E3E4E5;
+    }
 
-								#foreach ($speakers_uuid in $speaker_array_uuid)
-									#set ($speakers_uuid = $stringUtil.trim($speakers_uuid))
-									#set ($speaker_record = false)
-									#if ("$speakers_uuid" != "")
-										#set ($speaker_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($speakers_uuid, $groupId))
-										#set ($speaker_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($speaker_record_info.recordId)))
-									#end
-									#if ($speaker_record)
-										#set ($speaker_bio = $speaker_record.getFieldValue("speaker_bio"))
-										#set ($speaker_company = $speaker_record.getFieldValue("speaker_company"))
-										#set ($speaker_name = $speaker_record.getFieldValue("speaker_name"))
-										#set ($speaker_title = $speaker_record.getFieldValue("speaker_title"))
-									#else
-										#set ($speaker_bio = "")
-										#set ($speaker_company = "")
-										#set ($speaker_name = "")
-										#set ($speaker_title = "")
-									#end
+    #agendaWrapper td {
+        display: inline-block;
+        max-width: 100%;
+        min-height: 75px;
+        padding: 10px;
+    }
 
-									<div class="speaker-information">
-										#if ($speaker_name != "")
-											<strong>$speaker_name, </strong>
-										#end
-										<div>
-											#if ($speaker_title != "" && $speaker_company != "")
-												$speaker_title, <i>$speaker_company</i>
-											#end
-										</div>
-									</div>
-								#end
+    #agendaWrapper td.empty-session {
+        display: none;
+    }
 
-								#if ($session_summary != "")
-									#set($session_summary = $escapeTool.html($session_summary).replaceAll("\n", "<br />"))
+    #agendaWrapper td.multi-room-td {
+        border-bottom: 1px solid #E3E4E5;
+        display: block;
+    }
 
-									<b>Session Summary:</b><br /><p>$session_summary</p>
-								#end
-							</span>
-						</div>
+    #agendaWrapper td.pop-up.last {
+        border-bottom-width: 0;
+    }
 
-						<div class="speakers-agenda-info">
-							#foreach ($speakers_uuid in $speaker_array_uuid)
-								#set ($speakers_uuid = $stringUtil.trim($speakers_uuid))
-								#set ($speaker_record = false)
-								#if ("$speakers_uuid" != "")
-									#set ($speaker_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($speakers_uuid, $groupId))
-									#set ($speaker_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($speaker_record_info.recordId)))
-								#end
-								#if ($speaker_record)
-									#set ($speaker_name = $speaker_record.getFieldValue("speaker_name"))
-									#set ($speaker_company = $speaker_record.getFieldValue("speaker_company"))
-									#set ($speaker_title = $speaker_record.getFieldValue("speaker_title"))
-								#else
-									#set ($speaker_name = "")
-									#set ($speaker_company = "")
-									#set ($speaker_title = "")
-								#end
+    #agendaWrapper td.multi-room-td:last-child {
+        border-bottom-width: 0;
+    }
 
-								<div class="speaker-entry">
-									#if ($speaker_name != "")
-										<span>$speaker_name, </span>
-									#end
+    #agenda #agendaWrapper.hide-all  tr:not([data-selected]),
+    #agenda #agendaWrapper.hide-all  tr[data-selected="false"],
+    #agenda #agendaWrapper.hide-all  tr[data-selected="true"] td.pop-up[data-selected="false"],
+    #agenda #agendaWrapper.hide-all  tr[data-selected="true"] td.pop-up:not([data-selected])
+    {
+      display: none;
+    }
+/*
+    #agendaWrapper.hide-all tr, #agendaWrapper.hide-all td {
+        display: none;
+    }
 
-									<i>
-										#if ($speaker_title != "" && $speaker_company != "")
-											$speaker_title, $speaker_company
-										#end
-									</i>
-								</div>
-							#end
-						</div>
 
-						#if ($user_has_permissions)
-							<a class="taglib-icon edit-only" href="/web/devcon2014/admin?p_p_id=169_INSTANCE_7Em8SJeyq4BY&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=3&_169_INSTANCE_7Em8SJeyq4BY_struts_action=%2Fdynamic_data_list_display%2Fedit_record&_169_INSTANCE_7Em8SJeyq4BY_cmd=update&_169_INSTANCE_7Em8SJeyq4BY_redirect=https%3A%2F%2Fwww.liferay.com%2Fweb%2Fdevcon2014%2Fadmin%3Fp_p_id%3D169_INSTANCE_7Em8SJeyq4BY%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_count%3D3%26_169_INSTANCE_7Em8SJeyq4BY_currentURL%3D%252Fweb%252Fdevcon2014%252Fadmin%26_169_INSTANCE_7Em8SJeyq4BY_portletAjaxable%3D1&_169_INSTANCE_7Em8SJeyq4BY_recordId=$record.getRecordId()">
-								<img class="icon" src="/osb-community-theme/images/common/edit.png" alt="Edit DDL Record" title="Edit DDL Record">
-							</a>
-						#end
-					</td>
+    #agendaWrapper.hide-all .display-marketing .marketing .first-col,
+    #agendaWrapper.hide-all .display-customize .customize .first-col,
+    #agendaWrapper.hide-all .display-develop .develop .first-col,
+    #agendaWrapper.hide-all .display-production .production .first-col,
+    #agendaWrapper.hide-all .display-features .features .first-col,
+    #agendaWrapper.hide-all .display-technologies .technologies .first-col,
+    #agendaWrapper.hide-all .display-ui .ui .first-col,
+    #agendaWrapper.hide-all .display-using .using .first-col {
+        display: table-cell;
+        margin-bottom: -1px;
+    }
 
-					#set ($multi_session_row = $extensions.size() > 0 || $row_sessions_size > 1)
+    #agendaWrapper.hide-all .display-marketing td.marketing,
+    #agendaWrapper.hide-all .display-customize td.customize,
+    #agendaWrapper.hide-all .display-develop td.develop,
+    #agendaWrapper.hide-all .display-production td.production,
+    #agendaWrapper.hide-all .display-features td.features,
+    #agendaWrapper.hide-all .display-technologies td.technologies,
+    #agendaWrapper.hide-all .display-ui td.ui,
+    #agendaWrapper.hide-all .display-using td.using {
+        display: block;
+        margin-bottom: -1px;
+    }
 
-					#if ($multi_session_row && ($row_sessions_size == $velocityCount) && ($room_number < $default_col_span))
-						#set ($number_of_empty_rooms = $default_col_span - $room_number)
+    #agendaWrapper.hide-all .display-marketing tr.marketing,
+    #agendaWrapper.hide-all .display-customize tr.customize,
+    #agendaWrapper.hide-all .display-develop tr.develop,
+    #agendaWrapper.hide-all .display-production tr.production,
+    #agendaWrapper.hide-all .display-features tr.features,
+    #agendaWrapper.hide-all .display-technologies tr.technologies,
+    #agendaWrapper.hide-all .display-ui tr.ui,
+    #agendaWrapper.hide-all .display-using tr.using {
+        display: table-row;
+    }*/
 
-						#print_empty_sessions31(true $number_of_empty_rooms)
-					#end
-				#end
-			</tr>
-		#end
-	</table>
+    #agendaWrapper .first-col {
+        background: #FFF;
+        color: #909295;
+        display: table-cell;
+        font-size: 36px;
+        font-weight: lighter;
+        text-align: left;
+        vertical-align: top;
+        width: 20%;
+    }
+
+#if (!$show_agenda_with_columns)
+    #agendaWrapper .pop-up {
+        width: 100%;
+        width: calc(100% - 20px)
+    }
+#else
+  #agendaWrapper .single-row-td {
+        width: 100%;
+
+    }
+
+#end
+
+
+    #agendaWrapper .pop-up:hover {
+        cursor: pointer;
+    }
+
+    #agendaWrapper .pop-up-content {
+        display: none;
+    }
+
+    #agendaWrapper .single-row-td {
+        background: #EBEBEB;
+    }
+
+    #agendaWrapper .break-row-td {
+        background: #F3F3F3;
+    }
+
+    #agendaWrapper .speaker-entry {
+        color: #818183;
+    }
+
+    #agendaWrapper .company-logo {
+        float: right;
+        margin-right: 20px;
+    }
+
+    #agendaWrapper .company-logo img {
+        width: 180px;
+    }
+
+    #agendaWrapper .togglers {
+        background: #FFF;
+        border-left: 0 solid;
+        border-right: 0 solid;
+        border: 1px solid #CCC;
+        text-align: center;
+        width: 100%;
+        z-index: 10;
+    }
+
+    #agendaWrapper .togglers span:last-of-type {
+        border-right-width: 0;
+    }
+
+    #agendaWrapper .togglers .class-toggle-carousel {
+        border-right: 1px solid #CCC;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 18px;
+        margin-left: -3px;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: top;
+        width: $tabWidth%;
+    }
+
+    #agendaWrapper .trigger {
+        font-size: 18px;
+        letter-spacing: 2px;
+        #if ($texttransform != "none")
+            text-transform: uppercase;
+        #end
+    }
+
+    #wrapper .agenda-2,
+    #wrapper .agenda-3,
+    #wrapper.class-toggle-carousel-day-1 .agenda-2,
+    #wrapper.class-toggle-carousel-day-2 .agenda-1,
+    #wrapper.class-toggle-carousel-day-2 .agenda-3,
+    #wrapper.class-toggle-carousel-day-3 .agenda-1,
+    #wrapper.class-toggle-carousel-day-3 .agenda-2,
+    #wrapper.hide-all td {
+        display: none;
+    }
+
+    #wrapper #agendaWrapper,
+    #wrapper #agendaWrapper .select-day-1,
+    #wrapper.class-toggle-carousel-day-1 #agendaWrapper .select-day-1,
+    #wrapper.class-toggle-carousel-day-2 #agendaWrapper .select-day-2,
+    #wrapper.class-toggle-carousel-day-3 #agendaWrapper .select-day-3 {
+      font-weight: normal;
+    }
+
+    #wrapper #agendaWrapper .select-day-1,
+    #wrapper.class-toggle-carousel-day-1 #agendaWrapper .select-day-1.class-toggle-carousel,
+    #wrapper.class-toggle-carousel-day-2 #agendaWrapper .select-day-2.class-toggle-carousel,
+    #wrapper.class-toggle-carousel-day-3 #agendaWrapper .select-day-3.class-toggle-carousel {
+        background: $selector_color;
+        color: #FFF;
+    }
+
+    #wrapper #agendaWrapper .select-day-2,
+    #wrapper #agendaWrapper .select-day-3,
+    #wrapper.class-toggle-carousel-day-1 #agendaWrapper .select-day-2,
+    #wrapper.class-toggle-carousel-day-2 #agendaWrapper .select-day-1,
+    #wrapper.class-toggle-carousel-day-2 #agendaWrapper .select-day-3,
+    #wrapper.class-toggle-carousel-day-3 #agendaWrapper .select-day-1,
+    #wrapper.class-toggle-carousel-day-3 #agendaWrapper .select-day-2 {
+        background: #FFF;
+        color: #4C4C4E;
+        font-weight: lighter;
+    }
+
+    #wrapper #agendaWrapper .togglers .class-toggle-carousel:hover {
+        background: #153F6D;
+        color: #FFF;
+    }
+
+    #wrapper.class-toggle-carousel-day-1 .agenda-1,
+    #wrapper.class-toggle-carousel-day-2 #agendaWrapper .agenda-2,
+    #wrapper.class-toggle-carousel-day-3 #agendaWrapper .agenda-3 {
+        display: table;
+    }
+
+    #wrapper .agenda-3,
+    #wrapper.class-toggle-carousel-day-2 .agenda-1,
+    #wrapper.class-toggle-carousel-day-2 .agenda-3,
+    #wrapper.class-toggle-carousel-day-3 .agenda-1,
+    #wrapper.class-toggle-carousel-day-3 .agenda-2,
+    #wrapper.hide-all td {
+        display: none;
+    }
+
+    .agenda-table {
+        width: 100%;
+    }
+  #if ($validator.isNotNull($show_filters) && $validator.isNotNull($show_filters.data) && $show_filters.data)
+    @media all and (min-width: 901px) {
+        .agenda-table {
+             width: calc(100% - 200px);
+        }
+    }
+    #end
+
+    .agenda-table.sticky-nav {
+        margin-top: 60px;
+    }
+
+    .categorySelectors {
+        text-align: center;
+    }
+
+    .categorySelectors div {
+        display: inline-block;
+        padding: 5px 20px;
+    }
+
+    .categorySelectors.desktop-only {
+        background: #FFF;
+        border-bottom: 0 solid;
+        border-right: 0 solid;
+        border: 1px solid #CCC;
+        box-sizing: border-box;
+        height: 100%;
+        padding: 30px 15px;
+        position: absolute;
+        right: 0;
+        text-align: left;
+        top: 68px;
+        width: 200px;
+        z-index: 10;
+    }
+
+    .categorySelectors.desktop-only.sticky {
+        position: fixed;
+        top: 156px;
+    }
+
+    .categorySelectors .category {
+        background: url(/documents/35935946/36204249/Close-Icon.png) no-repeat;
+        color: #1A1A1A;
+        cursor: pointer;
+        display: block;
+        margin: 5px;
+        padding: 8px 25px 8px 8px;
+        text-decoration: none;
+    }
+
+    .categorySelectors .filter-header {
+        font-weight: normal;
+        padding: 15px;
+    }
+
+    .categorySelectors .category[data-selected=true] {
+        background-position: 92% 50%;
+        color: $selector_color;
+        font-weight: normal;
+    }
+
+    .category-toggle-container .aui-toggler-content-collapsed, .controls-hidden .edit-only, .controls-hidden form .separator, .controls-hidden form .aui-button, .desktop-hidden, .taglib-header {
+        display: none;
+    }
+
+    .category-toggle-container .aui-toggler-header-collapsed .arrow {
+        border: 7px solid transparent;
+        border-bottom-width: 0;
+        border-top-color: #4C4C4C;
+        content: "";
+        display: inline-block;
+        height: 0;
+        margin: 0 5px;
+        width: 0;
+    }
+
+    .category-toggle-container .aui-toggler-header-expanded .arrow {
+        border: 7px solid transparent;
+        border-bottom-color: #4C4C4C;
+        border-top-width: 0;
+        content: "";
+        display: inline-block;
+        height: 0;
+        margin: 0 5px;
+        width: 0;
+    }
+
+    .category-toggle-container .toggle-header {
+        cursor: pointer;
+        margin: 10px;
+    }
+
+    .keynote {
+        color: #005E8E;
+        font-weight: normal;
+    }
+
+    .lfr-meta-actions, .portlet-body {
+        clear: both;
+    }
+
+    .liferay-seven-icon {
+        background: url(/documents/47511614/51371158/Liferay-7-Icon.png) no-repeat center center;
+        background-size: cover;
+        float: right;
+        height: 34px;
+        width: 34px;
+    }
+
+    .on-screen-bop {
+        position: relative;
+        z-index: -1;
+    }
+
+    .on-screen-bop div {
+        background: #FFF;
+        position: fixed;
+        text-align: left;
+        top: 168px;
+        width: 130px;
+    }
+
+    .on-screen-bop.on-screen-boo-bop div {
+        position: absolute;
+        top: 0;
+    }
+
+    @media all and (max-width: 900px) {
+        #agendaWrapper td {
+            max-width: 100%;
+        }
+
+      #agendaWrapper .first-col, .on-screen-bop div, .on-screen-bop.on-screen-boo-bop div {
+        width: 120px;
+      }
+
+      #agendaWrapper .togglers {
+        margin-right: 0;
+        position: initial;
+        width: 100%;
+      }
+
+      #agendaWrapper table {
+        max-width: 100%;
+      }
+
+
+#if (!$show_agenda_with_columns)
+      #agendaWrapper td.multi-room-td {
+        box-sizing: border-box;
+        width: 100%;
+      }
+#end
+
+      .agenda-table.sticky-nav {
+        margin-top: 0;
+      }
+
+      .desktop-hidden {
+        display: block;
+      }
+
+      .desktop-only {
+        display: none;
+      }
+
+      .first-col div {
+        text-align: left;
+      }
+
+      .on-screen-bop div, .on-screen-bop.on-screen-boo-bop div  {
+        position: initial;
+      }
+    }
+
+    @media all and (min-width: 720px) {
+        .mobile-hidden {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+    }
+
+    @media all and (max-width: 720px) {
+        #agendaWrapper .company-logo {
+            float: none;
+        }
+
+        .mobile-only {
+            display: block;
+        }
+
+        .mobile-hidden {
+            display: none;
+        }
+
+        ##have to be very specific otherwise conflicts with filter rules
+        #wrapper #agendaWrapper td.first-col {
+            display: none;
+        }
+    }
+
+
+    .pop-up-content {
+        display: none;
+    }
+
+    .pop-up-content .btn {
+        font-size: 1em;
+        margin-top: 20px;
+    }
+
+    .ie8 #heading .company-title .logo {
+        background-color: #F5FAFD;
+    }
+
+    .ie8.show-nav #navigation {
+        background: #F5FAFD;
+    }
+
+    #mainCarousel .aui-carousel-item {
+        position: static;
+        z-index: 20;
+    }
+
+    #mainCarousel menu {
+        z-index: auto;
+    }
+
+    @media all and (min-width: 720px) {
+        #pagePopUp {
+            width: 440px;
+        }
+    }
+
+    .agenda-arrow svg {
+        margin-left: 7px;
+        -webkit-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .agenda-arrow.active svg {
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .agenda-aenderungen {
+        margin-bottom: 30px;
+        text-size: 1.25em;
+    }
+
+#if ($show_agenda_with_columns)
+
+  @media all and (min-width: 720px) {
+    #agendaWrapper td, #agendaWrapper td.multi-room-td {
+        display: table-cell;
+    }
+    /*
+   #agendaWrapper.hide-all tr, #agendaWrapper.hide-all td {
+        display: none;
+    }*/
+    #agendaWrapper table {
+      table-layout: fixed;
+    }
+  }
+#end
+
+
+    #agendaWrapper th {
+        font-size: 18px;
+        font-weight: normal;
+        text-align: center;
+        padding: 1em;
+    }
+</style>
+
+ <div id="agenda">
+ #if ($agendabutton)
+ <div class="lego-article" id="article-54196071">
+     <div class="lego-article-content max-960">
+        <div class="agenda-section aui-helper-clearfix lego-section section-1">
+            <div class="aui-w100 block-1 centered content-column lego-block">
+                <div class="content-column-content only-column">
+                    <div class="class-toggle lego-element btn" data-target-node="#agendaPop"> $agenda_button_text.data </div>
+                    #if ($agenda_button_subtext.data != "")
+                    <div class="agenda-aenderungen">$agenda_button_subtext.data</div>
+                    #end
+                 </div>
+            </div>
+        </div>
+     </div>
+ </div>
+
+ <div class="agenda-pop-up" id="agendaPop">
+
+#end
+
+#if ($validator.isNotNull($show_filters) && $validator.isNotNull($show_filters.data) && $show_filters.data)
+    <div class="categorySelectors category-toggle-container desktop-hidden">
+      <div class="aui-toggler-header aui-toggler-header-collapsed toggle-header">
+        Filter by <span class="arrow"></span>
+      </div>
+
+      <div class="aui-toggler-content aui-toggler-content-collapsed toggle-content">
+      #foreach ($filter_setting in $show_filters.filter_settings.siblings)
+             <a class="category" data-target-class="$filter_setting.filter_code.data" data-selected="false">$filter_setting.filter_name.data</a>
+      #end
+      </div>
+    </div>
+#end
+
+## day navigation
+
+<div class="" id="agendaWrapper">
+  <div id="agendaTabs" class="togglers sticky-watch" data-offset='{"top": "-88"}'>
+    #foreach ($day_to_print in $agenda.keySet())
+      <span class="select-day select-day-$velocityCount class-toggle-carousel" data-date="$day_to_print.substring(4)"  data-target-class="day-$velocityCount" data-target-node="#wrapper" data-value="date-$velocityCount">
+        ## snip off "day-" from date, parse and reformat
+        #set ($agendaDate = $dateTool.toDate("yyyy-MM-dd" , $day_to_print.substring(4), $localeEn))
+        #set ($agendaDateFormatted = $dateTool.format($agendaDateFormat,$agendaDate,$localePage))
+        $agendaDateFormatted
+      </span>
+    #end
+  </div>
+
+  #foreach ($day_to_print in $agenda.keySet())
+
+    #set ($day = {})
+    #set ($day = $agenda.get("$day_to_print"))
+    #set ($start_time_display = {})
+
+    <table id="agenda-$day_to_print" class="agenda-table agenda-$velocityCount">
+
+
+      #if ($validator.isNotNull($show_tracks) && $validator.isNotNull($show_tracks.data) && $show_tracks.data)
+        <thead>
+        #foreach ($track_day_entry in $show_tracks.track_day.siblings)
+          <!-- $day_to_print $track_day_entry.data -->
+          #if ($day_to_print.equalsIgnoreCase("day-$track_day_entry.data"))
+            <tr >
+            <th></th>
+            #foreach($track in $track_day_entry.track_settings.siblings)
+                <th class="track__heading $track.track_css_class.data">
+                    $track.track_name.data
+                </th>
+            #end
+            </tr>
+          #end
+        #end
+        </thead>
+      #end
+
+      #foreach ($row in $day)
+        #set ($row_count = $velocityCount)
+
+        <tr class="table-row $row_count">
+          #set ($room_count = 0)
+          #set ($row_end_time_display = $row.get("end-time-display"))
+          #set ($start_time = $row.get("start-time"))
+          #if ($start_time_display == $row.get("start-time-display"))
+            #set($same-as-previous = true)
+          #end
+          #set ($start_time_display = $row.get("start-time-display"))
+
+          #if ($same-as-previous)
+            <td class="first-col"></td>
+          #else
+            <td class="first-col on-ryan-screen-helper" data-offset='{"top": "-155"}'>
+              <div>$start_time_display</div>
+            </td>
+          #end
+
+          #foreach ($session in $row.get("sessions"))
+            #set ($custom_css_class = $session.get("custom-css-class"))
+            #set ($end_time = $integer.parseInt($session.get("end-time")))
+            #set ($extensions_time = false)
+            #set ($is_liferay_seven = $session.get("is-liferay-seven"))
+            #set ($room_count = $room_count + 1)
+            #set ($room_name = $session.get("room-name"))
+            #set ($room_number = $session.get("room-number"))
+            #set ($row_end_time = $integer.parseInt($row.get("end-time")))
+            #set ($row_sessions_size = $row.get("sessions").size())
+
+            ## Find all extended sessions and mark them in the next array
+            #set ($extension_count = 1)
+            #mark_as_extended5($end_time $row_end_time $start_time)
+
+            ## Get current rows extensions and generate all empty sessions
+            #set ($extensions = $row.get("extended-sessions"))
+            #set ($number_of_skipped_rooms = $room_number - $room_count)
+
+            ## Set all variables needed for printing the td
+            #set ($end_time_display = $session.get("end-time-display"))
+
+            #set ($record = $session.get("record"))
+
+            #set ($session_summary = $record.getFieldValue("session_summary"))
+
+            #set ($session_type = $record.getFieldValue("session_type"))
+            #set ($session_type = $stringUtil.replace($session_type, "[", ""))
+            #set ($session_type = $stringUtil.replace($session_type, "]", ""))
+            #set ($session_type = $stringUtil.replace($session_type, '"', ''))
+
+            #set ($speaker_record = false)
+            #if ($record.getFieldValue("speakers_uuid") != "")
+              #set ($speaker_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($record.getFieldValue("speakers_uuid"), $groupId))
+              #set ($speaker_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($speaker_record_info.recordId)))
+            #end
+            #if ($speaker_record)
+              #set ($speaker_bio = $speaker_record.getFieldValue("speaker_bio"))
+              #set ($speaker_company = $speaker_record.getFieldValue("speaker_company"))
+              #set ($speaker_name = $speaker_record.getFieldValue("speaker_name"))
+              #set ($speaker_title = $speaker_record.getFieldValue("speaker_title"))
+            #else
+              #set ($speaker_bio = "")
+              #set ($speaker_company = "")
+              #set ($speaker_name = "")
+              #set ($speaker_title = "")
+            #end
+
+            ## company logo
+            #if ($record.getFieldValue("company_logo") && $record.getFieldValue("company_logo") != "")
+              #set ($company_logo_json_object = $jsonFactoryUtil.createJSONObject($record.getFieldValue("company_logo")))
+              #set ($company_logo_group_id = $company_logo_json_object.getString("groupId"))
+              #set ($company_logo_uuid = $company_logo_json_object.getString("uuid"))
+            #else
+              #set ($company_logo_json_object = "")
+              #set ($company_logo_group_id = "")
+              #set ($company_logo_uuid = "")
+            #end
+
+            #set ($title = $record.getFieldValue("title"))
+            #set ($filter_categories = $record.getFieldValue("filter_categories"))
+            #set ($filter_categories = $stringUtil.replace($filter_categories, "[", ""))
+            #set ($filter_categories = $stringUtil.replace($filter_categories, "]", ""))
+            #set ($filter_categories = $stringUtil.replace($filter_categories, '"', ''))
+            #set ($filter_categories = $stringUtil.replace($filter_categories, ',', ' '))
+
+            #set ($pop_up_css_class = "pop-up")
+
+            #if ($custom_css_class)
+              #set ($pop_up_css_class = "$pop_up_css_class $custom_css_class")
+            #end
+
+            #if ($row_sessions_size == 1 && $extensions.size() == 0)
+              #set ($colspan = "colspan='$default_col_span'")
+              #set ($pop_up_css_class = "$pop_up_css_class single-row-td")
+            #else
+              #set ($colspan = "")
+
+              #set ($pop_up_css_class = "$pop_up_css_class multi-room-td room-$room_number")
+            #end
+
+            #if ($filter_categories != "" && $filter_categories)
+              #set ($pop_up_css_class = "$pop_up_css_class $filter_categories")
+            #end
+
+            #if($extension_count > 1)
+              #set ($rowspan = "rowspan='$extension_count'")
+            #else
+              #set ($rowspan = "")
+            #end
+
+            #if ($session_type != "blank" && $session_type == "Break")
+               #set ($pop_up_css_class = "$pop_up_css_class break-row-td")
+            #end
+            ## Print td
+            #set ($session-title = "$title - $speaker_name")
+            <td class="$pop_up_css_class" $colspan data-session-title='$htmlUtil.escape($session-title)' $rowspan>
+             ##if ($session_type != "blank" && $session_type != "")
+             ##   <span>$session_type:</span>
+             ## #end
+                <div class="mobile-only">
+                  $start_time_display - $end_time_display
+               </div>
+
+              #if ($company_logo_uuid != "")
+                <div class="company-logo lazy-load"><img src="/documents/$company_logo_group_id/$company_logo_uuid"></div>
+              #end
+
+              #if ($title != "")
+                <span class="trigger">$title</span><br>
+              #end
+
+              #if ($is_liferay_seven == "true" && $validator.isNotNull($is_liferay_seven))
+                  <div class="liferay-seven-icon"></div>
+              #end
+
+
+              <div class="pop-up-content">
+                <span class="data">
+                  <div class="room-session">
+                    #if ($room_name != "") $languageUtil.get($locale, "room", "Room"): $room_name,#end Time: $start_time_display - $end_time_display<br>
+                  </div>
+
+                  #set ($speaker_array_uuid = $stringUtil.split($record.getFieldValue("speakers_uuid")))
+
+                  #foreach ($speakers_uuid in $speaker_array_uuid)
+                    #set ($speakers_uuid = $stringUtil.trim($speakers_uuid))
+                    #set ($speaker_record = false)
+                    #if ("$speakers_uuid" != "")
+                      #set ($speaker_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($speakers_uuid, $groupId))
+                      #set ($speaker_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($speaker_record_info.recordId)))
+                    #end
+                    #if ($speaker_record)
+                      #set ($speaker_bio = $speaker_record.getFieldValue("speaker_bio"))
+                      #set ($speaker_company = $speaker_record.getFieldValue("speaker_company"))
+                      #set ($speaker_name = $speaker_record.getFieldValue("speaker_name"))
+                      #set ($speaker_title = $speaker_record.getFieldValue("speaker_title"))
+                    #else
+                      #set ($speaker_bio = "")
+                      #set ($speaker_company = "")
+                      #set ($speaker_name = "")
+                      #set ($speaker_title = "")
+                    #end
+
+                    <div class="speaker-information">
+                      #if ($speaker_name != "")
+                        <strong>$speaker_name</strong>
+                      #end
+                      <div>
+                        #if ($speaker_title != "" && $speaker_company != "")
+                          $speaker_title, $speaker_company
+                        #end
+                      </div>
+                    </div>
+                  #end
+
+                  #if ($session_summary != "")
+                    $languageUtil.get($locale, "session-summary", "Session Summary"):<br /><p>$session_summary</p>
+                  #end
+                </span>
+              </div>
+
+              #if ("speakers_uuid" != "")
+                <div class="speakers-agenda-info">
+                  #foreach ($speakers_uuid in $speaker_array_uuid)
+                    #set ($speakers_uuid = $stringUtil.trim($speakers_uuid))
+                    #set ($speaker_record = false)
+                    #if ("$speakers_uuid" != "")
+                      #set ($speaker_record_info = $ddl_records_local_service.getDDLRecordByUuidAndGroupId($speakers_uuid, $groupId))
+                      #set ($speaker_record = $ddl_records_local_service.fetchDDLRecord($getterUtil.getLong($speaker_record_info.recordId)))
+                    #end
+                    #if ($speaker_record)
+                      #set ($speaker_name = $speaker_record.getFieldValue("speaker_name"))
+                      #set ($speaker_company = $speaker_record.getFieldValue("speaker_company"))
+                      #set ($speaker_title = $speaker_record.getFieldValue("speaker_title"))
+                    #else
+                      #set ($speaker_name = "")
+                      #set ($speaker_company = "")
+                      #set ($speaker_title = "")
+                    #end
+
+                    <div class="speaker-entry">
+                      #if ($speaker_name != "" && $speaker_company != "")
+                        $speaker_name, $speaker_company
+                                                    #else
+                                 $speaker_name
+                      #end
+                    </div>
+                  #end
+                </div>
+              #end
+
+              #if ($room_name != "")
+                ($room_name)
+              #end
+
+              #if ($user_has_permissions)
+                <a class="taglib-icon edit-only" href="${admineditlink}recordId=$record.getRecordId()">
+                  <img class="icon" src="/osb-community-theme/images/common/edit.png" alt="Edit DDL Record" title="Edit DDL Record">
+                </a>
+              #end
+
+
+            </td>
+          #end
+        </tr>
+      #end
+    </table>
+  #end
+
+
+#if ($validator.isNotNull($show_filters) && $validator.isNotNull($show_filters.data) && $show_filters.data)
+
+  <div class="categorySelectors desktop-only sticky-watch" data-offset='{"top": "-176"}'>
+    <span class="filter-header">Filter by:</span>
+
+#foreach ($filter_setting in $show_filters.filter_settings.siblings)
+         <a class="category" data-target-class="$filter_setting.filter_code.data" data-selected="false">$filter_setting.filter_name.data</a>
+  #end
+
+
+  </div>
+#end
+</div>
 </div>
 
-<style>
-#agendaWrapper {
-	margin: 0 10px;
-}
 
-#agendaWrapper tr {
-	border-bottom: 1px solid #58585A;
-}
+<script>
+AUI().ready(
+  'aui-base',
+  'node',
+  function(A) {
 
-#agendaWrapper td {
-	padding: 10px;
-}
+    A.all('span.select-day').on("click", function(event) {
+      if (window.ga && event && event.currentTarget) {
+        ga('send', 'event', '$ga_conference_name', 'Agenda Day Clicks', event.currentTarget.attr('data-date'));
+      }
+    });
+     A.all('#agendaPop td.pop-up').on("click", function(event) {
+      if (window.ga && event && event.currentTarget) {
+        ga('send', 'event', '$ga_conference_name', 'Agenda Session Clicks', event.currentTarget.attr('data-session-title'));
+      }
+    });
 
-#agendaWrapper .first-col {
-	display: table-cell;
-	text-align: right;
-	vertical-align: top;
-	width: 150px;
-}
 
-#agendaWrapper .first-col:hover {
-	background-color: transparent;
-}
+    var category = A.all('.category');
 
-#agendaWrapper .pop-up-content {
-	display: none;
-}
+    var displayClass = function(event) {
+      event.stopPropagation();
 
-.pop-up-content {
-	color: #6B6C6B;
-}
+      var agendaTable = A.all('.agenda-table');
 
-.pop-up-content .view-all-bio-link a {
-	font-size: 15px
-}
+      var agendaWrapper = A.one('#agendaWrapper');
 
-.pop-up-content .view-all-bio-link, .pop-up-content .room-session, .pop-up-content .speaker-information {
-	padding-bottom: 1em;
-}
+      var currentTargetNode = event.currentTarget;
 
-#agendaLegend span, #agendaWrapper .multi-room-td {
-	border-left: 3px solid #1DA99E;
-}
+      var dataSelected = currentTargetNode.attr('data-selected');
 
-#agendaLegend .room-2, #agendaWrapper .room-2 {
-	border-left-color: #E95B27;
-}
+      var targetClass = currentTargetNode.attr('data-target-class');
 
-#agendaLegend .room-3, #agendaWrapper .room-3 {
-	border-left-color: #FAA325;
-}
+      var displayTargetClass = 'display-' + targetClass;
 
-#agendaLegend .room-4, #agendaWrapper .room-4 {
-	border-left-color: #662F8A;
-}
+      var selectedCategoryClass = targetClass + '-selected';
 
-.controls-hidden .edit-only {
-	display: none;
-}
 
-.keynote {
-	color: #005E8E;
-	font-weight: bold;
-}
 
-@media all and (max-width: 720px) {
-	#agendaWrapper td {
-		display: block;
-	}
+      var factor = 1;
+      if (dataSelected == 'false') {
+        currentTargetNode.setAttribute('data-selected', 'true');
+      }
+      else {
+        currentTargetNode.setAttribute('data-selected', 'false');
+        factor = -1;
+      }
 
-	#agendaWrapper .first-col {
-		width: 98px;
-	}
-}
-</style>
+
+      if (targetClass) {
+        agendaTable.toggleClass(displayTargetClass);
+
+        A.all('.' + targetClass).each(
+          function(node) {
+           
+            var registerSelect = function(selectednode, factor) {
+                var numselect = selectednode.getAttribute("data-numselect");
+
+                if (numselect) {
+                  numselect = (+numselect) + factor;
+                }
+                else {
+                  numselect = (factor == 1) ? 1 : 0;
+                }
+                selectednode.setAttribute("data-numselect", numselect);
+                selectednode.setAttribute("data-selected", numselect > 0);
+            };
+
+            var selectedParent = node.get("parentNode");
+            if (selectedParent && selectedParent.hasClass("table-row")) {
+                registerSelect(selectedParent, factor);
+            }
+            registerSelect(node, factor);
+          }
+        );
+      }
+
+      var hideAll = false;
+
+      category.each(
+        function(node) {
+          if (node.getAttribute('data-selected') == 'true') {
+            hideAll = true;
+          }
+        }
+      );
+
+      if (hideAll) {
+        agendaWrapper.addClass('hide-all');
+
+        currentTargetNode.toggleClass(selectedCategoryClass);
+      }
+      else {
+        agendaWrapper.removeClass('hide-all');
+
+        currentTargetNode.toggleClass(selectedCategoryClass);
+      }
+    };
+
+    category.on('click', displayClass);
+
+    /**
+     * Multiple Room Action
+     **/
+
+    var MRAction= function() {
+      this.prototype = {
+        get_categories : function(node) {
+          var data = [];
+
+          A.all(node).each(
+            function(el) {
+              if (el.getAttribute("data-selected") === "true") {
+                data.push(el.getAttribute("data-target-class"));
+              }
+            }
+          );
+
+          return data;
+        },
+
+        get_table_cells : function(filterArray, nodes) {
+          var data = [];
+          var queryNode = A.all(nodes);
+
+          queryNode.each(
+            function(node) {
+              var nodeCollectionSet = [];
+
+              var containerNode = A.one(node.getDOM().parentNode);
+              var classListenerNode = containerNode.all('.pop-up');
+
+              classListenerNode.each(
+                function(el) {
+                  var nodeHasProperty = false;
+
+                  A.all(filterArray).each(
+                    function(filter) {
+                      if (el.hasClass(filter)) {
+                        nodeHasProperty = true;
+                      }
+                    }
+                  );
+
+                  if (nodeHasProperty) {
+                    nodeCollectionSet.push(el);
+                  }
+                }
+              );
+
+              data.push(nodeCollectionSet);
+            }
+          );
+
+          return data;
+        },
+
+        remove_last_class : function(valueArray) {
+          A.each(valueArray, function(nodeArray) {
+            A.each(nodeArray, function(node) {
+              if (node.hasClass('last')) {
+                node.removeClass('last');
+              }
+            });
+          });
+        },
+
+        apply_last_class : function(valueArray) {
+          A.each(valueArray, function(sousArray) {
+            if (sousArray.length !== 0) {
+              var node = sousArray[sousArray.length - 1];
+
+              node.addClass('last');
+            }
+          });
+        }
+      };
+
+      return this.prototype;
+    };
+
+    category.on(
+      'click', function() {
+        var multiple_room = new MRAction();
+
+        var cat = multiple_room.get_categories(".categorySelectors .category");
+        var tableCells = multiple_room.get_table_cells(cat, '#agendaWrapper .first-col');
+
+        multiple_room.remove_last_class(tableCells);
+        multiple_room.apply_last_class(tableCells);
+      }
+    );
+  }
+);
+
+AUI().ready(
+    'aui-base',
+  'aui-toggler',
+  function(A) {
+    var container = A.one('.category-toggle-container');
+
+    if (container) {
+        new A.TogglerDelegate(
+          {
+            animated: false,
+            closeAllOnExpand: false,
+            container: '.category-toggle-container',
+            content: '.toggle-content',
+            expanded: false,
+            header: '.toggle-header'
+          }
+        );
+    }
+  }
+);
+</script>
+
+<script>
+AUI().ready(
+    'aui-base',
+    'node',
+    function(A) {
+        var pagePopUp = A.one('#pagePopUp');
+
+        if (!pagePopUp) {
+            A.one('#wrapper').append('<div class="aui-helper-hidden" id="pagePopUp"><div id="agendaclosePopUp"></div></div>')
+
+            pagePopUp = A.one('#pagePopUp');
+        };
+
+        var copyToPopUp = function(event) {
+            var newPopUpContent = event.currentTarget.one('.pop-up-content');
+
+            var oldPopUpContent = pagePopUp.one('.pop-up-content');
+
+            if (!newPopUpContent) {
+                return
+            }
+
+            if (oldPopUpContent) {
+                oldPopUpContent.remove();
+            }
+
+            event.stopPropagation();
+
+            pagePopUp.append(newPopUpContent.cloneNode(true));
+
+            pagePopUp.removeClass('aui-helper-hidden');
+
+            var popUpContent = pagePopUp.one('.pop-up-content')
+
+            popUpContent.on(
+                'clickoutside',
+                function(event) {
+                    pagePopUp.addClass('aui-helper-hidden');
+
+                    popUpContent.detach('clickoutside');
+                }
+            );
+        };
+
+        var WIN = A.getWin();
+
+        var centerOnPage = function(node) {
+            var currentScrollPos = WIN.get('docScrollY');
+
+            var winHeight = WIN.get('innerHeight');
+
+            if (winHeight == undefined) {
+                winHeight = document.documentElement.clientHeight;
+            }
+
+            var contentWidth = A.one('#content').get('clientWidth');
+
+            var nodeHeight = node.get('clientHeight');
+            var nodeWidth = node.get('clientWidth');
+
+            xCenter = (contentWidth / 2) - (nodeWidth / 2);
+            yCenter = ((winHeight / 2) - (nodeHeight / 2)) + currentScrollPos;
+
+            node.setStyle('right', xCenter);
+            node.setStyle('top', yCenter);
+        };
+
+        A.all('.pop-up').on(
+            'click',
+            function(event) {
+                copyToPopUp(event);
+
+                centerOnPage(pagePopUp);
+            }
+        );
+    }
+);
+</script>
+
+#if ($agendabutton)
+    <div class="blur-container">
+        &nbsp;
+    </div>
+</div>
+
+
+<p class="centered">
+    <a class="class-toggle animate-scroll agenda-arrow" data-target-node="#agendaPop" href="#agenda"> <svg enable-background="new 0 0 15 30" height="30px" id="Layer_1" version="1.1" viewbox="0 0 15 30" width="15px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px"> <polyline fill="none" points="14.5,29 0.5,15 14.5,1 " stroke="#909295" stroke-miterlimit="10"></polyline> </svg></a>
+</p>
+
+<script>
+AUI().ready(
+    'aui-base',
+    'node',
+    function(A) {
+        A.one('.agenda-arrow').on('click', function(e) {
+            this.toggleClass('active');
+        });
+    }
+);
+</script>
+#end
+
+
+
+#if ($validator.isNotNull($agenda_default_day) && $validator.isNotNull($agenda_default_day.data))
+<script>
+AUI().ready(
+    'aui-base',
+    'node',
+    function(A) {
+        var selectday = A.one('.select-day[data-date="$agenda_default_day.data"]');
+        if (selectday) {
+            var daynum = selectday.getAttribute("data-target-class");
+             if (daynum) {
+                A.one('#wrapper').setAttribute("class", " class-toggle-carousel-" + daynum);
+             }
+        }
+
+    }
+);
+</script>
+        #end
