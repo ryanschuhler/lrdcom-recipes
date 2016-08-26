@@ -168,7 +168,7 @@
 						<@print_item item=item />
 					</#list>
 
-					<input class="field hide please-leave-blank" name="please_leave_blank" />
+					<input class="field please-leave-blank" name="please_leave_blank" />
 
 					<#if submit_text.data?has_content>
 						<#assign btn_text = submit_text.data />
@@ -201,6 +201,13 @@
 			<#else>
 				<#assign thank_you_message = hs_form.getHSFormJSONObject().getString("inlineMessage")!localize("thank-you", "Thank You") />
 			</#if>
+
+			<style type="text/css">
+				.please-leave-blank {
+					position: absolute;
+					left: -999em;
+				}
+			</style>
 
 			<script type="text/javascript">
 				function submitHSForm${article_namespace}(formId, assetInfo) {
@@ -285,6 +292,7 @@
 							}
 
 							var leave = false;
+							var spam = false;
 
 							form.all('.field').each(
 								function(node) {
@@ -294,10 +302,18 @@
 										value = node.get('checked');
 									}
 
-									if ((node.hasClass('field-required') && value == '') || (node.hasClass('field-required') && !value) || (node.hasClass('please-leave-blank') && value != '')) {
+									if ((node.hasClass('field-required') && value == '') || (node.hasClass('field-required') && !value)) {
 										leave = true;
 
 										return;
+									}
+
+									var urlRegEx = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?(?!www.liferay|web.liferay|liferay)[A-Za-z0-9\.\-]+|(?:www\.)(?!liferay)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/ig;
+
+									var hasURL = (new RegExp(urlRegEx)).test(value)
+
+									if ((node.hasClass('please-leave-blank') && value.trim() != '') || hasURL) {
+										spam = true;
 									}
 
 									if (!node.hasClass('hidden-field') && (node.hasClass('field-checkbox') || node.hasClass('field-radio'))) {
@@ -386,8 +402,10 @@
 								fieldsString = fieldsString + field + ':;:' + fields[field] + ':;:';
 							}
 
+							var ioRequestUrl = (spam) ? '${request["render-url"]}' : '${request["resource-url"]}';
+
 							A.io.request(
-								'${request["resource-url"]}',
+								ioRequestUrl,
 								{
 									data: {
 										${portlet_namespace}fields: fieldsString,
