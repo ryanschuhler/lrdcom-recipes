@@ -668,6 +668,10 @@ $white: #fff;
 }
 /*----------------------------------*/
 
+.safari.mobile #agenda {
+	margin-top: 35px;
+}
+
 #agenda #agendaWrapper {
     
     margin: 2em 0;
@@ -702,7 +706,7 @@ $white: #fff;
 
 #agenda #agenda-day-2016-11-14 td.pop-up {
 	display: block;
-	border-right: none;
+	border-right: none !important;
 }
 
 #agenda #agenda-day-2016-11-14 td.multi-room-td:last-child {

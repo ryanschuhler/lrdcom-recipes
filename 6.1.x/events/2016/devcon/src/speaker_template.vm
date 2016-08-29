@@ -1,0 +1,341 @@
+<style type="text/css">
+    .highlight-container {
+        max-width: 920px;
+    }
+
+    .highlight-container, .featured-container {
+        margin: 0 auto;
+    }
+
+    .featured-container {
+        max-width: 1400px;
+    }
+
+    .speaker-container {
+        cursor: pointer;
+        display: inline-block;
+        margin: 40px 1.5%;
+        max-height: 250px;
+        max-width: 192px;
+        overflow: hidden;
+        position: relative;
+        vertical-align: top;
+    }
+
+    .speaker-container .speaker-image-container {
+        max-height: 220px;
+        overflow: hidden;
+    }
+
+    .speaker-container .speaker-image-container img {
+        max-width: 192px;
+        width: 100%;
+    }
+
+    .speaker-image-container .top-right-triangle {
+        border-bottom: 20px solid transparent;
+        border-left: 20px solid transparent;
+        border-right: 20px solid #FFF;
+        border-top: 20px solid #FFF;
+        float: right;
+        height: 0;
+        position: relative;
+        top: -200px;
+        width: 0;
+        z-index: 1;
+    }
+
+    .speaker-container .speaker-description {
+        background-color: #084D78;
+        bottom: 0;
+        color: #FFF;
+        position: absolute;
+        text-align: center;
+        width: 192px;
+    }
+
+    .speaker-container .speaker-title,
+    .speaker-container .speaker-company {
+        font-size: 0.7em;
+    }
+
+    .safari .speaker-container .speaker-description {
+        bottom: 50px;
+    }
+
+    .speaker-container .speaker-overlay, .speaker-container .speaker-overlay-text {
+        display: none;
+    }
+
+    .speaker-container:hover .speaker-overlay {
+        background-color: #000;
+        display: block;
+        position: relative;
+        height: 350px;
+        left: 0;
+        opacity: .65;
+        top: -340px;
+        width: 300px;
+    }
+
+    .speaker-container:hover .speaker-overlay-text {
+        color: #FFF;
+        display: block;
+        font-size: 1.5em;
+        font-weight: normal;
+        font-style: italic;
+        position: relative;
+        text-align: center;
+        top: -470px;
+    }
+
+    .speaker-container .speaker-description .speaker-name {
+        font-size: 16px;
+        font-weight: normal;
+        padding: 5px;
+    }
+
+    .speaker-container .speaker-description .speaker-company {
+        font-style: italic;
+        padding-bottom: 10px;
+    }
+
+    .speaker-section {
+        text-align: center;
+    }
+
+@media(max-width: 720px) {
+    .speaker-container:hover .speaker-overlay, .speaker-container:hover .speaker-overlay-text {
+        display: none;
+    }
+}</style>
+
+<style>
+
+.speakers-button-container {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.speakers-button-container a {
+    border: 2px solid #198aca;
+    cursor: pointer;
+    margin: 20px 0;
+    padding: 7px 15px;
+}
+</style>
+
+## Content Template
+#macro (speaker_template_devcon1 $heading $array)
+    #set ($className = $stringUtil.replace($heading, " ", "_").toLowerCase())
+
+    <h3 class="uppercase centered">
+        $heading
+    </h3>
+
+    #foreach ($record in $array)
+        #set ($speaker_bio = $record.get("speaker_bio"))
+        #set ($speaker_company = $record.get("speaker_company"))
+        #set ($speaker_image = $record.get("speaker_image"))
+        #set ($speaker_image_groupid = $record.get("speaker_image_groupid"))
+        #set ($speaker_image_uuid = $record.get("speaker_image_uuid"))
+        #set ($speaker_highlight = $record.get("speaker_highlight"))
+        #set ($speaker_name = $record.get("speaker_name"))
+        #set ($speaker_title = $record.get("speaker_title"))
+
+        #set ($sponsor_logo = $record.get("sponsor_logo"))
+        #set ($sponsor_logo_uuid = $record.get("sponsor_logo_uuid"))
+
+        #if ($speaker_image != "")
+            #set ($image_src = "/documents/$speaker_image_groupid/$speaker_image_uuid")
+        #else
+            #set ($image_src = "/documents/24222655/33896529/2014-LPSF-Benelux-Default.png/94ff4361-cf48-4c1d-b528-bd4807b8d9c2")
+        #end
+        <div class="speaker-container pop-up">
+            <div class="speaker-image-container" onclick="ga('send', 'event', 'Conferences - North America 2015', 'Speaker Profile Clicks', '$htmlUtil.escape($speaker_name)');">
+                <img src="$image_src" />
+                <div class="top-right-triangle">
+                    &nbsp;</div>
+                <div class="speaker-overlay">
+                    &nbsp;</div>
+                <div class="speaker-overlay-text">
+                    View Bio</div>
+            </div>
+            <div class="speaker-description">
+                <div class="speaker-name">
+                    $speaker_name</div>
+                <div class="speaker-title">
+                    $speaker_title, $speaker_company
+                </div>
+            </div>
+            <div class="speaker-bio pop-up-content">
+                <div class="speaker-name no-margin">
+                    $speaker_name</div>
+                <div class="speaker-title">
+                    $speaker_title, $speaker_company
+                </div>
+                <div class="speaker-company">
+                    </div>
+                <p>$speaker_bio</p>
+            </div>
+        </div>
+    #end
+#end
+
+## Set Up Permission Checker
+#set ($layout_id = $request.get("theme-display").get("plid"))
+#set ($layout_service = $serviceLocator.findService("com.liferay.portal.service.LayoutLocalService"))
+#set ($layout_long = $getterUtil.getLong($layout_id))
+#set ($layout = $layout_service.getLayout($layout_long))
+#set ($user_has_update_permissions = $layoutPermission.contains($permissionChecker, $layout, "UPDATE"))
+
+## Get DDL Records
+#set ($ddl_records_local_service = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))
+#set ($record_set_id = $getterUtil.getLong($record_set_id.data))
+#set ($records = $ddl_records_local_service.getRecords($record_set_id))
+
+#set($speaker_records = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+## Empty arrays for each respective categories
+#set($highlight_sorted = $portal.getClass().forName("java.util.TreeMap").newInstance())
+#set($featured_sorted = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+#foreach ($record in $records)
+    #set ($record = $record.record)
+    #set ($speaker_bio = $record.getFieldValue("speaker_bio"))
+    #set ($speaker_company = $record.getFieldValue("speaker_company"))
+    #set ($speaker_image = $record.getFieldValue("speaker_image"))
+    #set ($speaker_highlight = $record.getFieldValue("speaker_highlight"))
+    #set ($speaker_name = $record.getFieldValue("speaker_name"))
+    #set ($speaker_title = $record.getFieldValue("speaker_title"))
+
+    #set ($speaker_json_object = $jsonFactoryUtil.createJSONObject($speaker_image))
+    #set ($speaker_image_uuid = $speaker_json_object.getString("uuid"))
+
+    #set($speaker_record = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+    #set ($void = $speaker_record.put("speaker_bio", $speaker_bio))
+    #set ($void = $speaker_record.put("speaker_company", $speaker_company))
+    #set ($void = $speaker_record.put("speaker_image", $speaker_image))
+    #set ($void = $speaker_record.put("speaker_image_groupid", $record.getGroupId()))
+    #set ($void = $speaker_record.put("speaker_image_uuid", $speaker_image_uuid))
+    #set ($void = $speaker_record.put("speaker_highlight", $speaker_highlight))
+    #set ($void = $speaker_record.put("speaker_name", $speaker_name))
+    #set ($void = $speaker_record.put("speaker_title", $speaker_title))
+
+    #if ($record.getStatus() == "0")
+        #if ($speaker_highlight == "true")
+            #set ($void = $highlight_sorted.put($speaker_name, $speaker_record))
+        #else
+            #set ($void = $featured_sorted.put($speaker_name, $speaker_record))
+        #end
+    #end
+#end
+
+<div class="speaker-section">
+    #if ($highlight_sorted.size() > 0)
+        <div class="highlight-container">
+            #speaker_template_devcon1("$header.data", $highlight_sorted)
+        </div>
+    #end
+    
+    #if ($validator.isNotNull($show_regular_speakers) && $show_regular_speakers.data == "true")
+        #if ($featured_sorted.size() > 0)
+            <div class="featured-container">
+                #speaker_template_devcon1("$regular_speakers_header.data", $featured_sorted)
+            </div>
+        #end
+    #end
+</div>
+
+ #if ($validator.isNotNull($show_speaker_button) && $show_speaker_button.data == "true")
+    <div class="speakers-button-container">
+        <a class="main-text-color normal" href="$speaker_link_href.data">
+            $speaker_link_text.data
+        </a>
+    </div>
+#end
+
+<script>
+AUI().ready(
+    'node',
+    function(A) {
+        var pagePopUp = A.one('#pagePopUp');
+
+        if (!pagePopUp) {
+            A.one('#wrapper').append('<div class="aui-helper-hidden" id="pagePopUp"><div id="closePopUp"></div></div>')
+
+            pagePopUp = A.one('#pagePopUp');
+        };
+
+        var copyToPopUp = function(event) {
+            var newPopUpContent = event.currentTarget.one('.pop-up-content');
+
+            var oldPopUpContent = pagePopUp.one('.pop-up-content');
+
+            if (!newPopUpContent) {
+                return
+            }
+
+            if (oldPopUpContent) {
+                oldPopUpContent.remove();
+            }
+
+            event.stopPropagation();
+
+            pagePopUp.append(newPopUpContent.cloneNode(true));
+
+            pagePopUp.removeClass('aui-helper-hidden');
+
+            var popUpContent = pagePopUp.one('.pop-up-content')
+
+            popUpContent.on(
+                'clickoutside',
+                function(event) {
+                    pagePopUp.addClass('aui-helper-hidden');
+
+                    popUpContent.detach('clickoutside');
+                }
+            );
+        };
+
+        var WIN = A.getWin();
+
+        var centerOnPage = function(node) {
+            var currentScrollPos = WIN.get('docScrollY');
+
+            var winHeight = WIN.get('innerHeight');
+
+            if (winHeight == undefined) {
+                winHeight = document.documentElement.clientHeight;
+            }
+
+            var contentWidth = A.one('#content').get('clientWidth');
+
+            var nodeHeight = node.get('clientHeight');
+            var nodeWidth = node.get('clientWidth');
+
+            xCenter = (contentWidth / 2) - (nodeWidth / 2);
+            if (nodeHeight > winHeight) {
+                yCenter = currentScrollPos;
+            }
+            else {
+                 yCenter = ((winHeight / 2) - (nodeHeight / 2)) + currentScrollPos;
+            }
+            node.setStyle('right', xCenter);
+            node.setStyle('top', yCenter);
+
+
+        };
+
+        A.all('.pop-up').on(
+            'click',
+            function(event) {
+                copyToPopUp(event);
+
+                centerOnPage(pagePopUp);
+            }
+        );
+    }
+);
+</script>
