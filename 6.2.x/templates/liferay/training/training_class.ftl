@@ -1,7 +1,7 @@
 <#assign request_url = "/osb-portlet/training/training_events?" />
 
 <#if course_id.data?has_content>
-	<#assign request_url = request_url + "trainingCourseId=" + course_id.data />
+	<#assign request_url = request_url + "trainingCourseIds=" + course_id.data />
 </#if>
 
 <#assign online_course_only = ""/>
