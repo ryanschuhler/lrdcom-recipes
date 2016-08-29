@@ -316,7 +316,7 @@ bottom: 50px;
 
 ## Get DDL Records
 #set ($ddl_records_local_service = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))
-#set ($record_set_id = $getterUtil.getLong($reserved_record_set_id.data))
+#set ($record_set_id = $getterUtil.getLong($record_set_id.data))
 #set ($records = $ddl_records_local_service.getRecords($record_set_id))
 
 #set($speaker_records = $portal.getClass().forName("java.util.TreeMap").newInstance())
@@ -372,9 +372,9 @@ bottom: 50px;
 
 <div class="speaker-section">
     #if ($keynote_sorted.size() > 0)
-        #speaker_template15("plénières", $keynote_sorted)
+        #speaker_template15("$header.data", $keynote_sorted)
     #end
     #if ($featured_sorted.size() > 0)
-        #speaker_template15("Les Intervenants du Symposium", $featured_sorted)
+        #speaker_template15("$regular_speakers_header.data", $featured_sorted)
     #end
 </div>
