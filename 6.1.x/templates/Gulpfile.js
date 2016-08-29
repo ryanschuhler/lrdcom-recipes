@@ -97,18 +97,3 @@ gulp.task("update-template", function () {
              });
     }
 });
-
-
-gulp.task("get-structure", function () {
-    
-        var cmd = {
-            '/journalstructure/get-structure': {
-                "groupId": "67510365",
-                "structureId": "73732526"
-            }
-        };
-        liferay.invoke_liferay(config, cmd, function (body) {
-            logger.info(body);
-        });
-    
-});
