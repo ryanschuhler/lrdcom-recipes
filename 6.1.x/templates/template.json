@@ -4,6 +4,14 @@
         "filename": "events2016/ddl-speaker-symposium-template.vm",
         "name": "Speaker Symposium DDL Template"
 },
+
+{
+        "groupId": "67510365",
+        "templateId": "78236355",
+        "filename": "events2016/ddl-speaker-symposium-large-template.vm",
+        "name": "Symposium Speaker Large DDL Template",
+        "description": "Currently used on the 2016 Italy Symposium site"
+},
 {
         "groupId": "67510365",
         "templateId": "73049708",
