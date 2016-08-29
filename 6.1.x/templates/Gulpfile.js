@@ -25,7 +25,6 @@ try {
     throw new Error("Could not find config file: " + configFile);
 }
 
-
 gulp.task("get-templates", function () {
     var templateConfig = JSON.parse(fs.readFileSync('./template.json'));
 
@@ -97,3 +96,5 @@ gulp.task("update-template", function () {
              });
     }
 });
+
+
