@@ -1,0 +1,16 @@
+{
+  "name": "templates",
+  "version": "1.0.0",
+  "description": "Administer templates for Liferay 6.1 site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allen Ziegenfus <allen.ziegenfus@liferay.com> (https://www.liferay.com/web/allen.ziegenfus/blog)",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "liferay-json": "https://github.com/allen-ziegenfus/liferay-json",
+    "winston": "^2.2.0"
+  }
+}
