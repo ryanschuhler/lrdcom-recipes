@@ -9,5 +9,23 @@
         "templateId": "73049708",
         "filename": "events2016/symposium-css.ftl",
         "name": "Symposium CSS Template"
+},
+{
+        "groupId": "67510365",
+        "templateId": "69679784",
+        "filename": "events2016/ldsf-sliding-banner.vm",
+        "name": "Sliding Top Banner Template - 2016 LDSF"
+},
+{
+        "groupId": "67510365",
+        "templateId": "71756485",
+        "filename": "events2016/ldsf-dach-agenda.vm",
+        "name": "DDL Agenda Recap Template"
+},
+{
+        "groupId": "67510365",
+        "templateId": "70236016",
+        "filename": "events2016/ddl-agenda-template.vm",
+        "name": "DDL Agenda Template"
 }
 ]
