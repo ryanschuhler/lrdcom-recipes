@@ -18,7 +18,9 @@
 
 <#include "${templatesPath}/1561886" />
 
-<a class="cta" href="/resources">${languageUtil.format(locale, "back-to-x", languageUtil.get(locale, "resources"))}</a>
+<p class="standard-padding">
+	<a class="cta" href="/resources">${languageUtil.format(locale, "back-to-x", languageUtil.get(locale, "resources"))}</a>
+</p>
 
 <div class="resource-display">
 	<#if dl_file_entry_local_service_util.fetchFileEntry(groupId, folder_id, title)??>
@@ -122,5 +124,9 @@
 				</span>
 			</#if>
 		</div>
+	<#else>
+		<p class="standard-padding">
+			Resource not found.
+		</p>
 	</#if>
 </div>
