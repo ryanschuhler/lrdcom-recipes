@@ -1,7 +1,7 @@
 [{
         "groupId": "67510365",
         "templateId": "73732534",
-        "filename": "events2016/symposium-speaker.vm",
+        "filename": "events2016/ddl-speaker-symposium-template.vm.vm",
         "name": "Speaker Symposium DDL Template"
 },
 {
@@ -19,7 +19,7 @@
 {
         "groupId": "67510365",
         "templateId": "71756485",
-        "filename": "events2016/ldsf-dach-agenda.vm",
+        "filename": "events2016/ddl-agenda-recap-template.vm",
         "name": "DDL Agenda Recap Template"
 },
 {
@@ -27,5 +27,11 @@
         "templateId": "70236016",
         "filename": "events2016/ddl-agenda-template.vm",
         "name": "DDL Agenda Template"
+},
+{
+        "groupId": "67510365",
+        "templateId": "78224346",
+        "filename": "events2016/ddl-speaker-devcon-template.vm",
+        "name": "Speakers DEVCON Template"
 }
 ]
