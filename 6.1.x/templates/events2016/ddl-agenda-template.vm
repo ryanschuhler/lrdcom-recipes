@@ -679,19 +679,6 @@
         top: 0;
     }
 
-    .pop-up-content {
-        color: #6B6C6B;
-    }
-
-    .pop-up-content .view-all-bio-link, .pop-up-content .room-session, .pop-up-content .speaker-information {
-        padding-bottom: 1em;
-    }
-
-    .ie8 .pop-up-content {
-        background: #6B6C6B;
-        color: #FFF;
-    }
-
     @media all and (max-width: 900px) {
         #agendaWrapper td {
             max-width: 100%;
@@ -768,58 +755,6 @@
             display: none;
         }
     }
-
-
-
-
-    .pop-up-content {
-        display: none;
-    }
-
-    .pop-up-content .btn {
-        font-size: 1em;
-        margin-top: 20px;
-    }
-
-    #pagePopUp {
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid #CCC;
-        position: absolute;
-        width: 100%;
-        z-index: 100;
-    }
-
-    #pagePopUp .pop-up-content {
-        display: block;
-        padding: 50px 35px 30px;
-    }
-
-    #pagePopUp .pop-up-content .speaker-company, #pagePopUp .pop-up-content .speaker-name, #pagePopUp .pop-up-content .speaker-title {
-        display: block;
-    }
-
-    #pagePopUp .speaker-title, #pagePopUp .speaker-company {
-        font-weight: bold;
-    }
-
-    #pagePopUp .speaker-name {
-        color: #3AA0D5;
-        font-size: 1.2em;
-        margin: 5px 0;
-    }
-
-    #pagePopUp .speaker-company {
-        font-style: italic;
-    }
-
-    #agendaclosePopUp {
-        background: url(/documents/35935946/36204257/close-pop-up.png/98401a14-9fcf-4f9a-8f1d-4fdcb7ff0207?t=1392924953000?t=1392924953000?t=1392924953590) no-repeat;
-        cursor: pointer;
-        float: right;
-        height: 60px;
-        width: 60px;
-    }
-
     .ie8 #heading .company-title .logo {
         background-color: #F5FAFD;
     }
