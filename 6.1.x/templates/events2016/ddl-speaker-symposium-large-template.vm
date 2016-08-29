@@ -1,0 +1,380 @@
+<style type="text/css">
+    .speaker-container {
+        cursor: pointer;
+        display: inline-block;
+        margin: 20px 1.5%;
+        max-height: 310px;
+        max-width: 244px;
+    }
+
+    .speaker-container.keynote {
+        max-height: 460px;
+        max-width: 290px;
+        margin: 20px 1.5%;
+        width: 30%;
+    }
+
+    .speaker-container .speaker-image-container {
+        max-height: 280px;
+        overflow: hidden;
+    }
+
+    .speaker-container.keynote .speaker-image-container {
+        max-height: 360px;
+    }
+
+    .speaker-container .speaker-image-container img {
+        max-width: 320px;
+        width: 100%;
+    }
+
+    .speaker-container.keynote .speaker-image-container img {
+        height: 330px;
+        max-width: 320px;
+    }
+    
+    .speaker-container .speaker-title {
+        min-height: 22px;
+    }
+
+    .speaker-image-container .top-right-triangle {
+        border-bottom: 40px solid transparent;
+        border-left: 40px solid transparent;
+        border-right: 40px solid #FFF;
+        border-top: 40px solid #FFF;
+        float: right;
+        height: 0;
+        position: relative;
+        top: -337px;
+        width: 0;
+        z-index: 1;
+    }
+
+    .speaker-container .speaker-description {
+        background-color: #353535;
+        bottom: 30px;
+        color: #FFF;
+        position: relative;
+        text-align: center;
+        width: 244px;
+    }
+
+.safari .speaker-container .speaker-description {
+bottom: 50px;
+}
+
+    .speaker-container.keynote .speaker-description {
+        margin-bottom: -40px;
+        width: 290px;
+    }
+
+    .speaker-container .speaker-overlay, .speaker-container .speaker-overlay-text {
+        display: none;
+    }
+
+    .speaker-container:hover .speaker-overlay {
+        background-color: #000;
+        display: block;
+        position: relative;
+        height: 350px;
+        left: 0;
+        opacity: .65;
+        top: -340px;
+        width: 300px;
+    }
+
+    .speaker-container:hover .speaker-overlay-text {
+        color: #FFF;
+        display: block;
+        font-size: 1.5em;
+        font-weight: normal;
+        font-style: italic;
+        position: relative;
+        text-align: center;
+        top: -500px;
+    }
+
+    .speaker-container.keynote:hover .speaker-overlay-text {
+        top: -540px;
+    }
+
+    .speaker-container .speaker-description .speaker-name {
+        font-size: 20px;
+        font-weight: normal;
+        padding: 15px;
+    }
+
+    .speaker-container .speaker-description .speaker-company {
+        font-style: italic;
+        padding-bottom: 10px;
+    }
+
+    .speaker-section {
+        text-align: center;
+    }
+
+    .speaker-socials a {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+    }
+
+    .speaker-socials .linkedin {
+        background: url('/documents/47511614/51371158/linkedin-grey.png') no-repeat center center;
+        background-size: cover;
+    }
+
+    .speaker-socials .linkedin:hover {
+        background: url('/documents/47511614/51371158/linkedin-color.png') no-repeat center center;
+        background-size: cover;
+    }
+
+    .speaker-socials .twitter {
+        background: url('/documents/47511614/51371158/twitter-grey.png') no-repeat center center;
+        background-size: cover;
+    }
+
+    .speaker-socials .twitter:hover {
+        background: url('/documents/47511614/51371158/twitter-color.png') no-repeat center center;
+        background-size: cover;
+    }
+
+@media(max-width: 1000px) {
+    .speaker-container {
+          width: 288px;
+          margin: 20px 1.5%;
+    }
+
+    .speaker-container.keynote {
+          width: 288px;
+          margin: 20px 1.5%;
+    }
+}
+
+@media(max-width: 720px) {
+    .speaker-container {
+        width: 200px;
+        margin: 40px 20px -20px;
+    }
+
+    .speaker-container.keynote {
+        width: 200px;
+        margin: 40px 20px -20px;
+    }
+
+    .speaker-container .speaker-image-container {
+        max-height: 260px;
+    }
+
+    .speaker-image-container img {
+        height: 230px;
+        width: 200px;
+        vertical-align: top;
+    }
+
+    .speaker-container.keynote  .speaker-image-container img {
+        height: 230px;
+        width: 200px;
+    }
+
+    .speaker-container .speaker-description {
+        bottom: 30px;
+        max-height: initial;
+        padding: 8px 0;
+        width: 100%;
+    }
+
+    .speaker-container.keynote .speaker-description {
+        bottom: 30px;
+        max-height: initial;
+        padding: 8px 0;
+        width: 100%;
+    }
+
+    .speaker-container:hover .speaker-description {
+        bottom: 30px;
+        max-height: initial;
+    }
+
+    .speaker-container.keynote:hover .speaker-description {
+        bottom: 30px;
+        max-height: initial;
+    }
+
+    .speaker-container .speaker-description .speaker-name {
+        font-size: 16px;
+        padding: 0;
+    }
+
+    .speaker-container.keynote .speaker-description .speaker-name {
+        font-size: 16px;
+        padding: 0;
+    }
+
+    .speaker-container.keynote .speaker-image-container {
+        max-height: 260px;
+    }
+
+    .speaker-container .speaker-title {
+        min-height: 42px;
+    }
+
+    .speaker-image-container .top-right-triangle {
+        border-bottom: 25px solid transparent;
+        border-left: 25px solid transparent;
+        border-right: 25px solid #FFF;
+        border-top: 25px solid #FFF;
+        top: -235px;
+    }
+
+    .speaker-container.keynote .speaker-image-container .top-right-triangle {
+        border-bottom: 25px solid transparent;
+        border-left: 25px solid transparent;
+        border-right: 25px solid #FFF;
+        border-top: 25px solid #FFF;
+        top: -235px;
+    }
+
+    .speaker-container:hover .speaker-overlay, .speaker-container:hover .speaker-overlay-text, .speaker-container.keynote:hover .speaker-overlay, .speaker-container.keynote:hover .speaker-overlay-text {
+        display: none;
+    }
+}</style>
+
+## Content Template
+#macro (speaker_template15 $heading $array)
+    #set ($className = $stringUtil.replace($heading, " ", "_").toLowerCase())
+
+    <h3 class="uppercase centered">
+        $heading
+    </h3>
+
+    #foreach ($record in $array)
+        #set ($speaker_bio = $record.get("speaker_bio"))
+        #set ($speaker_company = $record.get("speaker_company"))
+        #set ($speaker_image = $record.get("speaker_image"))
+        #set ($speaker_image_groupid = $record.get("speaker_image_groupid"))
+        #set ($speaker_image_uuid = $record.get("speaker_image_uuid"))
+        #set ($speaker_keynote = $record.get("speaker_keynote"))
+        #set ($speaker_name = $record.get("speaker_name"))
+        #set ($speaker_title = $record.get("speaker_title"))
+        #set ($speaker_social_linkedin = $record.get("speaker_social_linkedin"))
+        #set ($speaker_social_twitter = $record.get("speaker_social_twitter"))
+
+        #set ($sponsor_logo = $record.get("sponsor_logo"))
+        #set ($sponsor_logo_uuid = $record.get("sponsor_logo_uuid"))
+
+        #if ($speaker_image != "")
+            #set ($image_src = "/documents/$speaker_image_groupid/$speaker_image_uuid")
+        #else
+            #set ($image_src = "/documents/24222655/33896529/2014-LPSF-Benelux-Default.png")
+        #end
+        <div class="speaker-container pop-up #if ($speaker_keynote == 'true')keynote#end">
+            <div class="speaker-image-container" onclick="ga('send', 'event', 'Conferences - France 2016', 'Speaker Profile Clicks', '$htmlUtil.escape($speaker_name)');">
+                <img src="$image_src" />
+                <div class="top-right-triangle">
+                    &nbsp;</div>
+                <div class="speaker-overlay">
+                    &nbsp;</div>
+                <div class="speaker-overlay-text">
+                    Consulter sa bio</div>
+            </div>
+            <div class="speaker-description">
+                <div class="speaker-name">
+                    $speaker_name</div>
+                <div class="speaker-title">
+                    $stringUtil.shorten($speaker_title, $getterUtil.getInteger(35))</div>
+                <div class="speaker-company">
+                    $stringUtil.shorten($speaker_company, $getterUtil.getInteger(35))</div>
+            </div>
+            <div class="speaker-bio pop-up-content">
+                <div class="speaker-name">
+                    $speaker_name</div>
+                <div class="speaker-title">
+                    $speaker_title</div>
+                <div class="speaker-company">
+                    $speaker_company</div>
+                <div class="speaker-socials">
+                    #if ($speaker_social_twitter != "")
+                        <a href="$speaker_social_twitter" class="twitter"></a>
+                    #end
+                    #if ($speaker_social_linkedin != "")
+                        <a href="$speaker_social_linkedin" class="linkedin"></a>
+                    #end
+                </div>
+                <p>$speaker_bio</p>
+            </div>
+        </div>
+    #end
+#end
+
+## Set Up Permission Checker
+#set ($layout_id = $request.get("theme-display").get("plid"))
+#set ($layout_service = $serviceLocator.findService("com.liferay.portal.service.LayoutLocalService"))
+#set ($layout_long = $getterUtil.getLong($layout_id))
+#set ($layout = $layout_service.getLayout($layout_long))
+#set ($user_has_update_permissions = $layoutPermission.contains($permissionChecker, $layout, "UPDATE"))
+
+## Get DDL Records
+#set ($ddl_records_local_service = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))
+#set ($record_set_id = $getterUtil.getLong($reserved_record_set_id.data))
+#set ($records = $ddl_records_local_service.getRecords($record_set_id))
+
+#set($speaker_records = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+## Empty arrays for each respective categories
+#set($keynote_sorted = $portal.getClass().forName("java.util.TreeMap").newInstance())
+#set($featured_sorted = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+#foreach ($record in $records)
+    #set ($record = $record.record)
+    #set ($speaker_bio = $record.getFieldValue("speaker_bio"))
+    #set ($speaker_company = $record.getFieldValue("speaker_company"))
+    #set ($speaker_image = $record.getFieldValue("speaker_image"))
+    #set ($speaker_keynote = $record.getFieldValue("speaker_keynote"))
+    #set ($speaker_name = $record.getFieldValue("speaker_name"))
+    #set ($speaker_title = $record.getFieldValue("speaker_title"))
+    #set ($speaker_social_linkedin = $record.getFieldValue("speaker_social_linkedin"))
+    #set ($speaker_social_twitter = $record.getFieldValue("speaker_social_twitter"))
+
+    #set ($sponsor_logo = $record.getFieldValue("sponsor_logo"))
+
+    #set ($speaker_json_object = $jsonFactoryUtil.createJSONObject($speaker_image))
+    #set ($speaker_image_uuid = $speaker_json_object.getString("uuid"))
+
+    #set ($sponsor_json_object = $jsonFactoryUtil.createJSONObject($sponsor_logo))
+    #set ($sponsor_logo_uuid = $sponsor_json_object.getString("uuid"))
+
+    #set($speaker_record = $portal.getClass().forName("java.util.TreeMap").newInstance())
+
+    #set ($void = $speaker_record.put("speaker_bio", $speaker_bio))
+    #set ($void = $speaker_record.put("speaker_company", $speaker_company))
+    #set ($void = $speaker_record.put("speaker_image", $speaker_image))
+    #set ($void = $speaker_record.put("speaker_image_groupid", $record.getGroupId()))
+    #set ($void = $speaker_record.put("speaker_image_uuid", $speaker_image_uuid))
+    #set ($void = $speaker_record.put("speaker_keynote", $speaker_keynote))
+    #set ($void = $speaker_record.put("speaker_name", $speaker_name))
+    #set ($void = $speaker_record.put("speaker_title", $speaker_title))
+    #set ($void = $speaker_record.put("speaker_social_linkedin", $speaker_social_linkedin))
+    #set ($void = $speaker_record.put("speaker_social_twitter", $speaker_social_twitter))
+
+    #set ($void = $speaker_record.put("sponsor_image", $sponsor_image))
+    #set ($void = $speaker_record.put("sponsor_logo", $sponsor_logo))
+    #set ($void = $speaker_record.put("sponsor_logo_uuid", $sponsor_logo_uuid))
+
+    #if ($record.getStatus() == "0")
+        #if ($speaker_keynote == "true")
+            #set ($void = $keynote_sorted.put($speaker_name, $speaker_record))
+        #else
+            #set ($void = $featured_sorted.put($speaker_name, $speaker_record))
+        #end
+    #end
+#end
+
+<div class="speaker-section">
+    #if ($keynote_sorted.size() > 0)
+        #speaker_template15("plénières", $keynote_sorted)
+    #end
+    #if ($featured_sorted.size() > 0)
+        #speaker_template15("Les Intervenants du Symposium", $featured_sorted)
+    #end
+</div>
