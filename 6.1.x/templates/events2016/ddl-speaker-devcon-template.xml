@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element name="record_set_id" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="header" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="show_speaker_button" type="boolean" index-type="" repeatable="false"/>
+	<dynamic-element name="speaker_link_text" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="speaker_link_href" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="speaker_hover_text" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="show_regular_speakers" type="boolean" index-type="" repeatable="false"/>
+	<dynamic-element name="regular_speakers_header" type="text" index-type="" repeatable="false"/>
+</root>

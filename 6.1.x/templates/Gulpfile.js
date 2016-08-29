@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var fs = require("fs");
+const path = require("path");
 var liferay = require("liferay-json");
 var winston = require("winston");
 var logger = new winston.Logger({
@@ -39,6 +40,19 @@ gulp.task("get-templates", function () {
         liferay.invoke_liferay(config, cmd, function (body) {
             logger.info("Writing template " + body.nameCurrentValue + " to " + template.filename);
             fs.writeFile(template.filename, body.xsl);
+
+            var structureCmd = {
+            '/journalstructure/get-structure': {
+                "groupId": template.groupId,
+                "structureId": body.structureId
+                }
+            };
+            liferay.invoke_liferay(config, structureCmd, function (structurebody) {
+                var parsedTemplate = path.parse(template.filename);
+                var structureXMLFilename = parsedTemplate.root + parsedTemplate.dir +"/"+ parsedTemplate.name + ".xml";
+                logger.info("Writing structure XML for template " + body.nameCurrentValue + " to " + structureXMLFilename);
+                fs.writeFile(structureXMLFilename, structurebody.xsd);
+            });
         });
     });
 });
@@ -73,7 +87,7 @@ gulp.task("update-template", function () {
             };
             logger.info("Updating template " + template.name + " from " + template.filename);
             liferay.invoke_liferay(config, cmd, function (body) {
-                logger.info(body);
+                //logger.info(body);
             });
         });
     } else {
@@ -82,4 +96,19 @@ gulp.task("update-template", function () {
                  logger.info("gulp update-template --templateFilename " + template.filename);
              });
     }
+});
+
+
+gulp.task("get-structure", function () {
+    
+        var cmd = {
+            '/journalstructure/get-structure': {
+                "groupId": "67510365",
+                "structureId": "73732526"
+            }
+        };
+        liferay.invoke_liferay(config, cmd, function (body) {
+            logger.info(body);
+        });
+    
 });

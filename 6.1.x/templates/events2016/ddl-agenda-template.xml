@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element name="record_set_id" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[record_set_id]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="enable_agenda_button" type="list" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[true or false, if the Agenda button with v slide outshould be displayed]]></entry>
+			<entry name="label"><![CDATA[enable_agenda_button]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+		<dynamic-element name=" Wahr " type="true" index-type="" repeatable="false"></dynamic-element>
+		<dynamic-element name=" Falsch " type="false" index-type="" repeatable="false"/>
+	</dynamic-element>
+	<dynamic-element name="agenda_button_text" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[agenda_button_text]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_button_subtext" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[agenda_button_subtext]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_locale" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Locale for showing Agenda date/time formats (Java locale string) e.g. en_US or de_DE]]></entry>
+			<entry name="label"><![CDATA[agenda_locale]]></entry>
+			<entry name="predefinedValue"><![CDATA[en_US]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_time_format" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Time format (Java format) e.g. H:mm or h:mma]]></entry>
+			<entry name="label"><![CDATA[agenda_time_format]]></entry>
+			<entry name="predefinedValue"><![CDATA[H:mm]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_date_format" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Date format for the agenda header (Java format)]]></entry>
+			<entry name="label"><![CDATA[agenda_date_format]]></entry>
+			<entry name="predefinedValue"><![CDATA[EEEE, dd. MMMM yyyy]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_click_analytics_category" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Category for Google Analytics agenda clicks]]></entry>
+			<entry name="label"><![CDATA[agenda_click_analytics_category]]></entry>
+			<entry name="predefinedValue"><![CDATA[Conferences - DACH 2016]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_edit_link" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Link for editing agenda entries]]></entry>
+			<entry name="label"><![CDATA[agenda_edit_link]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="agenda_recap_flag" type="boolean" index-type="" repeatable="false"/>
+	<dynamic-element name="sectionid" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="full_agenda_hash" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="recap_share_slides_text" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="agenda_default_day" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="column_view" type="boolean" index-type="" repeatable="false"/>
+	<dynamic-element name="num_columns" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="agenda_filter" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="show_tracks" type="boolean" index-type="" repeatable="false">
+		<dynamic-element name="track_day" type="text" index-type="" repeatable="true">
+			<dynamic-element name="track_settings" type="selection_break" index-type="" repeatable="true">
+				<dynamic-element name="track_css_class" type="text" index-type="" repeatable="false"></dynamic-element>
+				<dynamic-element name="track_name" type="text" index-type="" repeatable="false"/>
+			</dynamic-element>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element name="show_filters" type="boolean" index-type="" repeatable="false">
+		<dynamic-element name="filter_settings" type="selection_break" index-type="" repeatable="true">
+			<dynamic-element name="filter_code" type="text" index-type="" repeatable="false"></dynamic-element>
+			<dynamic-element name="filter_name" type="text" index-type="" repeatable="false"/>
+		</dynamic-element>
+	</dynamic-element>
+</root>
