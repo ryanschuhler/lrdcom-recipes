@@ -48,7 +48,7 @@ If the version on prod is different from what is checked into git, then the diff
 
 # To update a template file on the Liferay server from your filesystem: 
 
-<pre> gulp update-template --templateFilename <templatefilename></pre>
+<pre> gulp update-template --templateFilename templatefilename.vm</pre>
 
 ***NOTE: This will directly update templates on prod so be careful.***
 
@@ -64,7 +64,7 @@ Calling the update-template function without any argument will cause it to spit 
 
 # To update a structure XML  on the Liferay server from your filesystem: 
 
-<pre> gulp update-structure --structureFilename <structurefilename></pre>
+<pre> gulp update-structure --structureFilename structurefilename.xml</pre>
 
 ***NOTE: This will directly update structures on prod so be careful.***
 

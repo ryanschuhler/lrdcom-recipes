@@ -25,11 +25,11 @@ try {
     throw new Error("Could not find config file: " + configFile);
 }
 
-gulp.task("get-templates", function () {
+gulp.task("get-templates", function (cb) {
     var templateConfig = JSON.parse(fs.readFileSync('./template.json'));
 
+    var foundTemplates = 0;
     templateConfig.forEach(function (template) {
-
         var cmd = {
             '/journaltemplate/get-template': {
                 "groupId": template.groupId,
@@ -39,18 +39,22 @@ gulp.task("get-templates", function () {
         liferay.invoke_liferay(config, cmd, function (body) {
             logger.info("Writing template " + body.nameCurrentValue + " to " + template.filename);
             fs.writeFile(template.filename, body.xsl);
+            foundTemplates++;
+            if (foundTemplates == templateConfig.length) {
+                cb();
+            }
         });
     });
 });
 
-gulp.task("update-template", function () {
+gulp.task("update-template", function (cb) {
     var templateConfig = JSON.parse(fs.readFileSync('./template.json'));
 
     var minimist = require('minimist');
     var options = minimist(process.argv.slice(2));
 
     if (options && options.templateFilename) {
-        logger.info("Using templateFilename " + options.templateFilemame);
+        logger.info("Using templateFilename " + options.templateFilename);
 
         templateConfig.filter(function(searchtemplate) { return searchtemplate.filename === options.templateFilename; }).forEach(function (template) {
             var templateFileContent = fs.readFileSync(template.filename).toString();
@@ -74,6 +78,7 @@ gulp.task("update-template", function () {
             logger.info("Updating template " + template.name + " from " + template.filename);
             liferay.invoke_liferay(config, cmd, function (body) {
                 //logger.info(body);
+                cb();
             });
         });
     } else {
@@ -185,4 +190,36 @@ gulp.task("get-structure-config", function () {
     } else {
             logger.info("Syntax: gulp get-structure-config --groupId ####### --configFileName filename");
     }
+});
+
+
+
+
+
+gulp.task("search-template", function () {
+  
+        var cmd = {
+            '/journalarticle/search': {
+                "companyId":  0,
+                "groupId": 67510365,
+                "classNameId": 0,
+                "keywords": "",
+                "version": 0,
+                "type": "",
+                "structureId": "",
+                "templateId": "78236355",
+                "displayDateGT": "",
+                "displayDateLT": "",
+                "status": 0,
+                "reviewDate": "",
+                "start": 1,
+                "end": 100,
+                "obc": "com.liferay.portal.kernel.util.OrderByComparator"
+            }
+        };
+        liferay.invoke_liferay(config, cmd, function (body) {
+
+            logger.info(body);
+        });
+
 });
