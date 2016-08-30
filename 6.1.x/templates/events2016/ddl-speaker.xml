@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element name="record_set_id" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="sectionid" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="speakerClickEventCategory" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="enable_speaker_toggle" type="list" index-type="" repeatable="false">
+		<dynamic-element name="false" type="false" index-type="" repeatable="false"></dynamic-element>
+		<dynamic-element name="true" type="true" index-type="" repeatable="false"/>
+	</dynamic-element>
+	<dynamic-element name="speakersizevalue" type="text" index-type="" repeatable="false"/>
+</root>

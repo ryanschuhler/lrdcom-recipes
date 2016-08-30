@@ -1,0 +1,387 @@
+[
+    {
+        "groupId": 67510365,
+        "structureId": "67612504",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67612801",
+        "name": "Symposium Footer Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67656927",
+        "name": "Time Graph - Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67703192",
+        "name": "Sliding Top Banner - Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709364",
+        "name": "Video Swapper with Paralax Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709366",
+        "name": "Justify",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709368",
+        "name": "Hubspot Form Generator",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709370",
+        "name": "Twitter Quote Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709372",
+        "name": "Twitter Handler Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "67709374",
+        "name": "LPSF-Session Sponsor - structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "68284662",
+        "name": "Multi Portlet Template",
+        "description": "Allows for showing more than one portlet, for example side by side or so.\n\nSetting it up for LDSF as a way of learning.",
+        "filename": "events2016/multi-portlet.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "68728211",
+        "name": "Sliding Top Banner Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "68734651",
+        "name": "Events Footer Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69676691",
+        "name": "Sliding Top Banner - Structure 2016 LDSF",
+        "description": "",
+        "filename": "events2016/ldsf-sliding-banner.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69890126",
+        "name": "Video Swapper with Paralax Structure LDSF",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69923605",
+        "name": "Twitter Quote Structure with configurable colors",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932474",
+        "name": "Contact Email Updates Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932476",
+        "name": "Hubspot Form Generator - structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932478",
+        "name": "Time Graph - structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932480",
+        "name": "test",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932482",
+        "name": "Toggled Sections",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932484",
+        "name": "At a Glance - structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932486",
+        "name": "Hubspot Slideout Form",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932488",
+        "name": "Popup Form Gating",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69932490",
+        "name": "Default",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "69987767",
+        "name": "Events Footer 2016 Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70083360",
+        "name": "Events Mobile+Sticky Nav",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70232182",
+        "name": "Page Title Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70235940",
+        "name": "DDL Agenda",
+        "description": "",
+        "filename": "events2016/ddl-agenda.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70241714",
+        "name": "Expert Exchange Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70302710",
+        "name": "Speaker DDL Structure",
+        "description": "",
+        "filename": "events2016/ddl-speaker.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70302712",
+        "name": "Sponsors DDL Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70345623",
+        "name": "Site Builder",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70449686",
+        "name": "Twitter Banner Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "70795441",
+        "name": "Event Location To-Do Blocks - structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "71951178",
+        "name": "Nav Link Structure",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "72838951",
+        "name": "Event Brite Form",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73049573",
+        "name": "Symposium CSS",
+        "description": "",
+        "filename": "events2016/symposium-css.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73053364",
+        "name": "Symposium Banner",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73392526",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73392647",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73392816",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73617993",
+        "name": "DEVCON CSS",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73617996",
+        "name": "DEVCON Banner",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73728595",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73732526",
+        "name": "Speaker Symposium DDL Structure",
+        "description": "",
+        "filename": "events2016/ddl-speaker-symposium.xml"
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73736819",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73916467",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73916728",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "73916964",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "74145680",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "74588293",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "74588427",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "74588454",
+        "name": "Lego",
+        "description": "",
+        "filename": ""
+    },
+    {
+        "groupId": 67510365,
+        "structureId": "76326060",
+        "name": "NAS DDL Speaker Info - Structure",
+        "description": "",
+        "filename": ""
+    }
+]

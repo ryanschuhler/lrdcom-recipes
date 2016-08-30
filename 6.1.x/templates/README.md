@@ -57,9 +57,18 @@ Calling the update-template function without any argument will cause it to spit 
 <pre> gulp update-template</pre>
 
 
-#Structure XML
+# To copy structure XML files from the Liferay server to your filesystem (currently only files configured in [structures.json](structures.json) are fetched)
 
-Currently the structure XML will be returned and stored multiple times if there are templates that use the same structure. Maybe come up with a better way of handling that?
+<pre>gulp get-structures</pre>
 
 
+# To update a structure XML  on the Liferay server from your filesystem: 
+
+<pre> gulp update-structure --structureFilename <structurefilename></pre>
+
+***NOTE: This will directly update structures on prod so be careful.***
+
+Calling the update-structure function without any argument will cause it to spit out a list of update commands for the currently configured list of structures:
+
+<pre> gulp update-structure</pre>
 

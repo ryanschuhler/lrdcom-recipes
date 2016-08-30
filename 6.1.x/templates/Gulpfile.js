@@ -39,19 +39,6 @@ gulp.task("get-templates", function () {
         liferay.invoke_liferay(config, cmd, function (body) {
             logger.info("Writing template " + body.nameCurrentValue + " to " + template.filename);
             fs.writeFile(template.filename, body.xsl);
-
-            var structureCmd = {
-            '/journalstructure/get-structure': {
-                "groupId": template.groupId,
-                "structureId": body.structureId
-                }
-            };
-            liferay.invoke_liferay(config, structureCmd, function (structurebody) {
-                var parsedTemplate = path.parse(template.filename);
-                var structureXMLFilename = parsedTemplate.root + parsedTemplate.dir +"/"+ parsedTemplate.name + ".xml";
-                logger.info("Writing structure XML for template " + body.nameCurrentValue + " to " + structureXMLFilename);
-                fs.writeFile(structureXMLFilename, structurebody.xsd);
-            });
         });
     });
 });
@@ -98,3 +85,104 @@ gulp.task("update-template", function () {
 });
 
 
+
+gulp.task("get-structures", function (cb) {
+    var structureConfig = JSON.parse(fs.readFileSync('./structures.json'));
+
+    var foundStructures = 0;
+    var structuresWithFilename = structureConfig.filter(function(searchstructure) { return searchstructure.filename; });
+    
+    structuresWithFilename.forEach(function (structure) {
+        var cmd = {
+            '/journalstructure/get-structure': {
+                "groupId": structure.groupId,
+                "structureId": structure.structureId
+            }
+        };
+        liferay.invoke_liferay(config, cmd, function (body) {
+            logger.info("Writing structure XML for structure " + body.nameCurrentValue + " to " + structure.filename);
+            fs.writeFile(structure.filename, body.xsd);
+            foundStructures++;
+            if (foundStructures == structuresWithFilename.length) {
+                    cb();
+            }
+        });
+    });
+});
+
+gulp.task("update-structure", function (cb) {
+    var structureConfig = JSON.parse(fs.readFileSync('./structures.json'));
+    
+    structureConfig = structureConfig.filter(function(structureCandidate)  {return structureCandidate.filename; });
+
+    var minimist = require('minimist');
+    var options = minimist(process.argv.slice(2));
+
+    if (options && options.structureFilename) {
+        logger.info("Using structureFilename " + options.structureFilename);
+
+        structureConfig.filter(function(searchtemplate) { return searchtemplate.filename === options.structureFilename; }).forEach(function (structure) {
+            var fileContent = fs.readFileSync(structure.filename).toString();
+            var cmd = {
+                "$structure = /journalstructure/get-structure": {
+                    "groupId": structure.groupId,
+                    "structureId": structure.structureId,
+                    "$update = /journalstructure/update-structure": {
+                        "groupId": structure.groupId,
+                        "structureId": structure.structureId,
+                        "@parentStructureId": "$structure.parentStructureId",
+                        "nameMap": { "en_US": structure.name },
+                        "descriptionMap": null,
+                        "xsd": fileContent
+                    }
+                }
+            };
+            logger.info("Updating structure " + structure.name + " from " + structure.filename);
+            liferay.invoke_liferay(config, cmd, function (body) {
+                logger.info("Updated finished for structure " + body.currentName);
+                cb();
+            });
+        });
+    } else {
+            logger.info ("Please specify a structure file name, e.g.:");
+             structureConfig.forEach(function (structure) {
+                 logger.info("gulp update-structure --structureFilename " + structure.filename);
+             });
+    }
+});
+
+
+
+
+
+gulp.task("get-structure-config", function () {
+    var minimist = require('minimist');
+    var options = minimist(process.argv.slice(2));
+
+    if (options && options.groupId && options.configFileName) {
+        logger.info("Using groupId " + options.groupId);
+        logger.info("Using config file name: " + options.configFileName);
+
+        var cmd = {
+            '/journalstructure/get-structures': {
+                "groupId": options.groupId
+            }
+        };
+        liferay.invoke_liferay(config, cmd, function (body) {
+
+            var structureConfigArray = body.map(function(currentValue) {
+                var structureConfig = {};
+                structureConfig.groupId = currentValue.groupId;
+                structureConfig.structureId = currentValue.structureId;
+                structureConfig.name = currentValue.nameCurrentValue;
+                structureConfig.description = currentValue.descriptionCurrentValue;
+                structureConfig.filename = "";
+                return structureConfig;
+            });
+
+            fs.writeFile(options.configFileName, JSON.stringify(structureConfigArray));
+        });
+    } else {
+            logger.info("Syntax: gulp get-structure-config --groupId ####### --configFileName filename");
+    }
+});
