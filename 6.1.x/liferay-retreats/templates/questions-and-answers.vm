@@ -1,28 +1,28 @@
 <style>
-#questionsToggle .answer {
+.questionsToggle .answer {
 	color: #474A4B;
 	padding: 0 0 10px 30px;
 }
 
-#questionsToggle .arrow {
+.questionsToggle .arrow {
 	border: 6px solid transparent;
 	display: inline-block;
 	vertical-align: top;
 }
 
-#questionsToggle .aui-toggler-header-collapsed .arrow {
+.questionsToggle .aui-toggler-header-collapsed .arrow {
 	border-right-width: 0;
 	border-left-color: #777;
 	margin: 3px 14px 0 0;
 }
 
-#questionsToggle .aui-toggler-header-expanded .arrow {
+.questionsToggle .aui-toggler-header-expanded .arrow {
 	border-bottom-width: 0;
 	border-top-color: #777;
 	margin: 5px 8px 0 0;
 }
 
-#questionsToggle .question {
+.questionsToggle .question {
 	color: #000;
 	cursor: pointer;
 	padding: 10px 0;
@@ -34,7 +34,7 @@
 		<h2>$heading.data</h2>
 	</div>
 
-	<div id="questionsToggle">
+	<div class="$container.data questionsToggle">
 		<div class="content">
 			#foreach ($single_question in $question.getSiblings())
 				<div class="question aui-toggler-header-collapsed">
@@ -49,14 +49,14 @@
 </div>
 
 <script>
-	AUI().use(
+	AUI().ready(
 		'aui-base', 'aui-toggler',
 		function(A) {
 			new A.TogglerDelegate(
 				{
                     animated: true,
 					closeAllOnExpand: false,
-					container: '#questionsToggle',
+					container: '.$container.data',
 					content: '.answer',
                     transition: {
                         duration: .5,
