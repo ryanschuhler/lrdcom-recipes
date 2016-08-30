@@ -1,0 +1,230 @@
+<style>
+.agenda-days .agenda-day, .class-toggle-carousel-day-2 #day-1, .class-toggle-carousel-day-3 #day-1, .class-toggle-carousel-day-4 #day-1, .class-toggle-carousel-day-5 #day-1, .class-toggle-carousel-day-6 #day-1, .class-toggle-carousel-day-7 #day-1, .class-toggle-carousel-day-8 #day-1, .class-toggle-carousel-day-9 #day-1 {
+    display: none;
+	opacity: 0;
+}
+
+#day-1 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-2 #day-2 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-3 #day-3 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-4 #day-4 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-5 #day-5 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-6 #day-6 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-7 #day-7 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-8 #day-8 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+.class-toggle-carousel-day-9 #day-9 {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+#retreatAgenda {
+	min-height: 800px;
+}
+
+.agenda-days {
+	padding: 50px 0;
+}
+
+.agenda-nav-item {
+	display: inline-block;
+	font-size: 1em;
+	min-width: 130px;
+	position: relative;
+}
+
+@media (max-width: 500px) {
+    .agenda-nav-item {
+        width: 100%;
+    }
+
+    .agenda-nav-item:before {
+        border: 0;
+    }
+
+    .agenda-nav-item:after {
+        display: none;
+    }
+
+    .agenda-nav-item .date {
+        margin: 0;
+    }
+}
+
+.agenda-nav-item:after, .agenda-nav-item:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 49%;
+}
+
+
+
+.agenda-nav-item:after {
+	border: 3px solid #FFF;
+	border-radius: 50%;
+	height: 20px;
+	left: 50%;
+	margin: -13px;
+	top: 50%;
+	width: 20px;
+}
+
+.agenda-nav-item:before {
+	border-bottom: 2px solid #BDD1D1;
+	position: absolute;
+	width: 105%;
+}
+
+.agenda-nav-item.last:before, .agenda-nav-item.first:before {
+	width: 50%;
+}
+
+.agenda-nav-item.first:before {
+	right: -5%;
+}
+
+.agenda-nav-item.last:before {
+	left: -5%;
+}
+
+.agenda-nav-item:after {
+}
+
+.agenda-nav-item, .class-toggle-carousel-day-2 .agenda-nav-item-1, .class-toggle-carousel-day-3 .agenda-nav-item-1, .class-toggle-carousel-day-4 .agenda-nav-item-1, .class-toggle-carousel-day-5 .agenda-nav-item-1, .class-toggle-carousel-day-6 .agenda-nav-item-1, .class-toggle-carousel-day-7 .agenda-nav-item-1, .class-toggle-carousel-day-8 .agenda-nav-item-1, .class-toggle-carousel-day-9 .agenda-nav-item-1 {
+	color: #BDD1D1;
+}
+
+.agenda-nav-item:after, .class-toggle-carousel-day-9 .agenda-nav-item-1:after, .class-toggle-carousel-day-2 .agenda-nav-item-1:after, .class-toggle-carousel-day-3 .agenda-nav-item-1:after, .class-toggle-carousel-day-4 .agenda-nav-item-1:after, .class-toggle-carousel-day-5 .agenda-nav-item-1:after, .class-toggle-carousel-day-6 .agenda-nav-item-1:after, .class-toggle-carousel-day-7 .agenda-nav-item-1:after, .class-toggle-carousel-day-8 .agenda-nav-item-1:after, .class-toggle-carousel-day-9 .agenda-nav-item-1:after {
+	background: #BDD1D1;
+}
+
+.agenda-nav-item:hover:after, .agenda-nav-item-1:after, .class-toggle-carousel-day-1 .agenda-nav-item-1:after, .class-toggle-carousel-day-2 .agenda-nav-item-2:after, .class-toggle-carousel-day-3 .agenda-nav-item-3:after, .class-toggle-carousel-day-4 .agenda-nav-item-4:after, .class-toggle-carousel-day-5 .agenda-nav-item-5:after, .class-toggle-carousel-day-6 .agenda-nav-item-6:after, .class-toggle-carousel-day-7 .agenda-nav-item-7:after, .class-toggle-carousel-day-8 .agenda-nav-item-8:after, .class-toggle-carousel-day-9 .agenda-nav-item-9:after {
+	background: #398289;
+}
+
+.agenda-nav-item:hover, .agenda-nav-item-1, .class-toggle-carousel-day-1 .agenda-nav-item-1, .class-toggle-carousel-day-2 .agenda-nav-item-2, .class-toggle-carousel-day-3 .agenda-nav-item-3, .class-toggle-carousel-day-4 .agenda-nav-item-4, .class-toggle-carousel-day-5 .agenda-nav-item-5, .class-toggle-carousel-day-6 .agenda-nav-item-6, .class-toggle-carousel-day-7 .agenda-nav-item-7, .class-toggle-carousel-day-8 .agenda-nav-item-8, .class-toggle-carousel-day-9 .agenda-nav-item-9 {
+	color: #398289;
+}
+
+.agenda-nav-item .date {
+	margin-bottom: 30px;
+}
+
+.agenda-days tr, .agenda-days .first-col {
+	border: 0 solid #7C799B;
+}
+
+.agenda-days tr {
+	border-bottom-width: 1px;
+}
+
+.agenda-days td {
+	box-sizing: border-box;
+	font-size: 1.2em;
+	padding: 15px;
+	text-align: left;
+	vertical-align: top;
+	width: 300px;
+}
+
+.agenda-days .first-col {
+	border-right-width: 1px;
+	font-weight: bold;
+	width: 100px;
+}
+
+.agenda-days .last-row {
+	border-bottom-width: 0;
+}
+</style>
+
+<div id="retreatAgenda" class="text-center">
+	<div class="centered dark section-title">
+		<h2 class="slag-font">
+			Stay tuned for updates!
+		</h2>
+	</div>
+
+	<div class="agenda-nav">
+		#foreach($date in $day.getSiblings())
+			#set ($nav_item_css_class = "agenda-nav-item agenda-nav-item-$velocityCount class-toggle-carousel")
+
+			#if ($velocityCount == 1)
+				#set ($nav_item_css_class = "$nav_item_css_class first")
+			#end
+
+			#if ($velocityCount == $day.siblings.size())
+				#set ($nav_item_css_class = "$nav_item_css_class last")
+			#end
+
+			<a class="$nav_item_css_class" data-target-class="day-$velocityCount" data-target-node="#retreatAgenda" href="javascript:;">
+				<div class="date">$date.getData()</div>
+				<div class="location">$date.location.getData()</div>
+			</a>
+		#end
+	</div>
+
+	<div class="agenda-days">
+		#foreach($date in $day.getSiblings())
+			<table class="agenda-day" id="day-$velocityCount">
+				#foreach ($time in $date.time.getSiblings())
+					#set ($tr_css_class = "agenda-row")
+
+					#if ($velocityCount == 1)
+						#set ($tr_css_class = "$tr_css_class first-row")
+					#end
+
+					#if ($velocityCount == $date.time.siblings.size())
+						#set ($tr_css_class = "$tr_css_class last-row")
+					#end
+
+					<tr class="$tr_css_class">
+						<td class="first-col">$time.getData()</td>
+						<td>$time.activity.getData()</td>
+					</tr>
+				#end
+			</table>
+		#end
+	</div>
+</div>
