@@ -31,7 +31,7 @@
 
 <div class="toggleable-list">
 	<div class="heading">
-		<h2>$heading.data</h2>
+		<h2 class="$heading-class.data">$heading.data</h2>
 	</div>
 
 	<div class="$container.data questionsToggle">
