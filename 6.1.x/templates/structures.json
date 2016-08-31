@@ -3,8 +3,8 @@
         "groupId": 67510365,
         "structureId": "67612504",
         "name": "Lego",
-        "description": "",
-        "filename": ""
+        "description": "All hail the lego tempalte",
+        "filename": "events2016/lego.xml"
     },
     {
         "groupId": 67510365,
@@ -227,8 +227,8 @@
         "groupId": 67510365,
         "structureId": "70345623",
         "name": "Site Builder",
-        "description": "",
-        "filename": ""
+        "description": "This is used for some utility pages on the web.liferay.com site, really just a dummy structure to allow creation of templates ",
+        "filename": "events2016/sitebuilder.xml"
     },
     {
         "groupId": 67510365,
@@ -272,13 +272,7 @@
         "description": "",
         "filename": ""
     },
-    {
-        "groupId": 67510365,
-        "structureId": "73392526",
-        "name": "Lego",
-        "description": "",
-        "filename": ""
-    },
+
     {
         "groupId": 67510365,
         "structureId": "73392647",

@@ -41,5 +41,22 @@
         "templateId": "78224346",
         "filename": "events2016/ddl-speaker-symposium-devcon-template.vm",
         "name": "Speakers DEVCON Template"
+},
+{
+        "groupId": "67510365",
+        "templateId": "78307176",
+        "filename": "events2016/sitebuilder-templatesearch.ftl",
+        "name": "Template Search"
 }
+,
+{
+            "groupId": "67510365",
+        "templateId": "67612506",
+        "filename": "events2016/lego.vm",
+        "name": "Lego"
+
+
+}
+
+
 ]

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element name="lego_section_attr" type="text" index-type="" repeatable="true">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[A section is a div which will be 100% and wraps all the lego-blocks inside of it.
+<br/>
+<br/>
+Any input with "_attr" in the title will put the respective content into the attribute section of the item. Example content would be: href="/home" or data-src="/image.png".]]></entry>
+			<entry name="label"><![CDATA[lego_section_attr]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+		<dynamic-element name="lego_block_attr" type="text" index-type="" repeatable="true">
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+				<entry name="instructions"><![CDATA[A block is div that you set the width to a percentage and it will then be floated so that you can create the grid style layout that you desire.]]></entry>
+				<entry name="label"><![CDATA[lego_block_attr]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+			</meta-data>
+			<dynamic-element name="lego_element_attr" type="text" index-type="" repeatable="true">
+				<meta-data>
+					<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="instructions"><![CDATA[Elements are the individual pieces of the lego block. Set the type of element andthen the desired content and/or class.]]></entry>
+					<entry name="label"><![CDATA[lego_element_attr]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+				</meta-data>
+				<dynamic-element name="element_type" type="list" index-type="" repeatable="false">
+					<dynamic-element name="h1" type="h1" index-type="" repeatable="false"/>
+					<dynamic-element name="h2" type="h2" index-type="" repeatable="false"/>
+					<dynamic-element name="h3" type="h3" index-type="" repeatable="false"/>
+					<dynamic-element name="span" type="span" index-type="" repeatable="false"/>
+					<dynamic-element name=" div " type="div" index-type="" repeatable="false"/>
+					<dynamic-element name=" p " type="p" index-type="" repeatable="false"/>
+					<dynamic-element name=" Image " type="image" index-type="" repeatable="false"/>
+					<dynamic-element name=" Button " type="button" index-type="" repeatable="false"/>
+					<dynamic-element name=" heading " type="heading" index-type="" repeatable="false"/>
+					<dynamic-element name=" sub_heading " type="sub_heading" index-type="" repeatable="false"/>
+				</dynamic-element>
+				<dynamic-element name="element_content" type="text_box" index-type="" repeatable="false">
+					<meta-data>
+						<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+						<entry name="required"><![CDATA[false]]></entry>
+						<entry name="instructions"><![CDATA[]]></entry>
+						<entry name="label"><![CDATA[element_content]]></entry>
+						<entry name="predefinedValue"><![CDATA[]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="element_css_class" type="text" index-type="" repeatable="false">
+					<meta-data>
+						<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+						<entry name="required"><![CDATA[false]]></entry>
+						<entry name="instructions"><![CDATA[Any input with "_css_class" in the title will put the respective content into the class attribute of the item. Example content would be: test-class.]]></entry>
+						<entry name="label"><![CDATA[element_css_class]]></entry>
+						<entry name="predefinedValue"><![CDATA[]]></entry>
+					</meta-data>
+				</dynamic-element>
+			</dynamic-element>
+			<dynamic-element name="block_css_class" type="text" index-type="" repeatable="false">
+				<meta-data>
+					<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="instructions"><![CDATA[Any input with "_css_class" in the title will put the respective content into the class attribute of the item. Example content would be: test-class.]]></entry>
+					<entry name="label"><![CDATA[block_css_class]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="column_position" type="list" index-type="" repeatable="false">
+				<meta-data>
+					<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="instructions"><![CDATA[This is to identify whether the given block is on the left, middle, or right of the section. It handles the padding appropriately.]]></entry>
+					<entry name="label"><![CDATA[column_position]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+				</meta-data>
+				<dynamic-element name=" only " type="only" index-type="" repeatable="false"/>
+				<dynamic-element name=" Left " type="left" index-type="" repeatable="false"/>
+				<dynamic-element name=" middle " type="middle" index-type="" repeatable="false"/>
+				<dynamic-element name=" Right " type="right" index-type="" repeatable="false"/>
+			</dynamic-element>
+			<dynamic-element name="width" type="list" index-type="" repeatable="false">
+				<dynamic-element name=" 100 " type="100" index-type="" repeatable="false"/>
+				<dynamic-element name=" 95 " type="95" index-type="" repeatable="false"/>
+				<dynamic-element name=" 90 " type="90" index-type="" repeatable="false"/>
+				<dynamic-element name=" 85 " type="85" index-type="" repeatable="false"/>
+				<dynamic-element name=" 80 " type="80" index-type="" repeatable="false"/>
+				<dynamic-element name=" 75 " type="75" index-type="" repeatable="false"/>
+				<dynamic-element name=" 70 " type="70" index-type="" repeatable="false"/>
+				<dynamic-element name=" 66 " type="66" index-type="" repeatable="false"/>
+				<dynamic-element name=" 65 " type="65" index-type="" repeatable="false"/>
+				<dynamic-element name=" 60 " type="60" index-type="" repeatable="false"/>
+				<dynamic-element name=" 55 " type="55" index-type="" repeatable="false"/>
+				<dynamic-element name=" 50 " type="50" index-type="" repeatable="false"/>
+				<dynamic-element name=" 45 " type="45" index-type="" repeatable="false"/>
+				<dynamic-element name=" 40 " type="40" index-type="" repeatable="false"/>
+				<dynamic-element name=" 35 " type="35" index-type="" repeatable="false"/>
+				<dynamic-element name=" 33 " type="33" index-type="" repeatable="false"/>
+				<dynamic-element name=" 30 " type="30" index-type="" repeatable="false"/>
+				<dynamic-element name=" 25 " type="25" index-type="" repeatable="false"/>
+				<dynamic-element name=" 20 " type="20" index-type="" repeatable="false"/>
+				<dynamic-element name=" 15 " type="15" index-type="" repeatable="false"/>
+				<dynamic-element name=" 10 " type="10" index-type="" repeatable="false"/>
+				<dynamic-element name=" 5 " type="5" index-type="" repeatable="false"/>
+			</dynamic-element>
+		</dynamic-element>
+		<dynamic-element name="section_css_class" type="text" index-type="" repeatable="false">
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+				<entry name="instructions"><![CDATA[Any input with "_css_class" in the title will put the respective content into the class attribute of the item. Example content would be: test-class.]]></entry>
+				<entry name="label"><![CDATA[section_css_class]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="custom_content" type="text_area" index-type="" repeatable="false">
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+				<entry name="instructions"><![CDATA[This item gives you the flexibility to make purely custom content in your section if you would like to.]]></entry>
+				<entry name="label"><![CDATA[custom_content]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+			</meta-data>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element name="lego_css_class" type="text" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Any input with "_css_class" in the title will put the respective content into the class attribute of the item. Example content would be: test-class.]]></entry>
+			<entry name="label"><![CDATA[lego_css_class]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="lego_css" type="text_box" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[Add you custom css here for this article. No need to add a style tag, the template does it for you.]]></entry>
+			<entry name="label"><![CDATA[lego_css]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="lego_media_query" type="text_box" index-type="" repeatable="true">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+			<entry name="instructions"><![CDATA[A simplified way to add media queries. Just put the css you want in the "lego_media_query" box and then set a max and or min width for it to take effect.]]></entry>
+			<entry name="label"><![CDATA[lego_media_query]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+		<dynamic-element name="media_query_max" type="text" index-type="" repeatable="false">
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+				<entry name="instructions"><![CDATA[Insert a number in pixels. for example: 720px]]></entry>
+				<entry name="label"><![CDATA[media_query_max]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="media_query_min" type="text" index-type="" repeatable="false">
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+				<entry name="instructions"><![CDATA[Insert a number in pixels. for example: 480px]]></entry>
+				<entry name="label"><![CDATA[media_query_min]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+			</meta-data>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element name="display_locales" type="text" index-type="" repeatable="false"/>
+	<dynamic-element name="target_user" type="text" index-type="" repeatable="true">
+		<dynamic-element name="article_id" type="text" index-type="" repeatable="false"/>
+	</dynamic-element>
+</root>

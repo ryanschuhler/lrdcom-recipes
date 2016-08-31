@@ -56,7 +56,7 @@ gulp.task("update-template", function (cb) {
     if (options && options.templateFilename) {
         logger.info("Using templateFilename " + options.templateFilename);
 
-        templateConfig.filter(function(searchtemplate) { return searchtemplate.filename === options.templateFilename; }).forEach(function (template) {
+        templateConfig.filter(function (searchtemplate) { return searchtemplate.filename === options.templateFilename; }).forEach(function (template) {
             var templateFileContent = fs.readFileSync(template.filename).toString();
             var cmd = {
                 "$template = /journaltemplate/get-template": {
@@ -82,10 +82,10 @@ gulp.task("update-template", function (cb) {
             });
         });
     } else {
-            logger.info ("Please specify a template file name, e.g.:");
-             templateConfig.forEach(function (template) {
-                 logger.info("gulp update-template --templateFilename " + template.filename);
-             });
+        logger.info("Please specify a template file name, e.g.:");
+        templateConfig.forEach(function (template) {
+            logger.info("gulp update-template --templateFilename " + template.filename);
+        });
     }
 });
 
@@ -95,8 +95,8 @@ gulp.task("get-structures", function (cb) {
     var structureConfig = JSON.parse(fs.readFileSync('./structures.json'));
 
     var foundStructures = 0;
-    var structuresWithFilename = structureConfig.filter(function(searchstructure) { return searchstructure.filename; });
-    
+    var structuresWithFilename = structureConfig.filter(function (searchstructure) { return searchstructure.filename; });
+
     structuresWithFilename.forEach(function (structure) {
         var cmd = {
             '/journalstructure/get-structure': {
@@ -109,7 +109,7 @@ gulp.task("get-structures", function (cb) {
             fs.writeFile(structure.filename, body.xsd);
             foundStructures++;
             if (foundStructures == structuresWithFilename.length) {
-                    cb();
+                cb();
             }
         });
     });
@@ -117,8 +117,8 @@ gulp.task("get-structures", function (cb) {
 
 gulp.task("update-structure", function (cb) {
     var structureConfig = JSON.parse(fs.readFileSync('./structures.json'));
-    
-    structureConfig = structureConfig.filter(function(structureCandidate)  {return structureCandidate.filename; });
+
+    structureConfig = structureConfig.filter(function (structureCandidate) { return structureCandidate.filename; });
 
     var minimist = require('minimist');
     var options = minimist(process.argv.slice(2));
@@ -126,7 +126,7 @@ gulp.task("update-structure", function (cb) {
     if (options && options.structureFilename) {
         logger.info("Using structureFilename " + options.structureFilename);
 
-        structureConfig.filter(function(searchtemplate) { return searchtemplate.filename === options.structureFilename; }).forEach(function (structure) {
+        structureConfig.filter(function (searchtemplate) { return searchtemplate.filename === options.structureFilename; }).forEach(function (structure) {
             var fileContent = fs.readFileSync(structure.filename).toString();
             var cmd = {
                 "$structure = /journalstructure/get-structure": {
@@ -149,10 +149,10 @@ gulp.task("update-structure", function (cb) {
             });
         });
     } else {
-            logger.info ("Please specify a structure file name, e.g.:");
-             structureConfig.forEach(function (structure) {
-                 logger.info("gulp update-structure --structureFilename " + structure.filename);
-             });
+        logger.info("Please specify a structure file name, e.g.:");
+        structureConfig.forEach(function (structure) {
+            logger.info("gulp update-structure --structureFilename " + structure.filename);
+        });
     }
 });
 
@@ -175,7 +175,7 @@ gulp.task("get-structure-config", function () {
         };
         liferay.invoke_liferay(config, cmd, function (body) {
 
-            var structureConfigArray = body.map(function(currentValue) {
+            var structureConfigArray = body.map(function (currentValue) {
                 var structureConfig = {};
                 structureConfig.groupId = currentValue.groupId;
                 structureConfig.structureId = currentValue.structureId;
@@ -188,38 +188,108 @@ gulp.task("get-structure-config", function () {
             fs.writeFile(options.configFileName, JSON.stringify(structureConfigArray));
         });
     } else {
-            logger.info("Syntax: gulp get-structure-config --groupId ####### --configFileName filename");
+        logger.info("Syntax: gulp get-structure-config --groupId ####### --configFileName filename");
     }
 });
 
 
+gulp.task("list-structure-templates", function (cb) {
 
-
-
-gulp.task("search-template", function () {
-  
+    var structureConfig = JSON.parse(fs.readFileSync('./structures.json'));
+    var foundStructures = 0;
+    structureConfig.forEach(function (structure) {
         var cmd = {
-            '/journalarticle/search': {
-                "companyId":  0,
-                "groupId": 67510365,
-                "classNameId": 0,
-                "keywords": "",
-                "version": 0,
-                "type": "",
-                "structureId": "",
-                "templateId": "78236355",
-                "displayDateGT": "",
-                "displayDateLT": "",
-                "status": 0,
-                "reviewDate": "",
-                "start": 1,
-                "end": 100,
-                "obc": "com.liferay.portal.kernel.util.OrderByComparator"
+            '/journaltemplate/get-structure-templates': {
+                "groupId": structure.groupId,
+                "structureId": structure.structureId
             }
         };
         liferay.invoke_liferay(config, cmd, function (body) {
+            //logger.info(structure.name + ": " + JSON.stringify(body, null, "\t"));
+            logger.info(structure.name + " (" + structure.structureId + ")");
+            body.forEach(function (template) {
+                logger.info("\t\t" + template.nameCurrentValue + ": " + template.templateId);
+            });
 
-            logger.info(body);
+            foundStructures++;
+            if (foundStructures == structureConfig.length) {
+                cb();
+            }
         });
 
+
+
+    });
+
+
+
 });
+
+
+gulp.task("search-template", function () {
+
+    var cmd = {
+        '/journalarticle/search': {
+            "companyId": 0,
+            "groupId": 67510365,
+            "classNameId": 0,
+            "keywords": "",
+            "version": 0,
+            "type": "",
+            "structureId": "",
+            "templateId": "78236355",
+            "displayDateGT": null,
+            "displayDateLT": null,
+            "status": 0,
+            "reviewDate": null,
+            "start": 1,
+            "end": 100,
+            "obc": null
+        }
+    };
+    liferay.invoke_liferay(config, cmd, function (body) {
+
+        logger.info(body);
+    });
+
+});
+
+
+/* nice try.. */
+gulp.task("structure-article-count", function (cb) {
+    var obj = {
+        groupId: 67510365,
+        structureId: "67612504"
+    };
+
+    var postrequest = {
+        url: "https://web.liferay.com/web/events2016/template-search",
+        json: true,
+        body: {
+            groupId: obj.groupId,
+            structureId: obj.structureId,
+            p_p_lifecycle: 2
+        },
+        headers: { "Authorization": "Basic " + config.base64auth }
+    };
+    var request = require("request");
+    request.post(postrequest, function (err, httpResponse, body) {
+
+        if (err) {
+               logger.error(err);
+        } else if (httpResponse && httpResponse.statusCode && (httpResponse.statusCode != 200)) {
+            logger.error("An error seems to have occurred. Response Code " + httpResponse.statusCode);
+            var errorobj = {
+                statusCode: httpResponse.statusCode,
+                body: body
+            };
+            throw errorobj;
+        }
+        else {
+            logger.info(body);
+
+        }
+        cb();
+    });
+});
+  
