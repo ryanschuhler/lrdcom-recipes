@@ -95,7 +95,7 @@
 				<#assign dl_file_entry = dl_file_entry_local_service_util.fetchDLFileEntry(getterUtil.getLong(asset_id)) >
 
 				<#assign void = asset_info.put("asset_folder_id", dl_file_entry.getFolderId()) />
-				<#assign void = asset_info.put("asset_id", asset_id) />
+				<#assign void = asset_info.put("asset_id", dl_file_entry.getUuid()) />
 				<#assign void = asset_info.put("asset_name", dl_file_entry.getTitle()) />
 
 				<#assign dl_file_entry_type_local_service_util = staticUtil["com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil"]>
